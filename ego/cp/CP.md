@@ -265,3 +265,18 @@ when a function is called , *a stack frame ( or activation record )* is created 
 when a function exits,its stack frame is popped, and the memory is reclaimed automatically.
 
 bcoz CPU can't address anything smaller than a byte.
+
+**slow and fast pointer** - 
+
+tortoise , moves one node at a time
+hare , moves two nodes
+
+cycle, hare and tortoise meet at some node
+no cycle, hare reaches end of list
+
+if the hare is k nodes behind , after each move, the gap reduces by one. since it is reduced by one hare doesn't skip over tortoise, instead they meet at some point.
+
+after detecting cycle, to find the node where cycle starts. reset tortoise to start and move both tortoise and hare one node at a time. the point where they meet is the node where cycle starts.
+
+this method can be used on other structures which contains a cycle.
+
