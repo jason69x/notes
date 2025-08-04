@@ -22,7 +22,7 @@ insertion sort uses the idea similar to how we sort a deck of cards. lets assume
   for i = 1 to n-1:
     card = arr[i]               // selecting a element to insert
     j = i-1
-    while j>=0 and arr[j]<card   
+    while j>=0 and arr[j]>card   
       arr[j+1] = arr[j]          // shifting elements from left to right
       j--
     arr[j+1] = card;            // inserting element in its sorted place

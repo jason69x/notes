@@ -58,13 +58,46 @@ for i from 1 to n:
 return -1,-1
 ```
 
-above approach has time complexity $O(n)$.
+above approach has time complexity $O(n)$ and space complexity $O(n)$.
 
 ---
 
-**A2** : Find the length of the longest contiguous subarray whose sum equals a given value K.
+**A2** : Find the length of the longest contiguous subarray whose sum equals a given value $K$.
 
-$\implies$ 
+**A3** : Given an array of size $n$, find the element that appears more than $⌊n/2⌋$ times.
+
+This can be solved by creating a hash map where key is elements of array and value is their frequency. then we can iterate over this map and return the element whose frequency is greater than $⌊n/2⌋$ . time complexity of this approach is $O(n)$ and space complexity is $O(n)$.
+
+*pseudocode* - 
+
+```cpp
+for i = 1 to n:
+	map[arr[i]] += 1    // count frequency of element
+for key,val in map:
+	if val > n/2:
+		return key
+```
+
+**A4** : For each element in the array, find next greater element to its right. If none exists, return $−1$.
+
+We can iterate over each element of  the array and check the right subarray of the element to find next greater element. time complexity of this approach is $O(n^2)$ .
+
+*pseudocode* -
+
+```cpp
+res = [],flag=0
+for i = 1 to n:
+	for j = i+1 to n:
+		if arr[j] > arr[i]:
+			res[i] = arr[j]
+			flag = 1
+	if flag == 0:
+		res[i] = -1   //if greater element is not found insert -1
+	flag = 0
+return res	
+```
+
+
 
 ---
 ###### Linked List
@@ -173,11 +206,11 @@ return true
 Indicate, for each pair of expressions (A, B) in the table below, whether A is O(B), o(B), Ω(B), ω(B), or
 Θ(B). Assume that k ≥ 1, ϵ > 0, and c > 1 are constants. Your answer should be in the form of a table with “yes” or “no” written in each box. Also, give the reasons.
 
-| Row | Expression A | Expression B | A ∈ O(B) | A ∈ o(B) | A ∈ Ω(B) | A ∈ ω(B) | A ∈ Θ(B) |
-| --- | ------------ | ------------ | -------- | -------- | -------- | -------- | -------- |
-| (a) | logᵏ n       | nᵉ           |          |          |          |          |          |
-| (b) | nᵏ           | cⁿ           |          |          |          |          |          |
-| (c) | cⁿ           | cⁿᵏ          |          |          |          |          |          |
-| (d) | nᵗⁱⁿ ⁿ       | 2ⁿ²ⁿ/²       |          |          |          |          |          |
-| (e) | 2ⁿ/²         | 2ⁿ           |          |          |          |          |          |
-| (f) | nˡᵒᵍ ᶜ       | cˡᵒᵍ ⁿ       |          |          |          |          |          |
+| Row | Expression A | Expression B   | A ∈ O(B) | A ∈ o(B) | A ∈ Ω(B) | A ∈ ω(B) | A ∈ Θ(B) |
+| --- | ------------ | -------------- | -------- | -------- | -------- | -------- | -------- |
+| (a) | $\log^k n$   | $n^\in$        | yes      | yes      | no       | no       | no       |
+| (b) | $n^k$        | $c^n$          | yes      | yes      | no       | no       | no       |
+| (c) | $c^n$        | $cn^k$         | no       | no       | yes      | yes      | no       |
+| (d) | $n^{\sin n}$ | $2^{n^{2n/2}}$ | no       | no       | no       | no       | no       |
+| (e) | $2^{n/2}$    | $2^n$          | yes      | yes      | no       | no       | no       |
+| (f) | $n^{\log c}$ | $c^{\log n}$   | yes      | no       | yes      | no       | yes      |

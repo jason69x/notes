@@ -280,3 +280,4 @@ after detecting cycle, to find the node where cycle starts. reset tortoise to st
 
 this method can be used on other structures which contains a cycle.
 
+`git add .`  used to stage changes.
