@@ -64,6 +64,15 @@ above approach has time complexity $O(n)$ and space complexity $O(n)$.
 
 **A2** : Find the length of the longest contiguous subarray whose sum equals a given value $K$.
 
+we can use two nested loops to iterate over all possible subarrays and calculate sum of each subarray and check if it equals to $k$ and also keep track of largest length. time complexity for this approach is $O(n^2)$ .
+
+*pseudocode* - 
+
+```cpp
+
+```
+//prefix sum 
+
 **A3** : Given an array of size $n$, find the element that appears more than $⌊n/2⌋$ times.
 
 This can be solved by creating a hash map where key is elements of array and value is their frequency. then we can iterate over this map and return the element whose frequency is greater than $⌊n/2⌋$ . time complexity of this approach is $O(n)$ and space complexity is $O(n)$.
@@ -77,6 +86,26 @@ for key,val in map:
 	if val > n/2:
 		return key
 ```
+
+
+if we want to solve this problem in linear time and constant space, we can use *Boyer–Moore majority vote algorithm*. this algorithm works only if it is guaranteed that one element appears more than $n/2$ times. otherwise, it may give wrong results. the idea is that the total count of non-majority numbers is strictly less than the frequency of majority element ($m$) , if we cancel out occurences of $m$ by occurences of other elements we would still be left with some $m$'s $. we use a variable $c$ to keep track of current count and assume that the first element is $m$ . now we iterate over the rest of the element's and decrementing $c$ if the element is not current $m$ and incrementing $c$ if it is $m$. if at any point $c=0$ , we set the current element at $m$.
+
+*pseudocode* - 
+
+```cpp
+m = arr[1]
+c = 1
+for i = 2 to n:
+	if c==0:
+		m = arr[i]
+	if m == arr[i]:
+		c++
+	if m != arr[i]:
+		c--
+return m
+```
+ 
+ ---
 
 **A4** : For each element in the array, find next greater element to its right. If none exists, return $−1$.
 
@@ -97,7 +126,7 @@ for i = 1 to n:
 return res	
 ```
 
-
+//stack
 
 ---
 ###### Linked List
