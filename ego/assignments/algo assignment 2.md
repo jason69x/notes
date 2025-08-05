@@ -11,7 +11,7 @@ Email   : [abhishekm1002@iitg.ac.in](mailto:abhishekm1002@iitg.ac.in)
 
 **A1** : Given an array and a target value, return indices of the two numbers such that they add up to the target.
 
-$\implies$ A simple approach to this problem would be check all the pairs and find if they add up to the target. running time of this approach would be $O(n^2)$. 
+$\implies$ A simple approach to this problem would be check all the pairs and find if they add up to the target. running time of this approach would be $O(n^2)$.    
 
 *pseudocode* - 
 
@@ -69,9 +69,15 @@ we can use two nested loops to iterate over all possible subarrays and calculate
 *pseudocode* - 
 
 ```cpp
-
+len = 0
+for i from 1 to n:
+	sum = 0
+	for j from i to n:
+		sum += arr[j]
+		if sum == k:
+			len = max(len,j-i+1)
+return len
 ```
-//prefix sum 
 
 **A3** : Given an array of size $n$, find the element that appears more than $⌊n/2⌋$ times.
 
@@ -125,8 +131,6 @@ for i = 1 to n:
 	flag = 0
 return res	
 ```
-
-//stack
 
 ---
 ###### Linked List
@@ -240,6 +244,30 @@ Indicate, for each pair of expressions (A, B) in the table below, whether A is O
 | (a) | $\log^k n$   | $n^\in$        | yes      | yes      | no       | no       | no       |
 | (b) | $n^k$        | $c^n$          | yes      | yes      | no       | no       | no       |
 | (c) | $c^n$        | $cn^k$         | no       | no       | yes      | yes      | no       |
-| (d) | $n^{\sin n}$ | $2^{n^{2n/2}}$ | no       | no       | no       | no       | no       |
+| (d) | $n^{\sin n}$ | $2^{n^{2n/2}}$ | yes      | yes      | no       | no       | no       |
 | (e) | $2^{n/2}$    | $2^n$          | yes      | yes      | no       | no       | no       |
 | (f) | $n^{\log c}$ | $c^{\log n}$   | yes      | no       | yes      | no       | yes      |
+
+**(A)** .  $\log^k n$ $\in$ $o(n^\in)$ ,  $\lim_{n \to \infty} \frac{\log^k n}{n^\in} = 0$ , 
+
+for constants $k,e,c\geq1$ and $n_0\geq2$, $\forall n\geq n_0$   $\log^k n <  cn^\in$ 
+
+**(B)** $n^k$ $\in$ $o(c^n)$ ,  $\lim_{n \to \infty} \frac{n^k}{c^n} = 0$ , 
+
+for constants $k,c_1\geq2$ and $c\geq2$ , $n_0\geq1$, $\forall n\geq n_0$   $n^k <  c_1 c^n$ 
+
+**(C)**  $c^n$ $\in$ $\omega(c\cdot n^k)$ ,  $\lim_{n \to \infty} \frac{c^n}{cn^k} = \infty$ , 
+
+for constants $k=1,c_1=1$ and $c\geq3$ , $n_0\geq2$, $\forall n\geq n_0$   $c^n >  c_1 cn^k$ 
+
+**(D)**  $n^{\sin n}$ $\in$ $o(2^{n^{2n/2}})$ ,  $\lim_{n \to \infty} \frac{n^{\sin n}}{2^{n^{2n/2}}} = 0$ , 
+
+for constants $n_0\geq1$, $\forall n\geq n_0$   $n^{\sin n} <  2^{n^{2n/2}}$ , the max and min values of $\sin n$ are $1,-1$ .
+LHS would be either $n$ or $1/n$ or something function which fall between these two.for every $n\geq n_0$ where $n_0>0$ , these two functions will be strictly less than RHS.
+
+**(E)**  $2^{n/2}$ $\in$ $o(2^n)$ ,  $\lim_{n \to \infty} \frac{2^{n/2}}{2^n} = 0$ , 
+
+for constants $n_0\geq1$, $\forall n\geq n_0$   $2^{n/2} < 2^n$ 
+
+divide by $2^{n/2}$ 
+
