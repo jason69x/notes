@@ -79,6 +79,8 @@ for i from 1 to n:
 return len
 ```
 
+---
+
 **A3** : Given an array of size $n$, find the element that appears more than $⌊n/2⌋$ times.
 
 This can be solved by creating a hash map where key is elements of array and value is their frequency. then we can iterate over this map and return the element whose frequency is greater than $⌊n/2⌋$ . time complexity of this approach is $O(n)$ and space complexity is $O(n)$.
@@ -267,7 +269,14 @@ LHS would be either $n$ or $1/n$ or something function which fall between these 
 
 **(E)**  $2^{n/2}$ $\in$ $o(2^n)$ ,  $\lim_{n \to \infty} \frac{2^{n/2}}{2^n} = 0$ , 
 
-for constants $n_0\geq1$, $\forall n\geq n_0$   $2^{n/2} < 2^n$ 
+for constants $n_0\geq1$, $\forall n\geq n_0$   $2^{n/2} < 2^n$ ,
 
-divide by $2^{n/2}$ 
+informally, if we divide both functions by $2^{n/2}$ , we get a constant on LHS and $2^{n/2}$ , therefore LHS is strictly less than RHS.
+
+**(F)**  $n^{\log c}$ $\in$ $\Theta(c^{\log n})$ $\forall n\geq n_0$ ,  $\lim_{n \to \infty} \frac{n^{\log c}}{c^{\log n}} = 1$ , 
+
+both represents the same function, we can use the property $a^{\log b} \equiv b^{\log a}$ .
+
+---
+
 
