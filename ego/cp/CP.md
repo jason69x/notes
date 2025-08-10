@@ -287,3 +287,16 @@ this method can be used on other structures which contains a cycle.
 fast string matching, check characters from right to left of string that needs to be matched.
 upon mismatch, skip alignments until (a) a mismatch becomes a match or (b) p moves past mismatched character.
 
+`__gcd(x,y)`
+
+```
+#define mt make_tuple
+#define mp make_pair
+#define eb emplace_back
+typedef tuple<int,int,int> tup;
+```
+`priority_queue<tup> q;`
+`q.emplace(x,y,z)` emplace_back is faster than push_back.
+
+`clamp(i,x,y)` 
+returns $i$  if it is in the interval $[x, y]$ ,otherwise, the nearest value (low/high).

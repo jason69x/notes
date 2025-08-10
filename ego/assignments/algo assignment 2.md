@@ -5,8 +5,6 @@ Roll no : 254101002
 Course : M.tech CSE (1st yr)
 Email   : [abhishekm1002@iitg.ac.in](mailto:abhishekm1002@iitg.ac.in)
 
----
-
 ###### Arrays
 
 **A1** : Given an array and a target value, return indices of the two numbers such that they add up to the target.
@@ -113,7 +111,7 @@ for i = 2 to n:
 return m
 ```
  
- ---
+---
 
 **A4** : For each element in the array, find next greater element to its right. If none exists, return $−1$.
 
@@ -132,6 +130,22 @@ for i = 1 to n:
 		res[i] = -1   //if greater element is not found insert -1
 	flag = 0
 return res	
+```
+
+a better approach would be to use a stack to keep track of next greater elements. time complexity of this approach is $O(n)$ and space complexity $O(n)$. this works by iterating in reverse on the input array. for every element $i$ we check if stack contains a element greater than this or not. if it does then it is the $i$'s next greater else we pop all elements from stack that are smaller than $i$ because the next greater element for the elements on left of $i$  will be $i$ and not the elements in stack that are less than $i$ . if the stack is becomes empty than there is no next greater for $i$.
+
+*pseudocode* - 
+
+```cpp
+for i = n to 1:
+	while stack not empty and stack.top <= arr[i]:
+		stack.pop
+	if stack.empty:
+		res[i] = -1
+	else:
+		res[i] = stack.top
+	stack.push(arr[i])
+return res
 ```
 
 ---
@@ -157,6 +171,7 @@ return false
 ```
 
 ---
+
 **L2 :** Remove the n-th node from the end of the list in a single pass.
 
 Given that we need to remove the n-th node in single pass, we can use a hash_map to store the position of a node and a pointer to that node. then we can make a single pass over the linked list to calculate its length . after that, we would only need to modify some pointers to remove the desired element. time complexity - $O(n)$ , where $n$ is the length of linked-list. space complexity if also $O(n)$.

@@ -149,3 +149,7 @@ then
 
 "If you can't prove something, try to prove something grander".
 
+##### 3. Logical Formulas -
+
+
+

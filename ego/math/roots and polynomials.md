@@ -16,3 +16,4 @@ imaginary unit $i$ = $\sqrt{-1}$
 *every complex number can be expressed in the form $a+bi$ , where a and b are real numbers*
 
 
+x_next = $1/2(x + n/x)$ 
