@@ -114,3 +114,15 @@ a *recurrence* is an equation that describes a function in terms of its value on
 $3T(n/4) + n^2$ 
 
 in recursion tree method, $n^2$ is the root node. it represents the cost incurred at this level. for the next level, cost of the $n/4$ subproblems  will be $(n/4)^2$ .
+
+###### Dynamic Programming : 
+
+when we say spanning tree of a graph we specifically mean - 
+* one connected tree
+* that includes all the vertices of the graph
+* has no cycles 
+* for a graph with n vertices, spanning tree always has n-1 edges
+
+dynamic programming solves problems by combining the solutions to subproblems.
+
+dynamic programming applies when the subproblems overlap - that is, when subproblems share subsubproblems. dp solves each subsubproblem just once and saves its answer in a table.

@@ -106,3 +106,9 @@ functions can return address of local variables. these variables will be shifted
 
 compiler decides wheter some variable will go on heap or stack.
 
+package initialization begins initializing package variables in order except that dependencies are resolved first.
+
+`func inti(){}` automatically executed when program starts. can create any no. of these
+
+`fmt.Println(" %d %[1]x %#[1]x %#[1]X",x)` \[1] tells the program to use the first operand again . # is used to omit 0 or 0x prefix
+
