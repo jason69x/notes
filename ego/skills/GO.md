@@ -112,3 +112,6 @@ package initialization begins initializing package variables in order except tha
 
 `fmt.Println(" %d %[1]x %#[1]x %#[1]X",x)` \[1] tells the program to use the first operand again . # is used to omit 0 or 0x prefix
 
+
+`go f()` , function f is executed in a new goroutine.
+

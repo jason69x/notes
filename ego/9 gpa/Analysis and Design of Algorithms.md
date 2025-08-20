@@ -126,3 +126,19 @@ when we say spanning tree of a graph we specifically mean -
 dynamic programming solves problems by combining the solutions to subproblems.
 
 dynamic programming applies when the subproblems overlap - that is, when subproblems share subsubproblems. dp solves each subsubproblem just once and saves its answer in a table.
+
+
+**Max-heapify** - assumes left subtree(i) and right subtree (i) are max heaps, then it compares value of i node with its childred and if it is less than it swaps it with the larger value and perform max heapify recursively on that child.
+
+**Build-Max-Heap** - converts an array $A=[1\ldots n]$  into a max-heap by
+calling **Max-heapify** in a bottom-up manner. the elements in the subarray $A=[n/2\ldots n]$  are all leaves of the tree, and so each is a 1-element heap to begin with. **Build-Max-Heap** goes through the remaining nodes of the tree and runs **Max-heapify** on each one.
+
+**nodes of height h** can have at most $\lceil n / 2^{h+1} \rceil$ nodes . bcoz height zero (leaf) nodes are n/2, height one are n/4 ...
+
+$\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{n}{2^{h+1}} \rceil ch = O(n)$ , here we are summing cost of each node at height h. that's why we 
+
+are multiplying no. of nodes at height h with cost each node can take that is h and we are doing it for all heights till height of root.
+
+**heap-sort** -  perform build-max-heap on given array, then exchanges root of heap with last element of array, decreases heap size and performs max-heapify on the new root, does this till heap size is 0. $O(n\cdot\log n)$ bcoz for each $n$ elements we call heapify $\log n$.
+
+A **priority queue** is a data structure for maintaining a set S of elements, each with an associated value called a key. inser(),extract-max(),max(),increase-key().

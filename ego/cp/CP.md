@@ -300,3 +300,29 @@ typedef tuple<int,int,int> tup;
 
 `clamp(i,x,y)` 
 returns $i$  if it is in the interval $[x, y]$ ,otherwise, the nearest value (low/high).
+
+#overflow_trick
+
+```cpp
+        while(x!=0){
+            t = x%10;
+            x /= 10;
+            if(res>INT_MAX/10 || (res==INT_MAX/10 && t>7)) return 0;
+            if(res<INT_MIN/10 || (res==INT_MIN/10 && t<-8)) return 0;
+            res = res*10 + t;
+        }
+```
+
+palindrome number - reverse half number and check
+
+```cpp
+        while (x > reversedHalf) {
+            reversedHalf = reversedHalf * 10 + x % 10;
+            x /= 10;
+        }
+        // For odd number of digits, ignore the middle digit
+        return x == reversedHalf || x == reversedHalf / 10;
+```
+
+`string.resize(n)`
+

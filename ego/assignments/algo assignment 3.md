@@ -71,13 +71,57 @@ return head
 ---
 
 
-L3. (⋆) Determine the node at which two singly linked lists intersect.
+**L3.** Determine the node at which two singly linked lists intersect.
+
 (a) What would be the brute force way of solving it?
+
+-> we can iterate over the first list and for each element of this list traverse over the second list and check if they have the same address or not. time complexity $O(n*m)$ .
+
 (b) Can you use hashing technique to solve this problem?
+
+-> we can create a hash set and iterate over the first list and insert the addresses of each node in the set and then we can iterate over the second list and check if the address of the current node is already present in the set or not. if it is then the given lists intersect at some point else they don't.
+time complexity $O(n+m)$  and space complexity $O(length\ of\ first\ list)$.
+
 (c) Can you use sorting to solve this problem?
+
+-> yes, we can iterate over both the lists and insert address of each element to a array and sort this array. then we can iterate over this array and check if two consecutive elements have same address or not. if they do then lists intersects else they don't. time complexity $O((n+m)\log(n+m))$ and space complexity $O(n+m)$ .
+
 (d) Can you design an algorithm for the problem that runs in O(n+m) time, where n and m denotes
 the number of nodes before the first intersecting node of the linked lists?
+
+-> suppose the given lists intersects at some point and they have same length, we can easily find the intersecting point by just traversing over lists one node at a time. but if they have different length, we can't use this approach. we can find the difference in their length and adjust the larger list according to it, then both the strings will go in sync till the intersecting point.if there is not intersecting point then one of the node will be NULL and we can return that the given list's doesn't intersects. time complexity of this approach is $O(max(n,m))$ where $n$ and $m$ are lengths of the given lists.
+
+```c++
+getLength(head):
+    res=0
+    if head==NULL : return 0
+    if head->next == NULL : return 1
+    while head!=NULL :
+        res++
+        head = head->next
+    
+    return res
+
+getIntersectionNode(headA,headB) :
+        l1 = getLength(headA),l2 = getLength(headB)
+        n = abs(l1-l2)
+        while n-- :
+            if l1>l2 :
+                headA = headA->next
+            else :
+                headB = headB->next
+        while headA!=NULL AND headB!=NULL :
+            if headA == headB :
+                return headA
+            headA = headA->next
+            headB = headB->next
+        return NULL
+```
+
 (e) Is it possible to use stacks?
+
+-> yes, we can use two stacks and push elements of these two lists in these two stacks respectively.
+then we can pop from both the stack if the elements have same address until they don't. the last popped element is the intersecting point. if during the pop phase if one of the stack becomes empty then they don't intersect. time complexity $O(n+m)$ and space complexity $O(n+m)$. 
 
 ---
 
