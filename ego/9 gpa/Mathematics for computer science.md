@@ -345,3 +345,153 @@ if $x_0 \in Y$ then $x_0 \notin Y$
 if $x_0 \notin Y$ then $x_0 \in Y$
 
 
+###### Number Theory - 
+
+number theory is the study of the intergers $\mathbb{Z}$ .
+
+ $a$ divides $b$   *iff*   $b = a\cdot k$ , for some $k$.
+
+1. *if a | b , then a | bc  for all c* .
+2. *if a | b and b | c , then a | c*
+3. *if a | b and a | c , then a | sb + tc  for all s and t*
+4. *for all c $\neq$ 0 , a | b iff  ca | cb* 
+
+*division theorem* - Let *n* and *d* be integers such that *d > 0 . Then there exists a unique pair of integers q and r , such that  $n = q\cdot d + r$  and  $0\leq r < d$ .
+
+*famous conjectures in number theory* - 
+
+- *fermats last theorem* : there are no positive intergers $x,y,z$  such that $x^n + y^n = z^n$  for some interger $n> 2$  .
+
+- *goldback conjecture* : every even integer greater than two is equal to the sum of two primes.
+
+- *there are infinitely many primes p such that p+2 is also a prime*
+
+- *factoring* - given the product of two large primes *n = pq* , there is no efficient way to recover the primes *p and q* .
+
+naive primality test algorithm $\sqrt{n}$ is polynomial in $n$ ,  but is exponential in $\log_2n$ (number of digits in binary representation)
+
+$\sqrt{n} = 2^{m/2}$ ,  $m=\log_2n$ (number of bits in n).
+
+
+equation of the form $s\cdot a + t\cdot b$ , is called an *integer linear combination* of a and b .
+
+*greatest common divisor of a and b is equal to the smallest positive linear combination of a and b .*
+
+*proof* - 
+
+by well ordering principle, there is a smallest positive linear combination of a and b , call it m. we'll prove that *gcd(a,b) = m* , i.e *gcd(a,b) <= m  &&  m <= gcd(a,b)*
+
+first we show that *gcd(a,b) <= m*, for any common divisor *c* ,  *c | a* & *c | b* $\implies$  *c | sa + tb*
+$\implies$ *c | m* , *gcd* is also a common divisor , so *gcd(a,b)* divides *m* , $\implies$ *gcd(a,b) <= m*.
+
+to prove *m <= gcd(a,b)*, we need to show *m | a* and symmetrically *m | b*,
+
+if *m | a* , *a = qm + r* , we know that *m = sa+tb*, 
+*r = (1-qs)a + (-qt)b* , so *r* is linear combination of *a,b*, but *m* is the smallest positive linear combination of *a,b*, this means that *r* is not positive $\implies$ *r=0* ($0\leq r < m$) $\implies$ *a = qm + 0* 
+so *m | a* and symmetrically *m | b* . so *m* is a common divisor of *a,b* and it will be less than the greatest common divisor , so we have *m <= gcd(a,b)* . 
+
+*An interger is linear combination of a and b iff it is a multiple of gcd(a,b)*
+
+suppose *d = gcd(a,b)* , *d | a* & *d | b*
+*a = dx , b = dy*
+
+for any linear combination, ai + bj  = dxi + dyj = d(xi+yj)
+so *d | ai+bj* , therefore any linear combination of a,b is multiple of gcd(a,b).
+
+$gcd(a,b)  = gcd(b,rem(a,b))$
+
+- fill the smaller jug
+- pour all the water of smaller jug in larger jug . if at any time larger jug becomes full empty it out and continue pouring water from smaller jug into the larger jug.
+
+this method eventually generates all the multiples of the gcd of the jug capacities.
+
+*fundamental theorem of arithmetic* - 
+
+*Every positive integer n can be written in a unique way as a product of primes :*
+
+$n = p_1 \cdot p_2 \ldots p_j$
+
+the product of an empty set of numbers is defined to be 1. sum of empty set of numbers is 0.
+
+*if p is a prime and p | ab then p | a or p | b* .
+
+the $1/ln(n)$ formula is not a probability for the specific interger *n*, but a *heuristic* for the average likelihood that a number close to *n* is prime.
+
+*Theorem* - 100% logically proved fact.
+
+*Heuristic* - an educated guess, approximation, or method that helps us understand/predict something, but without strict proof.
+
+**Modular Arithmetic** - 
+
+*a is congruent to b modulo n iff n | (a-b)* 
+
+$a \equiv b\ (mod\ n)$
+
+$a\equiv b \ (mod\ n)$ *iff*  $rem(a,n) = rem(b,n)$
+
+the *multiplicative inverse* of a number $x$ is another number $x^{-1}$ such that : 
+
+$x\cdot x^{-1} = 1$ 
+
+multiplicative inverses exist over real numbers. inverses generally do not exist over the integers.
+but they do exists when we're working *modulo a prime number*.
+
+$7\cdot 3 \equiv 1\ (mod\ 5)$ , here 3 is the multiplicative inverse of 7.
+
+numbers congruent to 0 modulu 5 ( i.e multiples of 5) do not have inverses.
+
+*if p is a prime and k is not a multiple of p, then k has a multiplicative inverse modulo p*.
+
+*suppose p is prime and k is not a multiple of p. Then 
+
+$ak \equiv bk \ (mod\ p) \implies a\equiv b \ (mod\ p)$ 
+
+*Fermat's Little Theorem* - 
+
+*suppose p is prime and k is not a multiple of p then,
+
+$k^{p-1} \equiv 1 \ (mod\ p)$ 
+
+you can use this find multiplicative inverses,
+
+$k^{p-2}\cdot k \equiv 1 \ (mod \ p)$ , here $k^{p-2}$ is the multiplicative inverse of $k$.
+
+then find $rem(k^{p-2},p)$ using repeated squaring,
+
+eg. find inverse of $6\ mod \ 17$ .
+
+*6 mod 17*   ->    $6^{16} \equiv 1\ (mod\ 17)$  ->  $6^{15}\cdot 6 \equiv 1\ (mod\ 17)$ 
+
+find $6^{15}$ using repeated squaring method,
+
+$6^2$ = 36 = 2 (36 mod 17)
+$6^4 = 2^2$
+$6^8 = 2^4$
+
+$6^8\cdot 6^4\cdot 6^2\cdot 6 = 16\cdot4\cdot2\cdot6 = 3$
+
+so 3 is multiplicative inverse of 6, $6\cdot3 \equiv 1\ (mod\ 17)$
+
+*integers a and b are relatively prime iff gcd(a,b) = 1*
+
+*let n be a positive integer. if k is relatively prime to n, then there exists an integer $k^{-1}$ such that* 
+
+$k\cdot k^{-1} \equiv 1 \ (mod \ n)$ 
+
+*Euler's theorem* - 
+
+*the exponent of k needed to produce multiplicative inverse of k mod n depends on number of integers in the set {1,2,...,n} that are relatively prime to n*. This value is known as *Euler's Totient function*  $\phi(n)$ . 
+for example $\phi(7) = 6$ . since 1,2,3,4,5,6 are all relatively prime to 7.
+if *n* is prime then $\phi(n) = n-1$ .
+
+*for any number n, if $p_1,p_2,...,p_j$ are distinct prime factors of n then,
+
+$\phi(n) = n\cdot(1-\frac{1}{p_1}\cdot(1-\frac{1}{p_2})\ldots (1-\frac{1}{p_j}))$ 
+
+*let n = pq , where p and q are different primes then*  $\phi(n) = (p-1)(q-1)$ 
+
+*suppose n is a positive interger and k is relatively prime to n then*
+
+$k^{\phi(n)} \equiv 1\ (mod\ n)$ 
+
+

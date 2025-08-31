@@ -326,3 +326,8 @@ palindrome number - reverse half number and check
 
 `string.resize(n)`
 
+making comp *static* removes the **this** pointer, because every non-static member function of a class has a implicit `this` pointer. but std:sort expects a plain function.
+
+using `const` prevents accidental changes to the arguments.
+`&` is used to pass by reference for efficiency, instead of copying values.
+

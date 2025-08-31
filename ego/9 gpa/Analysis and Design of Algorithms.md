@@ -39,9 +39,6 @@ $d$ is the dividing cost
 $c$ is the combining cost
 
 it takes $T(\frac{n}{b})$ time to solve one subproblem , so to solve $a$ such problems it takes $aT(\frac{n}{b})$ time.
-
-**// todo page 44 exercises
-
 ###### characterizing running times
 
 $O$-notation characterizes a *upper bound* on the asymptotic behavior of a function. it says that the function grows *no faster* than a cetain rate , based on the highest order term .
@@ -85,7 +82,7 @@ Asymptotic Analysis ,    Look at growth of $T(n)$ as $\lim{n \to \inf}$
 
 a set in a formula represents a anonymous function in that set.
 
-*masters method* work on recurrences in the form :
+*masters method* work on recurrences of the form :
 
 $T(n) = aT(\frac{n}{b}) + f(n)$ 
 
@@ -109,7 +106,6 @@ $f(n) + af(n/b) + a^2f(n/b^2) \ldots +\Theta(n^{\log_b{a}})$
 we can find time complexity by checking how the cost decreases $f(n)$ / increases $\Theta(n^{\log_b{a}})$ geometrically and if the cost remains fairly similar in all levels then the cost becomes $f(n)*\log_b{n}$ , because cost at each level is $f(n)$ and height of the tree is $\log_b{n}$.
 
 a *recurrence* is an equation that describes a function in terms of its value on other, typically smaller,arguments.
-
 
 $3T(n/4) + n^2$ 
 
@@ -141,4 +137,138 @@ are multiplying no. of nodes at height h with cost each node can take that is h 
 
 **heap-sort** -  perform build-max-heap on given array, then exchanges root of heap with last element of array, decreases heap size and performs max-heapify on the new root, does this till heap size is 0. $O(n\cdot\log n)$ bcoz for each $n$ elements we call heapify $\log n$.
 
-A **priority queue** is a data structure for maintaining a set S of elements, each with an associated value called a key. inser(),extract-max(),max(),increase-key().
+A **priority queue** is a data structure for maintaining a set S of elements, each with an associated value called a key. insert(),extract-max(),max(),increase-key().
+
+**lower bound - binary search $\Omega(\log n)$ ,**
+
+think of binary search as a comparison based decision tree
+- each node is a comparison ( "targer <,>,= middle")
+- leaves represents final answers (either "found at i" or "not found")
+
+there are $n$ possible outcomes and $1$ for not found , so total $n+1$ outcomes.
+a binary tree of height $h$ has at most $2^h$ leaves.
+to represent $n+1$ outcomes, $2^h \geq n+1 \implies h \geq \log_2(n+1)$
+
+###### greedy algorithms - 
+
+makes a locally optimal choice in the hope that this choice leads to a globally optimal solution.
+
+*interval scheduling problem* - 
+
+Intuition suggests that you should choose an activity that leaves the resource available for as many other activities as possible. therefore , choose the activity in $S$ with the earliest finish time.
+
+Lets call the greedy choice $G = a_1$ (finishing at time $f_1$)
+let $O={o_1,o_2,...o_k}$ be an optimal solution. activities in $O$ are odered by finish times.
+
+two cases : 
+- if $a_1 \in O$ , then our greedy choice aligns with optimal.
+- if $a_1 \notin O$, then since our $a_1$ has the earliest finish time it must finish no later than $o_1$. replace $o_1$ with $a_1$ in $O$ , the new set $O'$ is still compatible and has the same cardinality has $O$. therefore, the greedy choice does not reduce optimality.
+
+*earliest finish time first*, leaves as much *future space* as possible.
+*latest start time first* , leaves as much *past space* as possible.
+both ensure you're not blocking a larger solution.
+
+*interval partitioning problem* - 
+
+schedule *all* requests using as few resources as possible.
+in any instance of interval partitioning, the number of resources needed is at least the depth of the set of intervals. *depth* - maximum number of overlapping partitions over a common point.
+
+sort by start times and assign intervals to class whose last finish time is less that this intervals start time.
+
+if you can't reuse a classroom, you can't reuse any other (since they all finish later).
+
+you need to specify underlying container when creating a priority_queue in cpp.
+
+`priority_queue<int,vector<int>,greater<int>> q;`
+
+*scheduling with deadlines* - 
+
+sort by earliest deadlines, use max-heap to remove longer duration courses with shorter ones to maximize number of coures selected. push durations in max-heap. 
+
+*divide and conquer* - optimal substructure + independent subproblems
+*dynamic programming* - optimal substructure + overlapping subproblems
+*greedy algorithms* - optimal substructure + local optimal leads to global optimal.
+
+**elements of greedy strategy -**
+
+- determine the optimal substructure of the problem. *optimal substructure* is a property of a problem that say : an optimal solution to the whole problem can be constructed from optimal solutions to its subproblems.
+- show that if you make the greedy choice, only one subproblem remains.
+- prove that it is safe to make the greedy choice.
+
+greedy works on fractional knapsack ( sort by profit/weight ) , dp works on 0-1 knapsack. why tho??
+
+//todo coin problems 
+
+***Huffman encoding*** - 
+
+DEFLATE = LZ77 (find repeats) + Huffman (encode efficiently).
+
+LZ77 stores "abcabcabc" as "abc" then offset to "abc" followed by length of string to copy.
+
+*prefix-free codes* - no codeword is a prefix of some other codeword.
+
+optimal code is a *full* binary tree.
+$C$ leaves and $C-1$ internal nodes. every character appears on the leaves.
+
+for every character $c \in C$, its depth is also the length of its codeword.
+
+thus, no. of bits required to encode a file is ,
+
+$B(T) = \sum_{c\in C} c.freq\cdot d_T(c)$ ,
+
+
+working of huffman encoding - 
+
+create a min heap priority queue with frequency of characters as key and character as value.
+pop two values from heap x,y and create a new tree node z  with x,y as its left and right child.
+z.freq = x.freq + y.freq , push this z into the heap. repeat this process $n-1$ times and then pop and return the last element from the heap. this element is the root of the prefix tree. 
+$O(n\cdot \log n)$ 
+
+it maybe inefficient for small number of characters , bcoz you have to also store the prefix tree and dictionary, that will take extra space.
+
+total costs of the tree (in bits) constructed is equal to the sum of the costs of its mergers (internal nodes).
+root represents number of characters in the data.
+
+*proving prefix-free property* -
+
+huffman algorithm builds a full binary tree where each leaf corresponds to a unique symbol. suppose code for symbol $a$ is prefix of code for $b$. then the path to $a$ would be a prefix to the path to $b$, implying that the leaf for $a$ is an internal node on the path to $b$. but leaves have no children, so this is impossible.
+
+*proving optimal prefix-free codes have the greedy property* - 
+
+the idea of the proof is to take the tree $T$ representing an arbitrary optimal prefix-free code and modify it to make a tree representing another optimal prefix-free code such that the characters $x$ and $y$ appear as sibling leaves of maximum depth in the new tree. in such a tree, the codewords for $x$ and $y$ have the same length and differ only in the last bit.
+
+consider two characters $a$ and $b$ at leaves with maximum depth in tree $T$ and $x,y$ be any where in the tree. since $x,y$ are two characters with least frequencies we have $x \leq y$ and since $a,b$ are at leaves with max depth $a\leq b$ , assume $x\leq a$ and $y\leq b$ . we can create a new tree $T'$ by exchanging $x$ and $a$. now we have to prove that total cost of this new tree is no more than $T$.
+$B(T) - B(T') \geq 0$ , similarly, by exchangin $y,b$ we get $T''$ and this has cost $\leq B(T')$ . but since we assumed $T$ tree to be optimal , tree $T' , T''$ cannot have cost less than $T$ . therefore, these trees are also optimal with $x,y$ appearing as sibling at leaves with maximum depth.
+
+*proving optimal substructure property for huffman prefix-free trees* - 
+
+if we create a new tree with $x,y$ removed a new node $z$ with freq. $x.freq + y.freq$ and make $x,y$ its children, then this represents a optimal tree for the original set of characters. 
+
+$x.freq\cdot d(x) + y.freq\cdot d(y) = z.freq\cdot d(z) + x.freq + y.freq$
+
+$B(T') = B(T) - x.freq - y.freq$ 
+
+assuming $T$ is optimal for $C$.
+if we merge $x,y$ into $z$, the resulting $T'$ must also be optimal for $C'$.
+Otherwise, if there were a better tree $T''$ for $C'$ , expanding $z$ back into $x,y$ would give a better tree for $C$ than $T$.
+This contradicts $T$ being optimal.
+so $T'$ must be optimal.
+
+*proof interval partitioning* - 
+
+depth = lower bound on resources.
+greedy never uses more resources than depth. greedy always picks a free resources first if available. so at any time , the number of resources = number of overlapping intervals at that time.
+
+sorting by *start time* ensures that you never waste a resource on a later interval if an earlier one could have used it.
+
+counter example for sorting by finish time asc. =  [1,4],[3,7],[5,6],[0,2]
+because greedy always chooses resource with least finish time till now.
+coz it assigns early finish time firsts and this might make resources that finish later but start early use more resources.
+
+*proof by contradiction* - 
+
+suppose the greedy algorithms uses $m>d$ resources. let $i$ be the first interval that causes the creation of $d+1$-th resource. this means that all resources are busy and have intervals assigned to them that finishes after $s_i$ . these intervals must have started on or before $s_i$ , so each of these intervals are overlapping with $i$ at time $s_i$ , this gives $d+1$ intervals conflicting at any time and this **contradicts** with the fact that we assumed $d$ as the maximum overlap.
+
+
+
+
