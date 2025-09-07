@@ -5,6 +5,88 @@ Roll no : 254101002
 Course : M.tech CSE (1st yr)
 Email   : [abhishekm1002@iitg.ac.in](mailto:abhishekm1002@iitg.ac.in)
 
+
+###### Stacks - 
+
+**S1. stack permutation.**
+
+$\to$ 325641 -   yes, this order can be permuted.
+
+| operation |  stack  |    output     |
+| :-------: | :-----: | :-----------: |
+|  push(1)  |   [1]   |      []       |
+|  push(2)  |  [1,2]  |      []       |
+|  push(3)  | [1,2,3] |      []       |
+|   pop()   |  [1,2]  |      [3]      |
+|   pop()   |   [1]   |     [3,2]     |
+|  push(4)  |  [1,4]  |     [3,2]     |
+|  push(5)  | [1,4,5] |     [3,2]     |
+|   pop()   |  [1,4]  |    [3,2,5]    |
+|  push(6)  | [1,4,6] |    [3,2,5]    |
+|   pop()   |  [1,4]  |   [3,2,5,6]   |
+|   pop()   |   [1]   |  [3,2,5,6,4]  |
+|   pop()   |   []    | [3,2,5,6,4,1] |
+
+154623 - no, this order can't be permuted.
+
+| operation | stack     | output    |
+| --------- | --------- | --------- |
+| push(1)   | [1]       | []        |
+| pop()     | []        | [1]       |
+| push(2)   | [2]       | [1]       |
+| push(3)   | [2,3]     | [1]       |
+| push(4)   | [2,3,4]   | [1]       |
+| push(5)   | [2,3,4,5] | [1]       |
+| pop()     | [2,3,4]   | [1,5]     |
+| pop()     | [2,3]     | [1,5,4]   |
+| push(6)   | [2,3,6]   | [1,5,4]   |
+| pop()     | [2,3]     | [1,5,4,6] |
+after the last pop(), we have a problem, if we pop() then 3 will be in the output and not 2.
+
+**S2. Evaluate Postfix Expression.**
+
+$\to$ in a postfix expression operators occurs after the operands, eg. 3 5 +  this is  3 + 5 . we can evaluate a postfix expression using a stack. the approach is to push input when we see a operand i.e a number and pop last two pushed elements from the stack and calculate their result and push it back into the stack if the input is a operator. time complexity $O(n)$ , space complexity $O(n)$.
+
+*pseudocode* - 
+
+```cpp
+stack st
+for i in tokens :
+    if i != '+' AND i != '-' AND i != '/' AND i != '*' :
+		st.push(i)
+	else :
+		x = st.pop
+		y = st.pop
+		switch i :
+			case '+' : st.push(y+x)
+			case '-' : st.push(y-x)
+			case '*' : st.push(y*x)
+			case '/' : st.push(y/x)
+return st.top
+```
+
+**S3. Next Greater Element Using Stack.**
+
+$\to$ given a array of elements , we can find next greater element of each of the array elements by using a stack and iterating in reverse. if at the current element stack is empty that there is no greater element for current. if top of the stack has a number greater than current than that is its NGE, otherwise we need to pop elements from the stack that are less than the current till its not or the stack is empty. time complexity $O(n)$ , space complexity $O(n)$.
+
+*pseudocode* - 
+
+```cpp
+stack st
+for i from N-1 to 0 :
+	while !st.empty AND st.top <= nums[i] :
+		st.pop
+	if st.empty :
+		res[i] = -1
+	else
+		res[i] = st.top
+	st.push(nums[i])
+return res
+```
+
+**S4. Remove K Digits to Get Smallest Number.** 
+
+$\to$ 
 ###### Queues -
 
 **Q1. First Non-Repeating Character in a Stream.**

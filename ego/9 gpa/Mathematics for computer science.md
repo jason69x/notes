@@ -99,6 +99,8 @@ this only hold's for non-negative real numbers. you need to use complex numbers 
 
 *Every nonempty set of nonnegative integers has a smallest element*.
 
+infinite set of negative integers is not well-ordered, coz it doesn't have a least element, whereas infinite set of non-negative integers does have a least element. 
+
 *there are no fractions which cannot be written in lowest terms*
 
 $\frac{m_0}{n_0}$ are defined so that $m_0/n_0$ cannot be written in lowest terms. This means that by definition they have a common factor (if they didn't than this means they are already in lowest terms, so they can be written in lowest terms).
@@ -312,7 +314,7 @@ an element $x\in A$ is *minimal* if there is no other element $y\in A$ such that
 an element $x\in A$ is *maximal* if there is no other element $y\in A$ such that $x\preceq y$.
 
 *every finite poset has a topological sort*.
-*every finite poset has a minimal element*.
+*every finite poset has a minimal/maximal element*.
 
 parallel task scheduling. topological sort.
 
@@ -438,7 +440,7 @@ but they do exists when we're working *modulo a prime number*.
 
 $7\cdot 3 \equiv 1\ (mod\ 5)$ , here 3 is the multiplicative inverse of 7.
 
-numbers congruent to 0 modulu 5 ( i.e multiples of 5) do not have inverses.
+numbers congruent to 0 modulo 5 ( i.e multiples of 5) do not have inverses.
 
 *if p is a prime and k is not a multiple of p, then k has a multiplicative inverse modulo p*.
 
@@ -495,3 +497,81 @@ $\phi(n) = n\cdot(1-\frac{1}{p_1}\cdot(1-\frac{1}{p_2})\ldots (1-\frac{1}{p_j}))
 $k^{\phi(n)} \equiv 1\ (mod\ n)$ 
 
 
+---
+
+*purple-red eye island* - 
+
+suppose $p=2$ , then after the anouncement, on day 1, there are two purple eyes. there can be two cases from each purple eyes person perspective,
+case 1 - he is red and the other purple eyed person will leave after day 1.
+case 2 - he is purple, but he can only be sure of it when the other purple eyed doesn't leave after day 1.
+on day 2, both purple eyed see's each other, if there was only one purple eyed person then she would have left on day1 (coz she would have seen that everyone is red , therefore she is purple and leave), since it is day 2,there must be more than 1 purple and these two purple eyed girls sees that there is only one purple and rest are red, so they conclude that they must be purple and leave.
+so every purple eyed girl leaves at $p^{th}$ day.
+
+$jk = cn+1$
+
+$rem(a\cdot b,c) \equiv a\cdot b (mod\ c) \equiv rem(a,c)\cdot rem(b,c) (mod\ c) = rem((rem(a,c)\cdot rem(b,c)),c)$ 
+this principle extends to an arbitary number of factors, such that :
+
+$a_1\cdot a_2\cdot \ldots a_n \equiv rem(a_1,c)\cdot rem(a_2,c)\cdot \ldots rem(a_n,c)\ (mod\ c)$
+
+*eg. find rem(23x61x19,17)*
+
+###### cardinality rules : 
+
+*bijection rule* - *if there is a bijection* $\mathcal{f} : A\to B$  between $A$ and $B$ , then $\lvert A\rvert = \lvert B\rvert$ .
+
+star-bar
+
+*product rule* - *if* $p_1,p_2,\ldots,p_n$ are sets then : $\lvert p_1\times p_2\times \ldots \times p_n\rvert = \lvert p_1 \rvert \cdot \lvert p_2 \rvert \dots \cdot \lvert p_n \rvert$
+
+*sum rule* - *if* $a_1,a_2,\ldots a_n$ *are* **disjoint** *sets then* : $\lvert a_1 \cup a_2\cup \ldots \cup a_n \rvert = \lvert a_1 \rvert + \lvert a_2 \rvert + \ldots \lvert a_n \rvert$  
+*generalized product rule* - 
+
+*Let S be a set of length-k sequences. if there are :* 
+
+- $n_1$ *possible first entries,*
+- $n_2$ *possible second entries for each first entry*.
+- $n_3$ *possisble third entries for each combination of first and second entries,etc.*
+
+*then :*
+
+$\lvert S \rvert = n_1\cdot n_2\cdot n_3 \ldots n_k$
+
+*a **permutation** of a set S is a sequence that contains every element of S exactly once.*
+
+a *k-to-1 function* maps exactly *k* elements of domain to every element of codomain.
+
+*division rule* - *if $\mathcal{f} : A \to B$ is k-to-1, then $\lvert A\rvert = k\cdot \lvert B\rvert$
+
+by division rule, number of circular seating arrangements is *(n-1)!* .
+bcoz there is a *n-to-1* mapping from set of all permutations to set of circular arrangements.
+
+$\binom{n}{k}$ ::= the number of *k*-element subsets of an *n*-element set. "*n choose k*"
+
+$\binom{n}{k} = \frac{n!}{k!\cdot (n-k)!}$ 
+
+*subset split rule* -  *The number of $(k_1,k_2,\ldots k_m)$*-splits of an *n-element* set is :
+
+$\binom{n}{k_1,\ldots,k_m} = \frac{n!}{k_1!,k_2!,\ldots,k_m!}$
+
+**The Binomial Theorem** -
+
+A *binomial* is a sum of two terms, such as *a + b*. now consider its 4th power, 
+
+$(a+b)^4 = aaaa + aaab + aaba + \ldots + bbbb$
+
+there is one term for every sequence of a's and b's. so there are $2^4$ terms.
+the number of terms with *k* copies of *b* and *n-k* copies of *a* is $\binom{n}{k}$.
+the coefficient of $a^{n-k} b^k$ is $\binom{n}{k}$ 
+
+for n=4,
+
+$(a+b)^4 = \binom{4}{0}\cdot a^4b^0 +\binom{4}{1}\cdot a^3b^1 +\binom{4}{2}\cdot a^2b^2 +\binom{4}{3}\cdot a^1b^3 +\binom{4}{4}\cdot a^0b^4$
+
+*binomial theorem* - *For all n $\in \mathbb{N}$ and a, b$\in \mathbb{R}$ :*
+
+$(a + b)^n = \sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^{k}$ 
+
+*for $n,k_1,\ldots,k_m \in \mathbb{N}$, such that $k_1 + k_2 +\ldots + k_m = n$ , define the multinomial coefficient
+
+$\binom{n}{k_1,k_2,\ldots,k_m} = \frac{n!}{k_1!,k_2!,\ldots,k_m!}$ 
