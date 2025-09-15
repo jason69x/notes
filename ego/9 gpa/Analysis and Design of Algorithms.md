@@ -120,16 +120,24 @@ when we say spanning tree of a graph we specifically mean -
 * for a graph with n vertices, spanning tree always has n-1 edges
 
 dynamic programming solves problems by combining the solutions to subproblems.
-
 dynamic programming applies when the subproblems overlap - that is, when subproblems share subsubproblems. dp solves each subsubproblem just once and saves its answer in a table.
 
+dynamic programming typically applies to *optimization problems*. such problems can have many possible solutions. each solution has a value, and you want to find a solution with the optimal (minimum or maximum) value.
 
-**Max-heapify** - assumes left subtree(i) and right subtree (i) are max heaps, then it compares value of i node with its childred and if it is less than it swaps it with the larger value and perform max heapify recursively on that child.
+*rod cutting* - 
+
+number of ways to cut a rod of length *n*  = $2^{n-1}$ 
+
+
+
+###### Heaps :
+
+**Max-heapify** - assumes left subtree(i) and right subtree (i) are max heaps, then it compares value of i node with its children and if it is less than it swaps it with the larger value and perform max heapify recursively on that child.
 
 **Build-Max-Heap** - converts an array $A=[1\ldots n]$  into a max-heap by
 calling **Max-heapify** in a bottom-up manner. the elements in the subarray $A=[n/2\ldots n]$  are all leaves of the tree, and so each is a 1-element heap to begin with. **Build-Max-Heap** goes through the remaining nodes of the tree and runs **Max-heapify** on each one.
 
-**nodes of height h** can have at most $\lceil n / 2^{h+1} \rceil$ nodes . bcoz height zero (leaf) nodes are n/2, height one are n/4 ...
+**height h** can have at most $\lceil n / 2^{h+1} \rceil$ nodes . bcoz height zero (leaf) nodes are n/2, height one are n/4 ...
 
 $\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{n}{2^{h+1}} \rceil ch = O(n)$ , here we are summing cost of each node at height h. that's why we 
 
@@ -142,7 +150,7 @@ A **priority queue** is a data structure for maintaining a set S of elements, ea
 **lower bound - binary search $\Omega(\log n)$ ,**
 
 think of binary search as a comparison based decision tree
-- each node is a comparison ( "targer <,>,= middle")
+- each node is a comparison ( "target <,>,= middle")
 - leaves represents final answers (either "found at i" or "not found")
 
 there are $n$ possible outcomes and $1$ for not found , so total $n+1$ outcomes.
@@ -194,6 +202,22 @@ sort by earliest deadlines, use max-heap to remove longer duration courses with 
 - determine the optimal substructure of the problem. *optimal substructure* is a property of a problem that say : an optimal solution to the whole problem can be constructed from optimal solutions to its subproblems.
 - show that if you make the greedy choice, only one subproblem remains.
 - prove that it is safe to make the greedy choice.
+
+*weighted interval partitioning* -
+
+given *n* intervals $[s_i,f_i]$ , each with **weight** $w_i$ .
+select a subset of non-overlapping intervals that maximized the total weight.
+
+- sort intervals by finish time
+- for each interval $i$ , 
+	- Take it $\to$ add its weight $w_i$ + best solution from the last non-conflicting interval before $i$
+	- Skip it $\to$ just take the best solution upto $i-1$.
+
+$DP[i] = max(DP[i-1],w_i + DP[P(i)])$
+
+$P(i)$ = rightmost interval $x$ such that  $f_x < s_i$
+compute $P(i)$ using binary search after sorting by finish times.
+
 
 greedy works on fractional knapsack ( sort by profit/weight ) , dp works on 0-1 knapsack. why tho??
 

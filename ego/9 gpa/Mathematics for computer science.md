@@ -1,7 +1,4 @@
 *reference books* :  Lehman math for cs, basic probability - ash, wanskel notes on set theory, steven cook notes for logic 1, 2.
-
-todo : 
-- [ ]  proofs problems 
 ##### *1. Proofs* -
 
 *proof*, A mathematical proof of a proposition is a chain of logical deductions leading to the propositions from a base set of axioms.
@@ -30,7 +27,7 @@ $\frac{\neg P\implies\lnot Q}{Q\implies P}$
 
 *method 1* - 
 
-1. Write "Assume $P$".
+1. Write "Assume $P$ ".
 2. Show that $Q$ logically follows.
 
 $a^2 - b^2 = (a+b)(a-b)$
@@ -200,14 +197,14 @@ row moves doesn't change order or increase/decrease number of inversions. column
 
 *euclid's lemma* - if a prime *p* divides a product $a\cdot b$ , then *p* must divide at least one of *a* or *b*.
 
-Problem 1.19 -  prove that $\log_{12} 18$ is irrational.
+Problem 1.19 -  prove that $\log_{12} 18$ is irrational. (use prime factorization, powers of primes must be same in equality)
 
 ---
 $p\implies q$ is true when either $p$ is *false* or $q$ is *true* , that is $\lnot p \lor q$ .
 
 a truth assignment is a map $\tau : {atoms} \to {T,F}$ .
 
-$(\lnot A)^{\tau} = T \iff a^{\tau} = F$ 
+$(\lnot A)^{\tau} = T \iff A^{\tau} = F$ 
 
 a truth assignment $\tau$ satisfies $A$ iff $A^{\tau} = T$. $\tau$ satisfies a set $\Phi$ of formulas iff $\tau$ satisfies $A$ for all $A \in \Phi$ . The set $\Phi$ is satisfiable iff some $\tau$ satisfies $\Phi$, otherwise it is unsatisfiable.
 
@@ -275,7 +272,7 @@ $a(S\circ R)c \iff \exists b \in B | aRb \land bRc$
 composition of two functions , $(f\circ g)(a) = f(g(a))$
 
 *total* function covers entire domain, every element of domain has a image.
-*partial* function , some element may not have a image.
+	*partial* function , some element may not have a image.
 
 Let $A$ and $B$ be finite sets,
 
@@ -525,6 +522,7 @@ star-bar
 *product rule* - *if* $p_1,p_2,\ldots,p_n$ are sets then : $\lvert p_1\times p_2\times \ldots \times p_n\rvert = \lvert p_1 \rvert \cdot \lvert p_2 \rvert \dots \cdot \lvert p_n \rvert$
 
 *sum rule* - *if* $a_1,a_2,\ldots a_n$ *are* **disjoint** *sets then* : $\lvert a_1 \cup a_2\cup \ldots \cup a_n \rvert = \lvert a_1 \rvert + \lvert a_2 \rvert + \ldots \lvert a_n \rvert$  
+
 *generalized product rule* - 
 
 *Let S be a set of length-k sequences. if there are :* 

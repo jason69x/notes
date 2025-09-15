@@ -3,7 +3,7 @@
 Name   : Abhishek Meena
 Roll no : 254101002
 Course : M.tech CSE (1st yr)
-Email   : [abhishekm1002@iitg.ac.in](mailto:abhishekm1002@iitg.ac.in)
+	Email   : [abhishekm1002@iitg.ac.in](mailto:abhishekm1002@iitg.ac.in)
 
 ###### Arrays
 

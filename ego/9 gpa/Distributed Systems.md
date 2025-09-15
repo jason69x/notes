@@ -215,6 +215,86 @@ when a ELECTION msg arrives, the receiver sends a OK msg to indicate that it is 
 logical ring, each process knows who its successor is. when any process notices that coordinator is not responding, it builds an ELECTION msg and forwards it to its successor, if it is down then to the next of successor or the one after that, until a running process is located. at each step sender adds its own identifier to the list in the msg.
 eventually, the msg gets back to the process that started it all. at this point, the msg type is changed to COORDINATOR and is circulated once again, this time to inform everyone else who is the coordinator (the list member with the highest identifier) and who the members of new ring are. when this msg is circulated once, it is removed and everyone goes back to work.
 
+//election in raft page : 289
+###### Fault Tolerance
+
+*fault torerant system* - whenever a failure occurs, the system should continue to operate in an acceptable way while repairs are being made.
+
+dependable systems : 
+
+- Availability
+- Reliability
+- Safety
+- Maintainability
+
+*availability* is defined as the property that a system is ready to be used immediately.
+
+*reliability* refers to property that a system can run **continuously** without failure.
+
+*safety* refers to the situation that when a system temporarily fails to operate correctly, no catastrophic event happens.
+
+*maintainability* refers to how easily a failed system can be repaired.
+
+*transient faults* occur once and then disappear. if the operation is repeated, the fault goes away.
+
+*intermitten fault* occurs, then vanishes of its own accord, then reappears and so on.
+
+*permanent fault* continues to exists until the faulty component is replaced.
+
+*byzantine failures*, arbitary responses at arbitary times
+
+*asynchronous system* , no assumptions about process execution speeds or message delivery times are made. can't conclude that the other process has crashed, it might be slow etc.
+
+*synchronous system*, process execution speeds and message delivery times are bounded. if a process shows no more activity when expected to do, other processes can conclude that it crashed.
 
 
+redundancy can be used to mask faults.
+
+*information redundancy*, extra bits are added to allow recovery from garbled bits. eg hamming code
+
+*time redundancy*, an action is performed, and then, if need be, it is performed again. if a transaction aborts, it can be redone with no harm because nothing has been finalized yet.
+
+*physical redundancy*, extra equipment or processes are added to make it possible for the system to tolerate the loss or malfunctioning of some components.
+
+key approach to tolerating a faulty process is to organize several identical processes into a **group**.
+when a message is sent to a group, all members receive it.
+
+- flat group  -  no coordinator, decisions are made by all processes
+- hierarchical group - coordinator assigns job and manage all the workers
+
+*k-fault tolerant* , survive fault in *k* components.
+
+*2k+1* process need to achieve *k-fault tolerance* in case of arbitrary failure processes.
+
+assumption : *in a fault-tolerant process group, every non-faulty process executes the same commands, in the same order as every other non-faulty process*.
+
+this means that group members need to reach **consensus** on which command to execute.
+
+*flooding-based consensus*
+
+every processes share there command list with everyone else. 
+
+complete graph (everyone directly sends to everyone), all have the correct list after round 1.
+arbitary connected graph(neighbor-flooding), after D rounds every node has every other node's value. D is the diameter of the graph (longest shortest path between any two nodes). these values are without failures. if failures can occur then *f+1* in first case and *D+f* in second case.
+considering synchronous rounds and reliable delivery.
+
+*raft consensus protocol* - 
+
+group of replicated servers, each server maintains a **log** of operations. commited operations have the same position in each of the respective servers log. one of the server operates as a leader and decides on the order in which pending operations are to be commited.
+raft is a primary-backup protocol. with primary acting as leader and backups as followers.
+
+each client request is appended to leaders log in a tuple $<o,t,k>$ , where $o$ is the client operation, $t$ term under which the current leader serves, $k$ index of $o$ in the leader's log. after electing next leader term for new operations will be $t+1$ .
+
+assume leader has log of length $n$ and operating in term $t$ . it receives a client operation $<o,t,n+1>$ . it sends its entire log to other servers, along with the current value of $c$ (index of last operation that is commited) . all servers copy this entire log and returns a acknowledgement ensuring that all the operations upto $c$ are commited. after receiving majority acknowledgements , leader then executes operation $o$ and returns result to client and increases $c = n +1$ . next time it communicates with other servers it sends this updated log and $c$ value.
+so that other servers can commit the operation $o$. 
+in reality it will only send the last tuple instead of entire log.
+
+a server will never vote to a candidate whose log is less updated then hers.
+
+
+
+$2f+1 \implies f$ , intuition - majority
+
+two consecutive majorities at least have one common server. avoids split brain.
+so that the new leader knows about the previous state of the old leader.
 

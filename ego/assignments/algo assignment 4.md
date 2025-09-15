@@ -86,7 +86,30 @@ return res
 
 **S4. Remove K Digits to Get Smallest Number.** 
 
-$\to$ 
+$\to$ the problem demands that we need to remove k digits to form smallest number but the relative order of the digits in the number should be preserved else we would have just sorted the digits and form a number with n-k first digits. we will use a stack to keep track of smaller digits.
+we iterate over the digits of the number and check if top of the stack is greater than the current digit, we pop all the larger digits in a loop and decrement *k* with each removal. after iterating over all the digits, the stack will contain a increasing sequence of digits from bottom to top. if *k* is not zero, we need to pop remaining *k* from the stack. after this we just need to form a number in reverse order using the stack. time complexity $O(n)$ , space complexity $O(n)$. 
+
+*pseudocode* - 
+
+```cpp
+stack st
+string res = "";
+for c in num :
+	while !st.empty AND st.top > c AND k>0 :
+		st.pop
+		k--
+	st.push(c)
+while !st.empty AND k>0 :
+	st.pop
+	k--
+while !st.empty :
+	res += st.top
+	st.pop
+}
+reverse(res)
+if res == "" return "0"
+return res
+```
 
 **S5. check cycle using stack.**
 
@@ -162,6 +185,40 @@ for c in s:    // here s is the input string, c represents a char in s
     else
 		res.push_back(q.front())
     return res
+```
+
+**Q2. Sliding Window Maximum.**
+
+$\to$ we will use a deque for this problem. we iterate over the input and push indices at the back of the deque  and keep indices of only the maximum element in a window. we will pop indexes that are out of the current window from the front. after this we push the value of the index at front of the deque in a result array. time comlexity $O(n)$ , space complexity $O(n)$.
+
+*pseudocode* - 
+
+```cpp
+deque dq
+i,j=0
+i=0
+
+while i<k :
+	while !dq.empty AND nums[dq.back] <= nums[i] :
+		dq.pop_back
+		
+	dq.push_back(i)
+	i++
+	
+res.push_back(nums[dq.front])
+j=1
+
+while i<nums.size :
+	while !dq.empty() && nums[dq.back()] <= nums[i] :
+		dq.pop_back
+	dq.push_back(i)
+	while !dq.empty AND dq.front<j :
+		dq.pop_front
+	i++
+	j++
+	res.push_back(nums[dq.front])
+	
+return res
 ```
 
 **Q3. Generate Binary Numbers from 1 to N.**

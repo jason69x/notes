@@ -3,12 +3,6 @@ To learn spoken Japanese from scratch, focusing solely on speaking (pronunciatio
 Below is a detailed, phased plan using only free resources like apps (free tiers), podcasts, YouTube, and language exchanges. No textbooks or writing tools are included—everything is audio/visual-focused.
 
 ### Phase 1: Master Pronunciation and Basic Sounds (Weeks 1-2)
-Start with Japanese sounds (vowels, consonants, pitch accent) to avoid bad habits. Focus on listening and repeating simple greetings/phrases.
-
-- **Key Topics to Cover:**
-  - Vowel sounds (a/i/u/e/o—always short and clear).
-  - Common greetings (e.g., "konnichiwa" – hello; "arigatou" – thank you).
-  - Pitch accent (high/low tones that change meaning).
 
 - **Free Resources and Practice Plan:**
   - NHK World-Japan's "Easy Japanese" audio lessons for beginner pronunciation drills. Week 1: Listen to and repeat 10 basic phrases daily.
