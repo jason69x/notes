@@ -178,6 +178,8 @@ mutual exclusion is guaranteed without deadlock or starvation.
 
 if total number of processes is N , a process need to send $2\cdot (N-1)$ number of messages before it can enter its critical section.
 
+when we talk about *message  complexity* , we always count every message that crosses the network - both sent and received . network bandwidth is consumed no matter whether its a reply or a request.
+
 this algo has N points of failure, if one processes crashes it will fail to respond to requests. we can overcome some difficulties by timeouts and reply messages. each process must respond back either grant or deny permission, if reply or request packet is lost the sender resends request after a timeout or conclude that destination is unreachable. sender should block after recieving deny.
 
 **voting algorithm** - 
@@ -188,7 +190,7 @@ when a process wants to access a resource, it will simply need to get a majority
 let $p = \delta t/T$  be the probability that a coordinator resets during a time interval $\delta t$ , while having a lifetime of $T$ .  the probability $\mathbb{P}[k]$ that *k* out of *m* coordinators resets during the same interval is :
 $\ \ \ \ \mathbb{P}[k] = \binom{m}{k}\cdot p^k\cdot (1-p)^{m-k}$
 
-less resource utilization problem arises when there are too many processes wants to access a shared resource, no one can get enought votes, leaving the resource unused.
+less resource utilization problem arises when there are too many processes wants to access a shared resource, no one can get enough votes, leaving the resource unused.
 
 delays can be expressed in MTTU - message transfer time unit
 
@@ -197,7 +199,7 @@ delays can be expressed in MTTU - message transfer time unit
 - for the token ring, the delay varies from $0$ to $N-1$ MTTU's
 - in case of decentralized, the delay is dependent on the number of times a process need to return the minority votes. with having to go through $k\geq1$ attempts, a process may see $2kN + (k-1)N/2$  MTTU's . second part of this expression, is when a process fails, n/2 because if a process doesn't get majority votes that means on avg. half of the coordinators are busy with other processes and you need to release the minority votes.
 
-**zookeeper** provides a heirarchical namespace (like unix file system). impleming a lock using zookeeper can we done by creating a /lock node. the existence of that node means that a client has successfully acquired the lock. releasing the lock is simply done by deleting node /lock. any client wanting to create the same node will receive node already exists error. zookeeper sends notification that node is deleted to clients that are waiting for lock.
+**zookeeper** provides a heirarchical namespace (like unix file system). implementing a lock using zookeeper can we done by creating a /lock node. the existence of that node means that a client has successfully acquired the lock. releasing the lock is simply done by deleting node /lock. any client wanting to create the same node will receive node already exists error. zookeeper sends notification that node is deleted to clients that are waiting for lock.
 
 ###### Election algorithms :
 

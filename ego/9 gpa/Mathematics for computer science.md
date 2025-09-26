@@ -546,7 +546,7 @@ bcoz there is a *n-to-1* mapping from set of all permutations to set of circular
 
 $\binom{n}{k}$ ::= the number of *k*-element subsets of an *n*-element set. "*n choose k*"
 
-$\binom{n}{k} = \frac{n!}{k!\cdot (n-k)!}$ 
+$\binom{n}{k} = \frac{n!}{k!\cdot (n-k)!}$ ,     (k)(n-k) intuition
 
 *subset split rule* -  *The number of $(k_1,k_2,\ldots k_m)$*-splits of an *n-element* set is :
 
@@ -573,3 +573,49 @@ $(a + b)^n = \sum_{k=0}^{n}\binom{n}{k}a^{n-k}b^{k}$
 *for $n,k_1,\ldots,k_m \in \mathbb{N}$, such that $k_1 + k_2 +\ldots + k_m = n$ , define the multinomial coefficient
 
 $\binom{n}{k_1,k_2,\ldots,k_m} = \frac{n!}{k_1!,k_2!,\ldots,k_m!}$ 
+
+
+group together elements and count when necessary.
+
+*inclusion-exclusion* - 
+
+$\lvert S_1 \cup S_2 \cup \ldots \cup S_n\rvert =$
+
+sum of sizes of all sets  -*minus*   sum of sizes of all two-way intersections  +*plus*   sum of sizes of all three-way intersections   -*minus*  sum of sizes of all four-way intersections ...
+
+sign  of the *k-way* intersections $= (-1)^{k-1}$
+
+you can use inclusion-exclusion principle to calculate euler's totient function $\phi$ , by calculating number of elements that are not co-prime with $n$ and subtracting then with total numbers.
+
+eg. $\phi(175)$ , prime factorization $175 = 5*5*7$ , so the numbers which divides 175 must be multiple of $5$ and $7$ . so, the numbers that are not co-prime to 175 would be 
+
+$= \lfloor \frac{175}{5}\rfloor +\lfloor \frac{175}{7}\rfloor - \lfloor \frac{175}{5*7}\rfloor = 55$
+
+$\phi(175) = 175-55 = 120$
+
+$\phi(n) = n\cdot\prod_{i=1}^{m}(1-\frac{1}{p_i})$  , m is the number of distinct prime factors of n.
+
+
+*pascal identity* - 
+
+$\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$ 
+
+first part, if x is selected in team then choose k-1 from remaining n-1
+second, if x is not selected then choose k from remaining n-1
+
+
+$\binom{n}{r}\binom{2n}{n-r} = \binom{3n}{n}$ 
+
+total 3n cards , 2n black and n reds, choose n cards from 3n.
+choose r from n red-cards and n-r from 2n black cards.
+
+
+***pigeonhole principle*** - 
+
+*if $\lvert X\rvert > \lvert Y\rvert$, then for every total function $f:X\to Y$ , there exists two different elements of X that are mapped to the same element of Y.
+
+*"if there are more pigeons than holes they occupy, then at least two pigeons must be in the same hole."*
+
+*if $\lvert X\rvert > k\cdot\lvert  Y\rvert$, then every total function $f:X\to Y$ maps at least k+1 different elements of X to the same element of Y*.
+
+
