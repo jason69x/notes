@@ -331,3 +331,10 @@ making comp *static* removes the **this** pointer, because every non-static memb
 using `const` prevents accidental changes to the arguments.
 `&` is used to pass by reference for efficiency, instead of copying values.
 
+`decltype(expr)` - take whatever type this expr has and use it here.
+
+lamba functions,
+`auto cmp = [](T a,T b){}`
+
+in custom comparator, use `>` for min heap and `<` for max heap,
+returns true , means less priority.

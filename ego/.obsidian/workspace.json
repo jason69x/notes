@@ -8,17 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "92ea8bb32ca0e242",
+            "id": "c9d6d1d180218903",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "9 gpa/Mathematics for computer science.md",
+                "file": "skills/Lamine Yamal.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Mathematics for computer science"
+              "title": "Lamine Yamal"
             }
           }
         ]
@@ -169,26 +169,28 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "92ea8bb32ca0e242",
+  "active": "c9d6d1d180218903",
   "lastOpenFiles": [
+    "cp/CP.md",
     "skills/Lamine Yamal.md",
-    "9 gpa/Analysis and Design of Algorithms.md",
-    "projects/minimal_distributed_scheduler_roadmap.md",
     "9 gpa/Speech Processing.md",
+    "assignments/algo assignment 2.md",
+    "assignments/algo assignment 3.md",
+    "9 gpa/Analysis and Design of Algorithms.md",
+    "projects/disti project write up.md",
+    "Untitled.md",
+    "skills/GO.md",
+    "projects/minimal_distributed_scheduler_roadmap.md",
+    "9 gpa/Mathematics for computer science.md",
     "projects/vocaloid cover.md",
     "projects/kubernetes lite.md",
-    "projects/disti project write up.md",
     "projects/Building a Voice AI Assistant Detailed Learning Plan.md",
     "9 gpa/Distributed Systems.md",
     "proofs/interval scheduling.md",
     "proofs",
     "assignments/speech yes no detector.md",
     "assignments/speech ai , ri.md",
-    "9 gpa/Mathematics for computer science.md",
-    "cp/CP.md",
     "skills/learn jpnese.md",
-    "assignments/algo assignment 2.md",
-    "assignments/algo assignment 3.md",
     "assignments/algo assignment 4.md",
     "assignments/algo assignment 1.md",
     "HabitVault/Habits.md",
@@ -202,8 +204,6 @@
     "tasks/habits.md",
     "tasks/daily",
     "tasks/templates",
-    "tasks/reze.md",
-    "tasks/football-2.md",
     "tasks",
     "images/ntp.png",
     "images",

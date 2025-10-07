@@ -187,3 +187,88 @@ it is symmetric. it is defined by first row and first column, so $2*n-1$ element
 - recompute each cluster center as mean of all points assigned to it.
 - go back to step 2 until cluster centers don't change much (convergence)
 
+---
+
+**DC Shift** -
+
+dc shift is a non-zero mean in a recorded audio signal.
+
+$\mu = \frac{1}{N}\sum_{i=0}^{N-1}x[i]$
+
+when $\mu\neq0$ , the waveform is shifted up or down around zero instead of being centered at 0 - this is DC shift.
+
+Energy,zcr,autocorrelation,LPC estimate assumes zero-mean signals, offset biases all of these.
+a dc shift adds energy at 0hz. in DFT the dc bin gets a large value, biasing log-magnitude spectra and mel filter outputs.
+
+to remove dc shift, you can subtract mean from every sample.
+you can also do frame level mean subtraction or subtract running avg. mean.
+
+$m[i] = \alpha m[i-1] + (1-\alpha)x[i]$ ,  then subtract $m[i]$ from $x[i]$ .
+
+
+**Normalization** -
+
+transform signal/features to reduce variability caused by environment,recording devices,speaker differences etc.
+
+*peak amplitude normalization* :
+
+$x^{'}[n] = \frac{x[n]}{max(\lvert x[n]\rvert)}$  , divide all samples by absolute value of maximum sample value so that each sample lies between $[-1,+1]$ .
+
+*clipping* , form of a distortion when audio signal exceeds the maximum level that a system can handle.
+
+*rms energy normalization* :
+
+$RMS(x) = \frac{1}{N}\sqrt{\sum_{i=0}^{N-1}x[i]^2}$
+
+$x^{'}[n] = \frac{x[n]}{RMS(x)}\cdot targetRMS$
+
+compared recordings independent of speaker loudness
+
+*z-score normalization* :
+
+$\mu = \frac{1}{N}\sum_{i=0}^{N-1}x[i]$
+
+$\sigma = \sqrt{\frac{\sum_{i=0}^{N-1}(x[i]-\mu)^2}{N}}$
+
+$x^{'}[n] = \frac{x[n]-\mu}{\sigma}$ 
+
+now mean = 0, variance = 1
+removes DC bias and loudness scaling simultaneously
+
+---
+*frequency domain approach* - 
+
+analyzing speech signal **in terms of its frequency content** rather than directly working with raw time samples.
+
+A **speech signal** $x[n]$ varies over time - time domain representation.
+but speech is made up of different frequencies, analyzing those gives deeper insights.
+
+in the frequency domain, we represent the same signal as a function of **frequency**.
+usually via **Fourier Transform** .
+$X(f) = \mathcal{F}(x[n])$ 
+
+using DFT/FFT , converts  a time frame into its **spectral representation** - showing which frequencies are present and their amplitudes.
+
+*formants* - resonant frequencies of the vocal tract.
+
+***fourier transform*** - 
+
+every complex signal can be thought of as a mix of simple sinusoids - sin and cosines, each with its own frequency, amplitude and phase.
+fourier transform breaks down a time-domain signal into its frequency components. it shows how much of each frequency exists in that signal.
+
+*discrete-time fourier transform* , 
+
+$X(e^{j\omega}) = \sum_{n=-\infty}^{\infty}x[n]e^{-j\omega n}$ 
+
+inverse, $x[n] = \frac{1}{2\pi}\int_{-\pi}^{\pi}X(e^{j\omega})e^{j\omega n} d\omega$ 
+
+*discrete fourier transform* , finite samples
+
+$X[k] = \sum_{n=0}^{N-1}x[n]e^{-j\frac{2\pi}{N}kn}$ 
+
+inverse, $x[n] = \frac{1}{N}\sum_{k=0}{N-1}X[k]e^{j\frac{2\pi}{N}kn}$ 
+
+condition for existence of fourier transform, $\int_{-\infty}^{\infty}\lvert x(t)\rvert dt < \infty$ 
+total area under the magnitude of $x(t)$- a signal, must be finite.
+
+

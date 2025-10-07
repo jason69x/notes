@@ -130,35 +130,6 @@ dynamic programming typically applies to *optimization problems*. such problems 
 
 number of ways to cut a rod of length *n*  = $2^{n-1}$ 
 
-
-
-###### Heaps :
-
-**Max-heapify** - assumes left subtree(i) and right subtree (i) are max heaps, then it compares value of i node with its children and if it is less than it swaps it with the larger value and perform max heapify recursively on that child.
-
-**Build-Max-Heap** - converts an array $A=[1\ldots n]$  into a max-heap by
-calling **Max-heapify** in a bottom-up manner. the elements in the subarray $A=[n/2\ldots n]$  are all leaves of the tree, and so each is a 1-element heap to begin with. **Build-Max-Heap** goes through the remaining nodes of the tree and runs **Max-heapify** on each one.
-
-**height h** can have at most $\lceil n / 2^{h+1} \rceil$ nodes . bcoz height zero (leaf) nodes are n/2, height one are n/4 ...
-
-$\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{n}{2^{h+1}} \rceil ch = O(n)$ , here we are summing cost of each node at height h. that's why we 
-
-are multiplying no. of nodes at height h with cost each node can take that is h and we are doing it for all heights till height of root.
-
-**heap-sort** -  perform build-max-heap on given array, then exchanges root of heap with last element of array, decreases heap size and performs max-heapify on the new root, does this till heap size is 0. $O(n\cdot\log n)$ bcoz for each $n$ elements we call heapify $\log n$.
-
-A **priority queue** is a data structure for maintaining a set S of elements, each with an associated value called a key. insert(),extract-max(),max(),increase-key().
-
-**lower bound - binary search $\Omega(\log n)$ ,**
-
-think of binary search as a comparison based decision tree
-- each node is a comparison ( "target <,>,= middle")
-- leaves represents final answers (either "found at i" or "not found")
-
-there are $n$ possible outcomes and $1$ for not found , so total $n+1$ outcomes.
-a binary tree of height $h$ has at most $2^h$ leaves.
-to represent $n+1$ outcomes, $2^h \geq n+1 \implies h \geq \log_2(n+1)$
-
 ###### greedy algorithms - 
 
 makes a locally optimal choice in the hope that this choice leads to a globally optimal solution.
@@ -296,5 +267,91 @@ coz it assigns early finish time firsts and this might make resources that finis
 suppose the greedy algorithms uses $m>d$ resources. let $i$ be the first interval that causes the creation of $d+1$-th resource. this means that all resources are busy and have intervals assigned to them that finishes after $s_i$ . these intervals must have started on or before $s_i$ , so each of these intervals are overlapping with $i$ at time $s_i$ , this gives $d+1$ intervals conflicting at any time and this **contradicts** with the fact that we assumed $d$ as the maximum overlap.
 
 
+---
 
+###### Heaps :
+
+**Max-heapify** - assumes left subtree (i) and right subtree (i) are max heaps, then it compares value of i node with its children and if it is less than it swaps it with the larger value and perform max heapify recursively on that child.
+
+**Build-Max-Heap** - converts an array $A=[1\ldots n]$  into a max-heap by
+calling **Max-heapify** in a bottom-up manner. the elements in the subarray $A=[n/2\ldots n]$  are all leaves of the tree, and so each is a 1-element heap to begin with. **Build-Max-Heap** goes through the remaining nodes of the tree and runs **Max-heapify** on each one.
+
+**height h** can have at most $\lceil n / 2^{h+1} \rceil$ nodes . bcoz height zero (leaf) nodes are n/2, height one are n/4 ...
+
+$\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{n}{2^{h+1}} \rceil h = O(n)$ , here we are summing cost of each node at height h. that's why we 
+are multiplying no. of nodes at height h with cost each node can take that is h and we are doing it for all heights till height of root.
+
+$\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{h}{2^{h+1}} \rceil < \sum_{h=0}^{\infty} \lceil \frac{h}{2^{h+1}} \rceil$ = 2
+
+$\sum_{k=0}^{\infty} k x^k = \frac{x}{(1-x)^2}$ 
+
+**heap-sort** -  perform build-max-heap on given array, then exchanges root of heap with last element of array, decreases heap size and performs max-heapify on the new root, does this till heap size is 0. $O(n\cdot\log n)$ bcoz for each $n$ elements we call heapify $\log n$.
+
+A **priority queue** is a data structure for maintaining a set S of elements, each with an associated value called a key. insert(),extract-max(),max(),increase-key().
+
+**lower bound - binary search $\Omega(\log n)$ ,**
+
+think of binary search as a comparison based decision tree
+- each node is a comparison ( "target <,>,= middle")
+- leaves represents final answers (either "found at i" or "not found")
+
+there are $n$ possible outcomes and $1$ for not found , so total $n+1$ outcomes.
+a binary tree of height $h$ has at most $2^h$ leaves.
+to represent $n+1$ outcomes, $2^h \geq n+1 \implies h \geq \log_2(n+1)$
+
+k-th max. element can reside in the first $\lceil \log(k)\rceil$ levels.
+since the kth largest element must be among the k largest values in the heap. it cannot be deeper than the level where the total number of nodes is at least k.
+to accommodate k nodes, you need enough levels such that total number of nodes
+
+$2^{h+1}-1 \geq k$ 
+
+$h\geq \log_2(k+1)-1$
+
+###### array problems :
+
+*maximum subarray sum* - 
+
+using divide and conquer, 
+
+divide, split the array into two halves at the midpoint.
+conquer, recursively compute maximum subarray sum for the left and right halve.
+combine, compute the maximum subarray sum that crosses the mid point,
+by calculating sum of suffix from mid to left and sum of prefix from mid+1 to right
+add these two sums, return max of left,crossing,right sums.
+
+$O(n\log{n})$ 
+
+using dp,
+
+maximum subarray sum ending at each index depends on whether including the current element extends a previous subarray or starts a new one.
+
+$O(n)$ 
+
+*count sub-arrays with sum k*,
+
+using divide and conquer,
+
+divide,split the array into two halves at the midpoint.
+conquer, recursively count subarrays in left and right halve.
+combine, count subarrays that crosses mid point,
+do this by calculating prefix sums from mid to left and prefix sums from mid+1 to right.
+find number of pairs such that left prefix sum - right prefix sum == k. 
+return left + cross + right.
+
+$O(n^2\log{n})$ - if using brute matching
+$O(n\log{n}^2)$ - if using sorting and two pointer
+$O(n\log{n})$ - if using hashing for matching
+
+using dp,
+
+use prefix sum, for each index i , check for each subarray till i using prefix sum that its sum equals k.
+using `prefixSum[i+1]-prefixSum[j] == k`
+
+using prefix sum,
+
+use prefix sum and a hashmap to check if the currentSum - k exists in the map of not.
+
+$O(n)$ 
+
+*majority element* - 
 
