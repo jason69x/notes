@@ -271,4 +271,41 @@ inverse, $x[n] = \frac{1}{N}\sum_{k=0}{N-1}X[k]e^{j\frac{2\pi}{N}kn}$
 condition for existence of fourier transform, $\int_{-\infty}^{\infty}\lvert x(t)\rvert dt < \infty$ 
 total area under the magnitude of $x(t)$- a signal, must be finite.
 
+---
+**k-means**
+
+*k means* is an unsupervised learning algorithm user for *clustering data* into *k* distinct groups based on similarity.
+it tries to find *k* centers (called *centroids*) such that each data point belongs to the cluster with the nearest centroid.
+centroids are called codewords and the set of all centroids in called the codebook.
+
+1. initialize cluster centers
+2. assign observations to closest cluster center
+3. revise cluster centers as mean of assigned observation
+4. repeat 2&3 until convergence
+
+The k-means algorithm divides a set of N samples X into K disjoint clusters C , each described by the mean $u_j$ of the samples in the cluster (centroid).
+the k-means algorithm aims to  choose centroids that minimise the **inertia**.
+
+*inertia*, is a measure of how internally coherent the clusters are. basically, how close the points in each cluster are to their respective cluster centers.
+
+$Inertia = \sum_{i=1}^{k}\sum_{x\in C_i}\lvert\lvert x - \mu_i\rvert\rvert^2$ 
+
+total inertia is the sum of inertia of all clusters, inertia of a cluster is the sum of square of euclidean distance between each point and the centroid.
+
+lower is better , zero is optimal. in high dimensional spaces, euclidean distance becomes inflated.
+voronoi diagram
+
+size of codebook is the number of representative vectors we are using (*k*) .
+
+vector quantization, chooses a set of points to represent a larger set of points.
+
+tokhura distance, weighted euclidean distance.
+
+**LBG - Linde Buzo Gray**
+
+is a algorithm for designing a *vector quantization* codebook from training vectors. it builds a small set of prototype vectors (codewords) that are used to represent many real vectors with only the nearest prototype vector, saving bits.
+
+1. start with the universe, compute its centroid.
+2. repeatedly split each codeword in the codebook and run *k-means* for refinement, till the codebook contains desired number of codewords.
+
 

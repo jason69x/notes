@@ -353,5 +353,18 @@ use prefix sum and a hashmap to check if the currentSum - k exists in the map of
 
 $O(n)$ 
 
-*majority element* - 
+*majority element* -  booyer moore
+
+##### Graph Algorithms
+
+for *sparse* graph use adjacency-list  $O(V+E)$ 
+for *dense* graph use adjacency-matrix $O(V^2)$ 
+
+***BFS*** -
+
+starting from *s* , the algorithm first discovers all neighbors of *s* , which have distance 1. then it discovers all vertices with distance 2, and so on , until it has discovered every vertex reachable from s .
+
+queue contains portions of two consecutive waves at any time.
+queue contains all the gray vertices.
+since every vertex reachable from *s* is discovered at most once, each vertex reachable from *s* has exactly one parent.
 

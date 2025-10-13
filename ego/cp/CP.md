@@ -334,7 +334,13 @@ using `const` prevents accidental changes to the arguments.
 `decltype(expr)` - take whatever type this expr has and use it here.
 
 lamba functions,
-`auto cmp = [](T a,T b){}`
+`[ captures ] ( parameters ) -> return_type { function_body }`
+captures - variable outside the lambda functions you want to use inside it
+`[x] [&x] [&] [=]`
+return type is auto deduced if not provided.
 
 in custom comparator, use `>` for min heap and `<` for max heap,
 returns true , means less priority.
+
+
+

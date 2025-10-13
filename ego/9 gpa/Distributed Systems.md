@@ -297,6 +297,52 @@ a server will never vote to a candidate whose log is less updated then hers.
 
 $2f+1 \implies f$ , intuition - majority
 
-two consecutive majorities at least have one common server. avoids split brain.
+two consecuTtive majorities at least have one common server. avoids split brain.
 so that the new leader knows about the previous state of the old leader.
+
+###### Chapter 4 : Communication
+
+Due to absence of shared memory, all communication in distributed systems is based on sending and receiving low level messages.
+P and Q have to agree on the meaning of the bits being sent.
+
+***Remote Procedure Call -***
+
+allow programs to call procedures located on other machines. when a process on machine A calls a procedure on machine B, the calling process on machine A is suspended, and execution of the called procedure takes place on B. Information can be transported from the called to the callee in the parameters and can come back in the procedure result. no message passing at all is visible to the programmer.
+
+the idea behind RPC is to make a remote procedure call look as much as possible as a local one.
+(transparency).
+
+RPC uses call-by-value under the hood.
+
+when a function is actually a remote procedure, a different version of that function, called a **client stub** , is offered to the calling client. it packs the parameters into a message and requests that message to be sent to the server.
+when a message arrives at the server, the server's operating system passes it to a **server stub**.
+it is a piece of code that transforms request coming in over the network into local procedure calls.
+the server performs the local call returns result to the server stub. when server stub gets the control back it packs the result into a message and send it to the client.
+the client stub unpacks the result and returns it to the client.
+
+![[rpc.png]]
+
+packing parameters into a message is called **parameter marshalling**.
+
+marshalling and unmarshalling is all about the transformation to neutral formats.
+so that both parties can understand what does the bytes sent over the network means.
+
+local referenced object are passed by value and remote referenced object are passed via reference.
+
+both sides should follow the same RPC protocol.
+we need client and server to agree on the message format and representation of data structures.
+
+***gRPC*** - 
+
+gRPC uses protocol buffers as both its interface definition language and as its underlying message interchange format.
+
+*protocol buffers* , mechanism for serializing structured data ( converting it to byte stream)
+
+field numbers should be unique, lower field numbers take less space in wire format.
+do not use *reserved* field numbers.
+binary version of a message just uses field numbers as the key.
+
+`sintN` uses zig-zag encoding instead of two's complement, +ve number *p* as *2p* and -ve number *n* as $2\lvert n\rvert -1$ .  `(n << 1)^(n >> 31)` 
+
+for **go** , the compiler generates a `.pb.go` file with a type for each message type in your file.
 

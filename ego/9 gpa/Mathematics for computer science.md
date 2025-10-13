@@ -618,4 +618,77 @@ choose r from n red-cards and n-r from 2n black cards.
 
 *if $\lvert X\rvert > k\cdot\lvert  Y\rvert$, then every total function $f:X\to Y$ maps at least k+1 different elements of X to the same element of Y*.
 
+###### generating functions -
+
+generating functions transform problems about *sequences* into problems about *functions*.
+
+the ordinary generating function for the sequence $<g_0,g_1,g_2,\ldots>$ is the power series,
+
+$G(x) = g_0 + g_1\cdot x^1 + g_2\cdot x^2 + g_3\cdot x^3\ldots$
+
+
+
+##### Probability -
+
+use basic steps
+
+the *sample space* for an experiment is the set of all possible outcomes.
+
+an *outcome* also known as a *sample point* , consists of all the information about the experiment after it has been performed including values of all random choices. 
+
+*monty hall problem* , 
+
+use tree method to construct sample space for the case when the player switch doors.
+
+*probability space* consists of a sample space $S$ and a probability function $P_r$ , that maps each sample point to a real number.
+
+$P_r : S\to \mathbb{R}$  , such that
+
+1. $\forall \omega \in S, 0\leq P(\omega)\leq 1$ 
+2. $\sum_{\omega \in P} P_r(\omega) = 1$ 
+
+*interpretation* , $\forall \omega \in S , P(\omega) =$ probability that $\omega$ will be the outcome.
+
+the probability of a sample point is the product of the probabilities on the path of the tree leading to the sample point.
+
+*event* , is a subset of the sample space.
+the probability that a event $E$  occurs is $\sum_{\omega\in E} P_r(\omega)$ , sum of probabilities of all the sample points in the event.
+
+$\mathcal{P}(E) = \frac{|E|}{|\mathcal{S}|} = \frac{no. of samples in event}{size of sample space}$ , this is only true when all outcomes in the event are equally likely, *i.e* event is uniform. 
+
+*conditional probability* , 
+
+$P_r(A|B) =$ probability of event $A$ given that event $B$ occured. 
+
+if $P_r(B) \neq 0 ,\ \ P_r(A | B) = \frac{P_r(A \cap B)}{P_r(B)}$  , get intuition via venn diagram
+
+if $A$ and $B$ are disjoint, then $P(A|B) = 0$ , bcoz $A\cap B = \phi$ , this means that if $B$ occured , then we can be sure that $A$ didn't occured , so $P(A) = 0$ .
+
+![[conditional_probability.png]]
+
+*product rule* ,
+
+$P(A\cap B) = P(B)\cdot P(A | B)$  , probability of $A$ and $B$ occuring simultaneously.
+
+think of it as a path in tree, probability that B occurs then probability that A occurs given that B occured.
+
+*general product rule*,
+$P_r(A_1 \cap A_2 \cap A_3 \ldots \cap A_n) = P(A_1)\cdot P(A_2 | A_1)\cdot P(A_3 | A_1\cap A_2)\ldots P(A_n | A_1\cap A_2\cap\ldots A_{n-1})$
+so the leaves of the tree, gives us the probability that event $a_1,a_2,\ldots...a_n$(consider them as edge labels on a path to leaf) occured simultaneously.
+
+*the four step method* - 
+
+1. find the sample space (use tree method)
+2. define events of interest
+3. determine outcome probabilities
+	1. assign edge probabilities
+	2. compute outcome probabilites
+4. compute event probabilities
+
+**Q.** find the probability that you win the series given that you won the first game.
+**Q.** probability that the series last 3 games.
+
+$P(A|B)$  & $P(B|A)$  may or may not be same.
+
+
 
