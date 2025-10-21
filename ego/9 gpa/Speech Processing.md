@@ -274,7 +274,7 @@ total area under the magnitude of $x(t)$- a signal, must be finite.
 ---
 **k-means**
 
-*k means* is an unsupervised learning algorithm user for *clustering data* into *k* distinct groups based on similarity.
+*k means* is an unsupervised learning algorithm used for *clustering data* into *k* distinct groups based on similarity.
 it tries to find *k* centers (called *centroids*) such that each data point belongs to the cluster with the nearest centroid.
 centroids are called codewords and the set of all centroids in called the codebook.
 
@@ -308,4 +308,27 @@ is a algorithm for designing a *vector quantization* codebook from training vect
 1. start with the universe, compute its centroid.
 2. repeatedly split each codeword in the codebook and run *k-means* for refinement, till the codebook contains desired number of codewords.
 
+
+---
+**Discrete Markov Process** 
+
+a discrete markov process is a type of stochastic (random) process where : 
+
+1. the system moves between a finite set of states.
+2. time is discrete
+3. the markov property holds - the probability of moving to the next state depends only on the current state, not on the full history.
+
+also known as first-order markov process.
+
+raise the transition matrix to the power of t and multiply the initial probability distribution to get the probabilities after t steps.
+
+$\pi^{(t)} = \pi^{(0)}\cdot P^t$
+
+if today probabilities of sunny and rainy are $[\ \begin{matrix}1 & 0\end{matrix}\ ]$ , then tommorow they will be
+$\begin{bmatrix}1 & 0\end{bmatrix}\ \cdot \ \begin{bmatrix}0.8&0.2\\0.5&0.5\end{bmatrix} = \begin{pmatrix}0.8&0.2\end{pmatrix}$
+
+
+**Hidden Markov Models**
+
+a markov process with hidden states and visible outputs.
 

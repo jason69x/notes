@@ -1,5 +1,6 @@
 {
   "accentColor": "#f980bb",
   "interfaceFontFamily": "FiraCode Nerd Font",
-  "cssTheme": "Pink Topaz"
+  "cssTheme": "Pink Topaz",
+  "showRibbon": false
 }

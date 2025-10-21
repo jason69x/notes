@@ -357,8 +357,8 @@ $O(n)$
 
 ##### Graph Algorithms
 
-for *sparse* graph use adjacency-list  $O(V+E)$ 
-for *dense* graph use adjacency-matrix $O(V^2)$ 
+for *sparse* graph use adjacency-list  $O(V+E)$ space,  $O(\delta(v))$  time
+for *dense* graph use adjacency-matrix $O(V^2)$ space , or when you need to tell if there is edge between two nodes in $O(1)$ time.
 
 ***BFS*** -
 
@@ -368,3 +368,73 @@ queue contains portions of two consecutive waves at any time.
 queue contains all the gray vertices.
 since every vertex reachable from *s* is discovered at most once, each vertex reachable from *s* has exactly one parent.
 
+time complexity, $O(V+E)$ 
+
+*shortest path distance* $\delta(s,v)$ from *s* to *v* is the minimum number of edges in any path from *s* to *v*.
+we call a path of this length  *a shortest path* from *s* to *v*.
+
+*lemma* - Let $G = (V,E)$ be a directed or undirected graph and let $s\in V$ be an arbitrary vertex. then for any edge $(u,v)\in E$ ,
+
+$\delta(s,v) \leq \delta(s,u) + 1$ 
+
+
+**Depth-first search** 
+
+depth-first search explores edges out of the most recently discovered verted *v* that still has unexplored edges leaving it. once all of *v*'s edges have been explored, the search backtracks to explore edges leaving the vertex from which *v* was discovered.
+this process continues until all the vertices reachable from the original source vertex have been discovered. if any undiscovered vertices remain, then depth first search selects one of them as a new source. dfs repeats this process until it has discovered every vertex.
+
+depth-first forest
+
+running time - $\Theta(V+E)$ ,   $\theta$ coz dfs explores every vertex in graph, bfs $O$
+
+a depth-first forest produced by dfs can contain 4 types of edges : 
+
+- *tree edges* , edge *(u,v)* is a tree edge if *v* was first discovered by exploring edge *(u,v)*.
+- *back edges* , edges *(u,v)* connecting a vertex *u* to an ancestor *v*.
+- *forward edges*, non-tree edges *(u,v)* that connecting *u* to a descendant *v*.
+- *cross edges* , all other edges . can be between same tree or different.
+
+in undirected, there are only tree and back edges.
+
+when an edge *(u,v)* is first explored, the color of vertex *v* says something about the edge : 
+
+- *WHITE* indicates a tree edge,
+- GRAY indicates a back edge,
+- *BLACK* indicates a forwared edge.
+
+**Topological Sort** 
+
+is a linear ordering of all vertices such that if *G* contains an edge *(u,v)* , then *u* appears before *v* in the ordering. topological sorting is defined only on directed graphs that are acyclic.
+an ordering of  vertices along a horizontal line such that all directed edges go from left to right.
+
+- call *DFS(G)* to compute finish times *v.f* for each vertex *v* 
+- as each vertex is finished, insert it onto the front of a linked list
+- return the linked list of vertices
+
+$\Theta(V+E)$ 
+
+*proof* - 
+
+It suffices to show that for any pair of distinct vertices, if G contains edge from u to v, then *v.f < u.f* Consider any edge *(u,v)* explored by DFS. when this edge is explored, *v* cannot be gray, since then *v* would be an ancestor of *u* and *(u,v)* would be a back edge. therefore, *v* must be either white or black. if *v* is white, it becomes a descendant of *u*, and so *v.f < u.f* . If *v* is black, it has already
+been finished, so *v.f* has already been set. because the search is still exploring
+from *u*, it has yet to assign a timestamp to *u.f* , so that the timestamp eventually
+assigned to *u.f* is greater than *v.f* . thus, *v.f < u.f* for any edge *(u,v)* in the dag,
+
+
+*A directed graph G is acyclic if and only if a depth-first search of G yeilds no back edges.*
+
+$\to$  suppose DFS produces a back edge *(u,v)* , then *v* is an ancestor of *u* in DFF. thus, G contains a path from *v* to *u* and the back edge *(u,v)* completes a cycle.
+suppose that G contains a cycle *c* . we show that a DFS of G yields a back edge. Let *v* be the first vertex to be discovered in c , and let *(u,v)* be the preceding edge in *c* . at time *v.d* the vertices of *c* form a path of white vertices from *v* to *u*. By the white-path theorem, vertex *u* becomes a descendant of *v* in the DFF. therefore, *(u,v)* is a back edge.
+
+
+**strongly connected components** - 
+
+*scc* of a directed graph *G = (V,E)* is a maximal set of vertices $C\subseteq V$ such that  for every pair of vertices $u,v \in C$ , $u\rightsquigarrow v$  &  $v\rightsquigarrow u$ , vertices *u* and *v* are reachable from each other.
+
+acyclic component graph
+
+*articulation point* of *G* is a vertex whose removal disconnects *G*.
+
+a *bridge* of *G* is an edge whose removal disconnects *G*.
+
+a *biconnected component* of *G* is a maximal set of edges such that any two edges in the set lie on a common simple cycle.

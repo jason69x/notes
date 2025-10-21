@@ -351,8 +351,53 @@ when using unbuffered channels , the send operation blocks the enclosing functio
 this way interface{} can represent any type.
 any value of any type can be assigned to a variable of type interface{}
 
+---
+**RPC**
+
+```
+service PrimeService{
+rpc ListPrimes(Input) returns (Output);
+}                                        - define a service in .proto
+
+message Input{
+int32 Num=1;
+}                                        -define a message in .proto
+```
+
+use `repeated int32 Nums = 1;` to return $\geq 0$ results
+
+to send/receive a streaming message use `stream` keyword before message type `(stream Input)`.
+
+`option go_package = "path_to_protofiles;package_name"`
+
+path and package name defined here would be used to import the generated code files to use rpc methods. import the generated code using the path provides then use the package_name to use them.
+
+`syntax = "proto3";`
+
+`.pb.go`  - message structs, marshal/unmarshal helpers.
+`_grpc.pb.go`  - interfaces for your service (server and client stubs)
 
 
+
+`os.Getenv("PORT")` - returns value as a string
+
+`lis,err := net.Listen("tcp",":"+port)`
+
+`log.Fatalf()`  - log an error message and immediately stop the program
+
+`s := grpc.NewServer()` - creates  a new grpc server instance
+
+`pb.RegisterWorkerServer(s,&WorkerServer{workerID:workderID})` - now server s knows which functions handle which rpc calls
+
+`s.Serve(lis)` - listen for grpc calls on address lis
+
+`var mu sync.Mutex` 
+`mu.Lock()` - acquire the lock (waits if someone else has it)
+`mu.Unlock()` - release the lock
+
+`time.NewTicker(d)`   - repeats every d ; sends the current time repeatedly to `ticker.C`
+`time.NewTimer(d)` - fires once after d
+`time.Sleep(d)` - blocks for d
 
 
 

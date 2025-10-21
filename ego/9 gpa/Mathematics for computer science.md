@@ -654,7 +654,7 @@ the probability of a sample point is the product of the probabilities on the pat
 *event* , is a subset of the sample space.
 the probability that a event $E$  occurs is $\sum_{\omega\in E} P_r(\omega)$ , sum of probabilities of all the sample points in the event.
 
-$\mathcal{P}(E) = \frac{|E|}{|\mathcal{S}|} = \frac{no. of samples in event}{size of sample space}$ , this is only true when all outcomes in the event are equally likely, *i.e* event is uniform. 
+$\mathcal{P}(E) = \frac{|E|}{|\mathcal{S}|} = \frac{no. of samples in event}{size of sample space}$ , this is only true when all outcomes in the sample space are equally likely, *i.e* sample space is uniform. 
 
 *conditional probability* , 
 
@@ -691,4 +691,36 @@ so the leaves of the tree, gives us the probability that event $a_1,a_2,\ldots..
 $P(A|B)$  & $P(B|A)$  may or may not be same.
 
 
+$P(\overline{A}) = 1 - P(A)$ 
+
+$P(A\cup B) \leq P(A) + P(B)$ 
+
+if $A\subseteq B$, then $P(A) \leq P(B)$ 
+
+
+A finite probability space $\mathcal{S}$ , $P_r$ is said to be *uniform* if $P_r[w]$ is same for every outcome $w\in \mathcal{S}$ 
+
+
+**conditional probability** 
+
+the probability that one event happens, given that some other event definitely happens.
+
+$P_r[A\ |\ B]$ - probability of event $A$ , given that event $B$ happens. all the outcomes outside $B$ are irrelevant.
+
+$P_r[A\ |\ B] = \frac{P_r[A\cap B]}{P_r[B]}$ , 
+
+if $P_r[B] = 0$ it is undefined
+
+*bayes rule* -
+
+*if $P_r[A]$ and $P_r[B]$ are nonzero then* $P[B\ |\ A] = \frac{P[A\ |\ B]\cdot P[B]}{P[A]}$
+
+
+*independence* - 
+
+event *A* is independent of event *B* if 
+
+$P(A\ |\ B) = P(A)$  or  $P(B)=0$
+
+*disjoint* $\nRightarrow$ independence
 

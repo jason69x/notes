@@ -346,3 +346,114 @@ binary version of a message just uses field numbers as the key.
 
 for **go** , the compiler generates a `.pb.go` file with a type for each message type in your file.
 
+the protocol buffer compiler creates a class that implements automatic encoding and parsing of the protocol buffer data with an efficient binary format. the generated class provides getters and setters for the fields that make up a protocol buffer and takes care of the details of reading and writing the protocol buffer as a unit.
+
+types of RPC - 
+
+1. *simple RPC*
+2. *server-side streaming RPC* 
+3. *client-side streaming RPC*
+4. *bidirectional streaming RPC*
+
+
+###### Docker
+
+docker provides the ability to package and run an application in a loosely isolated environment called a container.
+
+containers share the same kernel and underlying os resouces of the host machine.
+
+vm's have their own os and kernel, they emulate hardware provided by hypervisor. type1 hypervisor directly uses hardware, type 2 uses host kernel to talk to the hardware.
+
+containers are light weight and contain everything needed to run the application, so we don't need to rely on what's installed on the host.
+
+dockerd , docker registry
+
+*Containers* - 
+a container is a runnable instance of an image. docker uses `namespaces` to provide isolated workspaces.
+
+on cloud, instead of running one application on one vm, a vm with a container runtime can run multiple containerized applications, increasing resource utilization and reducing costs.
+
+`docker run -d -p 8080:80 docker/welcome-to-docker`
+
+`-d`   run in detached mode i.e in background
+
+`-p 8080:80`  connects port 80 inside the container to port 8080 on host
+
+`docker/welcome-to-docker`  image name , fetched from docker registry
+
+linux containers on windows runs inside a linux vm.
+
+`docker ps -a` 
+
+`docker stop <id/name>`
+
+
+*Images* - 
+an image is a read-only template with instruction for creating a docker container. often, a image is based on another image, eg.`ubuntu`
+
+a container image is a standardized package that includes all of the files,binaries,libraries, and configurations to run a container.
+
+1. images are immutable. once an image is created, it can't be modified. you can only make a new image or add changes on top of it.
+2. container images are composed of layers. each layer represents a set of file system changes that add,remove or modify files.
+
+`docker image ls`
+
+use one container for one thing
+
+*docker compose* -
+
+you can define all of your containers and their configurations in a single YAML fie. if you include this file in your code respository, anyone that clones your repository can get up and running with a single command.
+
+`docker compose up`
+
+*layering* - 
+
+layering is made possible by content-addressable storage and union filesystems.
+
+1. after each layer is downloaded, it is extracted into its own directory on the host filesystem.
+2. when you run a container from a image, a union filesystem is created where layers are stacked on top of each other, creating a new and unified view.
+3. when the container starts, its root directory is set to the location of this unified directory.
+
+when the union filesystem is created, in addition to image layers , a directory is created specifically for the running container. this allows the container to make file system changes while allowing the original image layers to remain untouched. this enables you to run multiple containers from the same underlying image.
+
+`docker run -ti --name=base-img`
+
+`-t`  terminal
+`-i` interactive
+
+
+`docker container commit -m "add node" base-container node-base`
+
+`docker image history node-base`
+
+`docker rm -f base-container`
+
+`docker container commit -c "CMD node app.js" -m "add app" app-container sample-app`
+
+`docker image ls`
+
+
+*docker file* - 
+
+a dockerfile is a text-based document that's used to create a container image. it provides instructions to the image builder on the commands to run, files to copy, startup command, and more.
+
+`FROM <image>`  - specifies the base image
+`WORKDIR <path>` - dir in the image where files will be copied and commands will be executed
+`COPY <host-path> <image-path>` - copy files from the host to the image
+`RUN <cmd>` - run a command
+`ENV <name> <value>`  - set environment variables
+`EXPOSE <port>` - expose a port
+`USER <user>` - sets the default user for all subsequent instructions
+`CMD ["<cmd<","<arg1>"]` - default command containers using this image will run
+
+`docker build .`
+
+
+publishing port, `-p --publish` 
+`-d` detached mode, run in background
+
+`docker run -d -p HOST_PORT:CONTAINER_PORT nginx`
+
+any traffic sent to port `8080` on your host machine will be forwarded to port `80` within the container. you receive the traffic on your host port.
+
+
