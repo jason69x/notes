@@ -1,6 +1,9 @@
 {
-  "accentColor": "#f980bb",
+  "accentColor": "",
   "interfaceFontFamily": "FiraCode Nerd Font",
-  "cssTheme": "Pink Topaz",
-  "showRibbon": false
+  "cssTheme": "Minimal",
+  "showRibbon": false,
+  "enabledCssSnippets": [
+    "Colored Sidebar Items"
+  ]
 }

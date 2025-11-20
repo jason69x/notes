@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "projects/project_report.md",
+                "file": "skills/Lamine Yamal.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "project_report"
+              "title": "Lamine Yamal"
             }
           }
         ]
@@ -161,6 +161,7 @@
   },
   "left-ribbon": {
     "hiddenItems": {
+      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
@@ -171,22 +172,35 @@
   },
   "active": "e9a74565ae170770",
   "lastOpenFiles": [
-    "projects/disti project write up.md",
-    "projects/SHELL.md",
-    "projects/mtech projects.md",
-    "9 gpa/Analysis and Design of Algorithms.md",
     "skills/GO.md",
+    "skills/Lamine Yamal.md",
+    "01 - gpa/Speech Processing.md",
+    "07 - images/LBG.png",
+    "01 - gpa/Analysis and Design of Algorithms.md",
+    "01 - gpa/Mathematics for computer science.md",
+    "07 - images/indrv.png",
+    "07 - images/pnphard.png",
+    "07 - images/NP.png",
+    "07 - images/decisionProblems.png",
+    "EGO/Systems.md",
+    "EGO/GOALS.md",
+    "07 - images/dijkstra.png",
+    "07 - images/sssp in dag.png",
+    "07 - images/rpc.png",
+    "07 - images/ntp.png",
+    "07 - images/mst2.png",
+    "07 - images",
+    "projects/SHELL.md",
+    "projects/CS-542  , Term Project Report.md",
+    "projects/mtech projects.md",
     "projects/distributed_scheduler_plan.md",
-    "9 gpa/Distributed Systems.md",
+    "projects/disti project write up.md",
+    "01 - gpa/Distributed Systems.md",
     "images/container.jpg.~tmp",
-    "images/container.jpg",
-    "9 gpa/Mathematics for computer science.md",
-    "personal/GOALS.md",
-    "9 gpa/Speech Processing.md",
-    "assignments/algo assignment 4.md",
-    "assignments/algo assignment 3.md",
-    "assignments/algo assignment 2.md",
-    "assignments/algo assignment 1.md",
+    "02 assignments/algo assignment 4.md",
+    "02 assignments/algo assignment 3.md",
+    "02 assignments/algo assignment 2.md",
+    "02 assignments/algo assignment 1.md",
     "cp/CP.md",
     "math/prime numbers.md",
     "math/rational and irrational numbers.md",
@@ -195,13 +209,7 @@
     "math/graph,map coloring.md",
     "math/GCD - greatest common divisor.md",
     "projects/Building a Voice AI Assistant Detailed Learning Plan.md",
-    "projects/kubernetes lite.md",
-    "projects/vocaloid cover.md",
-    "skills/Lamine Yamal.md",
-    "skills/anime drawing.md",
-    "images/conditional_probability.png",
     "images/rpc.png.~tmp",
-    "images/rpc.png",
     "proofs",
     "HabitVault/Daily",
     "HabitVault/New folder",
@@ -209,8 +217,6 @@
     "HabitVault",
     "tasks/daily",
     "tasks/templates",
-    "tasks",
-    "images/ntp.png",
     "Untitled.canvas"
   ]
 }

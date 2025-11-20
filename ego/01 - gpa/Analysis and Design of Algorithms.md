@@ -1,0 +1,723 @@
+*reference books* : CLRS,
+
+*algorithm* is a well-defined computational procedure which takes a value or set of values as input and produces a value or set of values as output in a finite amount of time.
+
+problem specifies the desired input/output relationship for a problem instance and a algorithm provides a computational procedure to achieve that input/output relationship in all problem instances.
+
+
+A *decision problem* asks for a yes/no answer or determines whether a solution exists for a given input.
+
+An *optimization problem* seeks the best solution from a set of feasible solutions, often minimizing or maximizing a specific objective.
+
+
+***insertion sort*** - 
+
+sorting algorithm similar to how we sort a deck of cards. suppose we have a unsorted deck of cards on a table. we pick one card from our righthand and arrange it at the correct position in our left hand by checking it against cards from right to left direction in our left handand shifting the cards to the right till we find the correct location where we can place it.
+
+elements of array need not to be swapped with key, they need to be shifted right and make room for the key.
+
+***loop invariants*** - 
+
+they help us understand why an algorithm is correct. when using loop invariants you need to show three things:
+
+* *initializaiton* : it is true prior to the first iteration of the loop.
+* *maintenance* : if it is true before an iteration of the loop, it remains true before the next iteration.
+* *termination* : when loop terminates, the invariant along with the reason that loop terminated gives us a useful property that help show that the algorithm is correct.
+
+$\Theta(n^2)$ means "*roughly proportional to $n^2$ when n is large*".
+
+###### divide and conquer method :
+
+break the problem into several subproblems that are similar to the original problem but smaller in size, solve the subproblems recursively, and then combine these solutions to create a solution to the original problem.
+
+$T(n) = aT(\frac{n}{b}) + d + c$
+
+running time complexity of a algorithm can be described as above,
+where $a$ is the number of subproblems the original problem is divided into.
+$n/b$ size of each subproblem
+$d$ is the dividing cost
+$c$ is the combining cost
+
+it takes $T(\frac{n}{b})$ time to solve one subproblem , so to solve $a$ such problems it takes $aT(\frac{n}{b})$ time.
+###### characterizing running times
+
+$O$-notation characterizes a *upper bound* on the asymptotic behavior of a function. it says that the function grows *no faster* than a cetain rate , based on the highest order term .
+
+consider a function $7n^2$ , we can write it is $O(n^2)$ , we can also write it is $O(n^3)$ , because it grows no faster than $n^3$. similarly $n^4$ and so on.
+
+$\Omega$-notation characterizes a *lower bound* on the asymptotic behavior of a function. it says that the function grows *at least as fast* as a certain rate.
+
+$\Theta$-notation characterizes a *tight bound*. it says that the function grows *precisely* at a certain rate.
+
+
+$O(g(n))$ is a set of functions such that,
+
+$f(n)$ : there exists positive constants $c$ and $n_0$ such that $0\leq f(n)\leq cg(n)$ for all $n\geq n_0$
+
+$\Omega(g(n))$,
+
+$f(n)$ : there exists positive constants $c$ and $n_0$ such that $0\leq cg(n)\leq f(n)$ for all $n\geq n_0$
+
+$\Theta(g(n))$,
+
+$f(n)$ : there exists positive constants $c$ and $n_0$ such that $0\leq c_1g(n)\leq f(n)\leq c_2g(n)$ for all $n\geq n_0$
+
+
+$g(n)$ and $f(n)$  must be asymptotically non-negative.
+
+
+For any two functions $f(n)$ and $g(n)$ , we have $f(n) = \Theta (g(n))$ if and only if
+$f(n) = O(g(n))$ and $f(n)=\Omega(g(n))$.
+
+$o(g(n))$,
+
+$\lim_{n \to \infty}$ $\frac{f(n)}{g(n)} = 0$ , 
+
+$\omega(g(n))$,
+
+$\lim_{n \to \infty}$ $\frac{f(n)}{g(n)} = \infty$ , 
+
+
+Asymptotic Analysis ,    Look at growth of $T(n)$ as $\lim{n \to \inf}$ 
+
+a set in a formula represents a anonymous function in that set.
+
+*masters method* work on recurrences of the form :
+
+$T(n) = aT(\frac{n}{b}) + f(n)$ 
+
+we compare $f(n)$ with $n^{\log_b{a}}$ 
+
+here $n^{\log_b{a}}$ represent the number of leaves in the recursion tree.
+
+if we divide a problem by $b$ on every level than total levels would be $\log_b{n}$ .
+
+at the 1st level we have $a$ problems i.e $a^1$
+at the 2nd level we have $a^2$ nodes
+
+at the last level we have $a^h$ leaves, where $h$ is the height of the tree or no. of levels in the tree.
+
+$a^h \implies a^{\log_b{n}} \implies n^{\log_b{a}}$ 
+
+if we sum the terms at each level we get a geometric progression,
+
+$f(n) + af(n/b) + a^2f(n/b^2) \ldots +\Theta(n^{\log_b{a}})$
+
+we can find time complexity by checking how the cost decreases $f(n)$ / increases $\Theta(n^{\log_b{a}})$ geometrically and if the cost remains fairly similar in all levels then the cost becomes $f(n)*\log_b{n}$ , because cost at each level is $f(n)$ and height of the tree is $\log_b{n}$.
+
+a *recurrence* is an equation that describes a function in terms of its value on other, typically smaller,arguments.
+
+$3T(n/4) + n^2$ 
+
+in recursion tree method, $n^2$ is the root node. it represents the cost incurred at this level. for the next level, cost of the $n/4$ subproblems  will be $(n/4)^2$ .
+
+
+when we say spanning tree of a graph we specifically mean - 
+* one connected tree
+* that includes all the vertices of the graph
+* has no cycles 
+* for a graph with n vertices, spanning tree always has n-1 edges
+
+###### Dynamic Programming : 
+
+dynamic programming solves problems by combining the solutions to subproblems.
+dynamic programming applies when the subproblems overlap - that is, when subproblems share subsubproblems. dp solves each subsubproblem just once and saves its answer in a table.
+
+dynamic programming typically applies to *optimization problems*. such problems can have many possible solutions. each solution has a value, and you want to find a solution with the optimal (minimum or maximum) value.
+
+*rod cutting* - 
+
+number of ways to cut a rod of length *n*  = $2^{n-1}$ 
+
+###### greedy algorithms - 
+
+makes a locally optimal choice in the hope that this choice leads to a globally optimal solution.
+
+*interval scheduling problem* - 
+
+Intuition suggests that you should choose an activity that leaves the resource available for as many other activities as possible. therefore , choose the activity in $S$ with the earliest finish time.
+
+Lets call the greedy choice $G = a_1$ (finishing at time $f_1$)
+let $O={o_1,o_2,...o_k}$ be an optimal solution. activities in $O$ are odered by finish times.
+
+two cases : 
+- if $a_1 \in O$ , then our greedy choice aligns with optimal.
+- if $a_1 \notin O$, then since our $a_1$ has the earliest finish time it must finish no later than $o_1$. replace $o_1$ with $a_1$ in $O$ , the new set $O'$ is still compatible and has the same cardinality has $O$. therefore, the greedy choice does not reduce optimality.
+
+*earliest finish time first*, leaves as much *future space* as possible.
+*latest start time first* , leaves as much *past space* as possible.
+both ensure you're not blocking a larger solution.
+
+*interval partitioning problem* - 
+
+schedule *all* requests using as few resources as possible.
+in any instance of interval partitioning, the number of resources needed is at least the depth of the set of intervals. *depth* - maximum number of overlapping partitions over a common point.
+
+sort by start times and assign intervals to class whose last finish time is less that this intervals start time.
+
+if you can't reuse a classroom, you can't reuse any other (since they all finish later).
+
+you need to specify underlying container when creating a priority_queue in cpp.
+
+`priority_queue<int,vector<int>,greater<int>> q;`
+
+*scheduling with deadlines* - 
+
+sort by earliest deadlines, use max-heap to remove longer duration courses with shorter ones to maximize number of coures selected. push durations in max-heap. 
+
+*divide and conquer* - optimal substructure + independent subproblems
+*dynamic programming* - optimal substructure + overlapping subproblems
+*greedy algorithms* - optimal substructure + local optimal leads to global optimal.
+
+**elements of greedy strategy -**
+
+- determine the optimal substructure of the problem. *optimal substructure* is a property of a problem that say : an optimal solution to the whole problem can be constructed from optimal solutions to its subproblems.
+- show that if you make the greedy choice, only one subproblem remains.
+- prove that it is safe to make the greedy choice.
+
+*weighted interval scheduling* -
+
+given *n* intervals $[s_i,f_i]$ , each with **weight** $w_i$ .
+select a subset of non-overlapping intervals that maximized the total weight.
+
+- sort intervals by finish time
+- for each interval $i$ , 
+	- Take it $\to$ add its weight $w_i$ + best solution from the last non-conflicting interval before $i$
+	- Skip it $\to$ just take the best solution upto $i-1$.
+
+$DP[i] = max(DP[i-1],w_i + DP[P(i)])$
+
+$P(i)$ = rightmost interval $x$ such that  $f_x < s_i$
+compute $P(i)$ using binary search after sorting by finish times.
+
+
+greedy works on fractional knapsack ( sort by profit/weight ) , dp works on 0-1 knapsack. why tho??
+
+//todo coin problems 
+
+***Huffman encoding*** - 
+
+DEFLATE = LZ77 (find repeats) + Huffman (encode efficiently).
+
+LZ77 stores "abcabcabc" as "abc" then offset to "abc" followed by length of string to copy.
+
+*prefix-free codes* - no codeword is a prefix of some other codeword.
+
+optimal code is a *full* binary tree.
+$C$ leaves and $C-1$ internal nodes. every character appears on the leaves.
+
+for every character $c \in C$, its depth is also the length of its codeword.
+
+thus, no. of bits required to encode a file is ,
+
+$B(T) = \sum_{c\in C} c.freq\cdot d_T(c)$ ,
+
+
+working of huffman encoding - 
+
+create a min heap priority queue with frequency of characters as key and character as value.
+pop two values from heap x,y and create a new tree node z  with x,y as its left and right child.
+z.freq = x.freq + y.freq , push this z into the heap. repeat this process $n-1$ times and then pop and return the last element from the heap. this element is the root of the prefix tree. 
+$O(n\cdot \log n)$ 
+
+it maybe inefficient for small number of characters , bcoz you have to also store the prefix tree and dictionary, that will take extra space.
+
+total costs of the tree (in bits) constructed is equal to the sum of the costs of its mergers (internal nodes).
+root represents number of characters in the data.
+
+*proving prefix-free property* -
+
+huffman algorithm builds a full binary tree where each leaf corresponds to a unique symbol. suppose code for symbol $a$ is prefix of code for $b$. then the path to $a$ would be a prefix to the path to $b$, implying that the leaf for $a$ is an internal node on the path to $b$. but leaves have no children, so this is impossible.
+
+*proving optimal prefix-free codes have the greedy property* - 
+
+the idea of the proof is to take the tree $T$ representing an arbitrary optimal prefix-free code and modify it to make a tree representing another optimal prefix-free code such that the characters $x$ and $y$ appear as sibling leaves of maximum depth in the new tree. in such a tree, the codewords for $x$ and $y$ have the same length and differ only in the last bit.
+
+consider two characters $a$ and $b$ at leaves with maximum depth in tree $T$ and $x,y$ be any where in the tree. since $x,y$ are two characters with least frequencies we have $x \leq y$ and since $a,b$ are at leaves with max depth $a\leq b$ , assume $x\leq a$ and $y\leq b$ . we can create a new tree $T'$ by exchanging $x$ and $a$. now we have to prove that total cost of this new tree is no more than $T$.
+$B(T) - B(T') \geq 0$ , similarly, by exchangin $y,b$ we get $T''$ and this has cost $\leq B(T')$ . but since we assumed $T$ tree to be optimal , tree $T' , T''$ cannot have cost less than $T$ . therefore, these trees are also optimal with $x,y$ appearing as sibling at leaves with maximum depth.
+
+*proving optimal substructure property for huffman prefix-free trees* - 
+
+if we create a new tree with $x,y$ removed a new node $z$ with freq. $x.freq + y.freq$ and make $x,y$ its children, then this represents a optimal tree for the original set of characters. 
+
+$x.freq\cdot d(x) + y.freq\cdot d(y) = z.freq\cdot d(z) + x.freq + y.freq$
+
+$B(T') = B(T) - x.freq - y.freq$ 
+
+assuming $T$ is optimal for $C$.
+if we merge $x,y$ into $z$, the resulting $T'$ must also be optimal for $C'$.
+Otherwise, if there were a better tree $T''$ for $C'$ , expanding $z$ back into $x,y$ would give a better tree for $C$ than $T$.
+This contradicts $T$ being optimal.
+so $T'$ must be optimal.
+
+*proof interval partitioning* - 
+
+depth = lower bound on resources.
+greedy never uses more resources than depth. greedy always picks a free resources first if available. so at any time , the number of resources = number of overlapping intervals at that time.
+
+sorting by *start time* ensures that you never waste a resource on a later interval if an earlier one could have used it.
+
+counter example for sorting by finish time asc. =  [1,4],[3,7],[5,6],[0,2]
+because greedy always chooses resource with least finish time till now.
+coz it assigns early finish time firsts and this might make resources that finish later but start early use more resources.
+
+*proof by contradiction* - 
+
+suppose the greedy algorithms uses $m>d$ resources. let $i$ be the first interval that causes the creation of $d+1$-th resource. this means that all resources are busy and have intervals assigned to them that finishes after $s_i$ . these intervals must have started on or before $s_i$ , so each of these intervals are overlapping with $i$ at time $s_i$ , this gives $d+1$ intervals conflicting at any time and this **contradicts** with the fact that we assumed $d$ as the maximum overlap.
+
+
+###### Coin Change Problem - 
+
+greedy algorithm gives an optimal solution only if the coin system is **canonical**  *i.e*  each larger coin is an integer multiple of the previous one.
+
+Because each big coin is an exact multiple of the next-smaller coin, you can always _exchange_ groups of smaller coins for one bigger coin without changing the sum — and such an exchange strictly **reduces** the number of coins. So any supposedly optimal solution that “uses too many small coins instead of a big one” can be improved, forcing the optimal to match greedy.
+
+---
+
+###### Heaps :
+
+**Max-heapify** - assumes left subtree (i) and right subtree (i) are max heaps, then it compares value of i node with its children and if it is less than it swaps it with the larger value and perform max heapify recursively on that child.
+
+**Build-Max-Heap** - converts an array $A=[1\ldots n]$  into a max-heap by
+calling **Max-heapify** in a bottom-up manner. the elements in the subarray $A=[n/2\ldots n]$  are all leaves of the tree, and so each is a 1-element heap to begin with. **Build-Max-Heap** goes through the remaining nodes of the tree and runs **Max-heapify** on each one.
+
+**height h** can have at most $\lceil n / 2^{h+1} \rceil$ nodes . bcoz height zero (leaf) nodes are n/2, height one are n/4 ...
+
+$\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{n}{2^{h+1}} \rceil h = O(n)$ , here we are summing cost of each node at height h. that's why we are multiplying no. of nodes at height h with cost each node can take that is h and we are doing it for all heights till height of root.
+
+$\sum_{h=0}^{\lfloor\log n\rfloor} \lceil \frac{h}{2^{h+1}} \rceil < \sum_{h=0}^{\infty} \lceil \frac{h}{2^{h+1}} \rceil$ = 2
+
+$\sum_{k=0}^{\infty} k x^k = \frac{x}{(1-x)^2}$ 
+
+**heap-sort** -  perform build-max-heap on given array, then exchanges root of heap with last element of array, decreases heap size and performs max-heapify on the new root, does this till heap size is 0. $O(n\cdot\log n)$ bcoz for each $n$ elements we call heapify $\log n$.
+
+A **priority queue** is a data structure for maintaining a set S of elements, each with an associated value called a key. insert(),extract-max(),max(),increase-key().
+
+**lower bound - binary search $\Omega(\log n)$ ,**
+
+think of binary search as a comparison based decision tree
+- each node is a comparison ( "target <,>,= middle")
+- leaves represents final answers (either "found at i" or "not found")
+
+there are $n$ possible outcomes and $1$ for not found , so total $n+1$ outcomes.
+a binary tree of height $h$ has at most $2^h$ leaves.
+to represent $n+1$ outcomes, $2^h \geq n+1 \implies h \geq \log_2(n+1)$
+
+k-th max. element can reside in the first $\lceil \log(k)\rceil$ levels.
+since the kth largest element must be among the k largest values in the heap. it cannot be deeper than the level where the total number of nodes is at least k.
+to accommodate k nodes, you need enough levels such that total number of nodes
+
+$2^{h+1}-1 \geq k$ 
+
+$h\geq \log_2(k+1)-1$
+
+###### array problems :
+
+*maximum subarray sum* - 
+
+using divide and conquer, 
+
+divide, split the array into two halves at the midpoint.
+conquer, recursively compute maximum subarray sum for the left and right halve.
+combine, compute the maximum subarray sum that crosses the mid point,
+by calculating sum of suffix from mid to left and sum of prefix from mid+1 to right
+add these two sums, return max of left,crossing,right sums.
+
+$O(n\log{n})$ 
+
+using dp,
+
+maximum subarray sum ending at each index depends on whether including the current element extends a previous subarray or starts a new one.
+
+$O(n)$ 
+
+*count sub-arrays with sum k*,
+
+using divide and conquer,
+
+divide,split the array into two halves at the midpoint.
+conquer, recursively count subarrays in left and right halve.
+combine, count subarrays that crosses mid point,
+do this by calculating prefix sums from mid to left and prefix sums from mid+1 to right.
+find number of pairs such that left prefix sum - right prefix sum == k. 
+return left + cross + right.
+
+$O(n^2\log{n})$ - if using brute matching
+$O(n\log{n}^2)$ - if using sorting and two pointer
+$O(n\log{n})$ - if using hashing for matching
+
+using dp,
+
+use prefix sum, for each index i , check for each subarray till i using prefix sum that its sum equals k.
+using `prefixSum[i+1]-prefixSum[j] == k`
+
+using prefix sum,
+
+use prefix sum and a hashmap to check if the currentSum - k exists in the map of not.
+
+$O(n)$ 
+
+*majority element* -  booyer moore
+
+##### Graph Algorithms
+
+for *sparse* graph use adjacency-list  $O(V+E)$ space,  $O(\delta(v))$  time
+for *dense* graph use adjacency-matrix $O(V^2)$ space , or when you need to tell if there is edge between two nodes in $O(1)$ time.
+
+***BFS*** -
+
+starting from *s* , the algorithm first discovers all neighbors of *s* , which have distance 1. then it discovers all vertices with distance 2, and so on , until it has discovered every vertex reachable from s .
+
+queue contains portions of two consecutive waves at any time.
+queue contains all the gray vertices.
+since every vertex reachable from *s* is discovered at most once, each vertex reachable from *s* has exactly one parent.
+
+time complexity, $O(V+E)$ 
+
+*shortest path distance* $\delta(s,v)$ from *s* to *v* is the minimum number of edges in any path from *s* to *v*.
+we call a path of this length  *a shortest path* from *s* to *v*.
+
+*lemma* - Let $G = (V,E)$ be a directed or undirected graph and let $s\in V$ be an arbitrary vertex. then for any edge $(u,v)\in E$ ,
+
+$\delta(s,v) \leq \delta(s,u) + 1$ 
+
+
+**Depth-first search** 
+
+depth-first search explores edges out of the most recently discovered verted *v* that still has unexplored edges leaving it. once all of *v*'s edges have been explored, the search backtracks to explore edges leaving the vertex from which *v* was discovered.
+this process continues until all the vertices reachable from the original source vertex have been discovered. if any undiscovered vertices remain, then depth first search selects one of them as a new source. dfs repeats this process until it has discovered every vertex.
+
+depth-first forest
+
+running time - $\Theta(V+E)$ ,   $\theta$ coz dfs explores every vertex in graph, bfs $O$
+
+a depth-first forest produced by dfs can contain 4 types of edges : 
+
+- *tree edges* , edge *(u,v)* is a tree edge if *v* was first discovered by exploring edge *(u,v)*.
+- *back edges* , edges *(u,v)* connecting a vertex *u* to an ancestor *v*.
+- *forward edges*, non-tree edges *(u,v)* that connecting *u* to a descendant *v*.
+- *cross edges* , all other edges . can be between same tree or different.
+
+in undirected, there are only tree and back edges.
+
+when an edge *(u,v)* is first explored, the color of vertex *v* says something about the edge : 
+
+- *WHITE* indicates a tree edge,
+- GRAY indicates a back edge,
+- *BLACK* indicates a forward edge.
+
+**Topological Sort** 
+
+is a linear ordering of all vertices such that if *G* contains an edge *(u,v)* , then *u* appears before *v* in the ordering. topological sorting is defined only on directed graphs that are acyclic.
+an ordering of  vertices along a horizontal line such that all directed edges go from left to right.
+
+- call *DFS(G)* to compute finish times *v.f* for each vertex *v* 
+- as each vertex is finished, insert it onto the front of a linked list
+- return the linked list of vertices
+
+$\Theta(V+E)$ 
+
+*proof* - 
+
+It suffices to show that for any pair of distinct vertices, if G contains edge from u to v, then *v.f < u.f* Consider any edge *(u,v)* explored by DFS. when this edge is explored, *v* cannot be gray, since then *v* would be an ancestor of *u* and *(u,v)* would be a back edge. therefore, *v* must be either white or black. if *v* is white, it becomes a descendant of *u*, and so *v.f < u.f* . If *v* is black, it has already
+been finished, so *v.f* has already been set. because the search is still exploring
+from *u*, it has yet to assign a timestamp to *u.f* , so that the timestamp eventually
+assigned to *u.f* is greater than *v.f* . thus, *v.f < u.f* for any edge *(u,v)* in the dag,
+
+
+*A directed graph G is acyclic if and only if a depth-first search of G yeilds no back edges.*
+
+$\to$  suppose DFS produces a back edge *(u,v)* , then *v* is an ancestor of *u* in DFF. thus, G contains a path from *v* to *u* and the back edge *(u,v)* completes a cycle.
+suppose that G contains a cycle *c* . we show that a DFS of G yields a back edge. Let *v* be the first vertex to be discovered in c , and let *(u,v)* be the preceding edge in *c* . at time *v.d* the vertices of *c* form a path of white vertices from *v* to *u*. By the white-path theorem, vertex *u* becomes a descendant of *v* in the DFF. therefore, *(u,v)* is a back edge.
+
+
+**strongly connected components** - 
+
+*scc* of a directed graph *G = (V,E)* is a maximal set of vertices $C\subseteq V$ such that  for every pair of vertices $u,v \in C$ , $u\rightsquigarrow v$  &  $v\rightsquigarrow u$ , vertices *u* and *v* are reachable from each other.
+
+acyclic component graph
+
+*articulation point* of *G* is a vertex whose removal disconnects *G*.
+
+a *bridge* of *G* is an edge whose removal disconnects *G*.
+
+a *biconnected component* of *G* is a maximal set of edges such that any two edges in the set lie on a common simple cycle.
+
+transpose of $G$ ,    $G^T = (V,E^T)$ 
+$E^T$ consists of edges of $G$ with their direction reversed.
+
+*STRONGLY-CONNECTED-COMPONENTS*
+
+1. call DFS to compute finish times *u.f* for each vertex *u*.
+2. create $G^T$.
+3. call DFS on $G^T$ but in the main loop of DFS, consider the vertices in order of decreasing *u.f*
+4. output the vertices of each tree in the depth-first forest formed in step 3 as a
+separate strongly connected component.
+
+
+weighted interval scheduling 
+coin change
+matrix multiplication
+rod cutting
+maximum subarray dnc dp opt
+max subarr of sum k dnc dp opt
+majority element dnc dp opt
+peak element dnc dp opt
+diameter of graph
+path from u2v v2u
+planar
+strongly connected
+cut vertex/edge
+mid-sem solutions
+prims algo
+union-find
+kruskals
+
+
+*coin-change problem* - 
+
+```
+dp = array of size amount+1, filled with INF
+dp[0] = 0
+
+for x from 1 to amount:
+    for coin in coins:
+        if coin <= x:
+            dp[x] = min(dp[x], dp[x - coin] + 1)
+
+if dp[amount] == INF:
+    return -1
+else:
+    return dp[amount]
+
+```
+
+*prims* -
+
+```
+        vector<vector<pair<int,int>>> adj(V);
+        for(auto e : edges){
+            auto u = e[0];
+            auto v = e[1];
+            auto w = e[2];
+            adj[u].push_back({v,w});
+            adj[v].push_back({u,w});
+        }
+        priority_queue<tuple<int,int,int>,vector<tuple<int,int,int>>,greater<tuple<int,int,int>>> pq;
+        vector<int> vis(V,0);
+        vector<pair<int,int>> mst;
+        int sum = 0;
+        pq.emplace(0,0,-1);
+        
+        while(!pq.empty()){
+            auto [weight,v,p] = pq.top();
+            pq.pop();
+            if(vis[v]==1) continue;
+            if(weight!=-1){
+                mst.push_back({p,v});
+                sum+=weight;
+            }
+            vis[v] = 1;
+            for(auto neighbor : adj[v]){
+                if(vis[neighbor.first]==0){
+                auto [n,w] = neighbor;
+                pq.emplace(w,n,v);
+                }
+            }
+        }
+        return sum;
+```
+
+*disjoint set : union-find* - 
+
+```
+    vector<int> parent,size;
+    
+    int find(int v){
+        if(v == parent[v]) return v;
+        parent[v] = find(parent[v]);
+        return parent[v];
+    }
+    int union(int u,int v){
+        int pu = find(u);
+        int pv = find(v);
+        if(pu==pv) return;
+        if(size[pu] < size[pv]){
+            size[pv]+=size[pu];
+            parent[pu] = pv;
+        }
+        else{
+            size[pu]+=size[pv];
+            parent[pv] = pu;
+        }
+    }
+    int spanningTree(int V, vector<vector<int>>& edges) {
+        // code here
+        parent.resize(V);
+        size.resize(V);
+        for(int i=0;i<V;i++){
+            parent[i] = i;
+            size[i] = 1;
+        }
+        
+    }
+```
+
+
+###### minimum spanning trees 
+
+spanning tree of a graph G  = subset of edges of G that form a tree and covers all vertices of G.
+
+mst = given a graph $G = (V,E)$ and edge-weight function $w : E \to \mathbb{R}$ , find a spanning tree $T$ of *minimum weight* $\to \sum_{e\in T}w(e)$ .
+
+greedy properties,
+
+- optimal substructure, optimal solution to the problem incorporates optimal solutions to its subproblem(s).
+- greedy choice property, locally optimal choice leads to globally optimal solution.
+
+*edge contraction* - proving optimal substructure property. if we know that edge *(u,v)* {safe edge} is in mst, then we can contract it and find mst of graph $G/e$ and then add that edge again, to find mst of $G$ . exponential. dp. try for each edge.
+
+![[mst.png]]
+
+![[mst2.png]]
+
+
+*shortest path from a source in a directed acyclic graph* - 
+
+topological sort + edge relaxation from source in topological order.
+processing the vertices in topological order ensures that by the time you get to a vertex, you've already processed all the vertices that can precede it.
+sssp is necessary for graphs that can contain cycles.
+
+
+bellmanford can detect -ve cycle if it is reachable from the source ( if shortest distances change in *nth* iteration then -ve cycle is present)
+
+
+###### single source shortest paths
+
+the input to *shortest-paths problem* is a weighted, directed graph $G = (V,E)$ , with a weight function $w : E\to \mathbb{R}$ . 
+the *weight* $w(p)$ of path $p = \langle v_0,v_1,\ldots v_k\rangle$ is the sum of the weights of its contituent edges :
+$w(p) = \sum\limits_{i=1}^{k}w(v_{i-1},v_i)$ 
+
+we define the *shortest-path weight* $\delta(u,v)$ from $u$ to $v$ by
+$\delta(u,v) = \big\{min\{w(p):u\rightsquigarrow^p v\}$ if there is a path from $u$ to $v$ , $\infty$ otherwise.
+
+
+**optimal substructure of a shortest path**
+
+shortest-paths algorithms typically rely on the property that a shortest path between two vertices contain other shortest paths within it.
+
+*lemma* - *subpaths of shortest paths are shortest paths* 
+
+given a weighted, directed graph $G=(V,E)$ with weight function $w:E\to \mathbb{R}$ , let $p = \langle v_0,v_1,\ldots v_k\rangle$ be a shortest path from vertex $v_0$ to $v_k$ and, for any $i$ and $j$ such that $0\leq i \leq j \leq k$ , let $p_{ij} = \langle v_i,v_{i+1},\ldots v_j\rangle$ be the subpath of p from vertex $v_i$ to $v_j$ . then, $p_{ij}$ is  a shortest path from $v_i$ to $v_j$ .
+
+**Proof**   Decompose path $p$ into $v_0\rightsquigarrow^{p_{0i}}v_i\rightsquigarrow^{p_{ij}}v_j\rightsquigarrow^{p_{jk}}v_k$ , so that $w(p) = w(p_{0i}) + w(p_{ij}) + w(p_{jk})$ . Now, assume there is a path $p'_{ij}$  from $v_i$ to $v_j$ with weight $w(p'_{ij}) < w(p_{ij})$. Then, $v_0\rightsquigarrow^{p_{0i}}v_i\rightsquigarrow^{p'_{ij}}v_j\rightsquigarrow^{p_{jk}}v_k$ is a path from $v_0$ to $v_k$ whose weight is less than $w(p)$ , which contradicts the assumption that $p$ is the shortest path from $v_0$ to $v_k$ .
+
+*negative-weight edges* - 
+
+if the graph $G=(V,E)$ contains no negative-weight cycles reachable from source $s$ , then for all $v\in V$ , the shortest path weight $\delta(s,v)$ remains well defined.
+if the graph contains negative-weight cycle reachable from $s$ , shortest-path weights are not well defined.
+
+dijkstra's, assume that all edge weights in the input graph are nonnegative.
+Bellman-Ford , allow negative-weight edges in the input graph and
+produce a correct answer as long as no negative-weight cycles are reachable from
+the source. if there is such a negative-weight cycle, the algorithm can detect it.
+
+*can a shortest path contain a cycle?* 
+it cannot contain a negative-weight cycle nor can it contain a positive-weight cycle, since removing the cycle from the path produces a path with the same source and destination vertices and a lower path weight. 
+
+*Triangle inequality* -
+For any edge $(u,v)\in E$, we have $\delta(s,v)\leq \delta(s,u) + w(u,v)$.
+
+*Upper-bound property* - 
+We always have $v.d \geq\delta(s,v)$  for all vertices $v\in V$ , and once $v.d = \delta(s,v)$ it never changes.
+
+*No-path property* - 
+If there is no path from $s$ to $v$, then we always have $v.d = \delta(s,v) = \infty$ .
+
+*Convergence property* - 
+If $s\rightsquigarrow u \to v$  is a shortest path in $G$ for some $(u,v)\in V$ , and if $u.d = \delta(s,u)$  at
+any time prior to relaxing edge $(u,v)\in V$  then $v.d = \delta(s,v)$ at all times afterward.
+
+*Path-relaxation property* - 
+If $p=\langle v_0,v_1,\ldots v_k\rangle$ i is a shortest path from $s=v_0$ to $v_k$ , and the edges of $p$
+are relaxed in the order $(v_0,v_1), (v_1,v_2),\ldots,(v_{k-1},v_k)$, then $v.k = \delta(s,v_k)$ .
+This property holds regardless of any other relaxation steps that occur, even if
+they are intermixed with relaxations of the edges of $p$.
+
+*Predecessor-subgraph property -* 
+Once $v.d = \delta(s,v)$ for all $v\in V$  , the predecessor subgraph is a shortest-paths
+tree rooted at $s$ .
+
+
+**The Bellman-Ford algorithm** 
+
+The Bellman-Ford algorithm solves the single-source shortest-paths problem in
+the general case in which edge weights may be negative.
+
+![[bellman.png]]
+
+The Bellman-Ford algorithm runs in $O(V^2 + V E)$  time when the graph is rep-
+resented by adjacency lists, since each of the $\lvert V\rvert-1$ passes over the edges in lines takes $\Theta(V+E)$ . Fewer than  $\lvert V\rvert-1$ passes over the edges sometimes suffice. which is why we say $O$ and not  $\Theta$.
+
+**Proof**  
+by the path-relaxation property. Consider any vertex v that is reachable from s , and let $p=\langle v_0,v_1,\ldots v_k\rangle$ be any shortest path from $v_0=s$ to $v_k=v$ . Because shortest paths are
+simple, p has at most $V-1$ edges, and so $k\leq V-1$ . Each of the $V-1$ iterations of the for loop relaxes all $\lvert E\rvert$ edges. Among the edges relaxed in the $i$th iteration, for $i = 1,2,\ldots,k,$ is $(v_{i-1},v_i)$ . By the path-relaxation property, $v.d = v_k.d = \delta(s,v_k) = \delta(s,v)$ .
+
+
+**Single-source shortest paths in directed acyclic graphs**
+
+![[sssp in dag.png]]
+
+**Proof** 
+We first show that $v.d = \delta(s,v)$  for all vertices $v\in V$at termination.
+If $v$  is not reachable from $s$  , then $v.d = \delta(s,v) = \infty$  by the no-path property.
+Now, suppose that $v$  is reachable from $s$  , so that there is a shortest path 
+$p=\langle v_0,v_1,\ldots v_k\rangle$ $v_0=s$ to $v_k=v$ , Because DAG-SHORTEST-PATHS
+processes the vertices in topologically sorted order, it relaxes the edges on $p$ in the
+order $(v_0,v_1),(v_1,v_2),\ldots(v_{k-1},v_k)$ . The path-relaxation property implies that
+$v.d = \delta(s,v)$ at termination for $i=0,1,\ldots,k$ . Finally, by the predecessor subgraph property, $G_\pi$ is a shortest-paths tree.
+
+
+**Dijkstra** 
+
+![[dijkstra.png]]
+
+Dijkstra's algorithm maintains a set $S$ of vertices whose final shortest path weights from the source $s$ have already been determined. The algorithm repeatedly selects the vertex $u\in V-S$  with the minimum shortest-path estimate, adds $u$ into $S$ , and relaxes all edges leaving $u$.
+
+it is like BFS in that set S corresponds to the set of black vertices in a BFS. Just as vertices in S have their final shortest-path weights, so do black vertices in a BFS have their correct BFS distances. Dijkstra's algorithm is like Prim's algorithm in that both algorithms use a min-priority queue to find the "lightest" vertex outside a given set (the set S in Dijkstra's
+algorithm and the tree being grown in Prim's algorithm), add this vertex into the set, and adjust the weights of the remaining vertices outside the set accordingly.
+
+array - $O(V^2)$ 
+binary heap in case of sparse graph  - $O(E\cdot \log{V})$ 
+fibonacci heap - $O(V\cdot \log{V} + E)$ 
+
+# NP
+
+![[decisionProblems.png]]
+
+the set of all possible programs in countable
+each decision problem is a function that maps input (binary string) to yes/no (0/1)
+so a decision problem can be thought of as a infinite binary sequence
+
+each function from $\{0,1\}\to \mathbb{N}$ corresponds to one infinite binary sequence
+set of all infinite binary sequence is *uncountable*.
+
+there are more decision problems than programs.
+
+**P** = \{ problems solvable in polynomial time \}
+**EXP** = \{ problems solvable in exponential time $2^{n^c}$ \}
+**R** = \{ solvable in finite amount of time \} ( decidable )
+**NP** = { decision problem with solutions that can be "checked" in polynomial time}
+"checked" - when output is yes , can check it in polynomial time.
+**NP-hard** = { as hard as every problem in NP }
+**NP-complete** = { NP $\cap$ NP-hard }
+
+![[NP.png]]
+
+"lucky" algorithm always guess the right choice.
+
+![[pnphard.png]]
+
+*reduction* - convert problem *A* which you want to solve into problem *B* you know how to solve.
+
+

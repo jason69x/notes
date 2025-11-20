@@ -1,14 +1,9 @@
 
-MON - speech 3.5hrs    algo 3.5hrs
-TUE - dist 4hrs    algo 2.5hrs 
-WED - dist 2.5hrs    algo 3.5hrs
-
-THU - 
-8 : 10.45
-12.30 : 2.50
-4.30 : 7.30
-8 : 9
-
-FRI - maths 3.5hrs      algo 3.5hrs
-SAT - maths 3hrs     project 8hrs
-SUN - maths 3hrs    project 8hrs
+- **Shell (C)**: Systems foundation—get comfy with OS primitives.
+- **HTTP Server (Go)**: Infra entry—apply to real-world serving.
+- **DNS (Go)**: Infra networking—builds on HTTP's I/O.
+- **Git (Rust)**: Infra tools—version your other projects!
+- **BitTorrent (Rust)**: Distributed basics—P2P without state complexity.
+- **Kafka (Rust)**: Distributed scaling—add fault-tolerance.
+- **Redis (Rust)**: DB intro—lightweight, networked store.
+- **SQLite (C)**: DB depth—embed it in prior projects (e.g., Git backend).
