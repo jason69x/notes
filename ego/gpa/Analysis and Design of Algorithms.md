@@ -721,3 +721,32 @@ there are more decision problems than programs.
 *reduction* - convert problem *A* which you want to solve into problem *B* you know how to solve.
 
 
+# **quick sort , quick select**
+
+*Divide*
+by partitioning the array $A[p:r]$ into two (possibly empty) subarrays $A[p:q-1]$ and $A[q+1:r]$ such that each element in the low side of the partition is less than or equal to the *pivot* $A[q]$ , which is , less than or equal to each element in the hight side.
+
+*Conquer*
+by calling quicksort recursively to sort each of the subarrays $A[p:q-1]$ and $A[q+1:r]$
+
+*Combine*
+by doing nothing: because the two subarrays are already sorted, no work is needed to combine them.
+
+![[quick_sort.png]]
+![[qs_partition.png]]
+![[qs_regions.png]]
+
+
+# *order statistics*
+
+find *min* & *max* in one pass $3\lfloor\frac{N}{2}\rfloor$ no. of comparisons 
+take two elements at a time, compare them and then compare minimum of them with current *min* and maximum of them with current *max*.
+
+![[rand_select.png]]
+
+$i$ - *kth* order we need to find
+$k$ - rank of the pivot element
+
+if the rank we need to find $i$ is less than $k$ , go left else go right
+$i-k$ , when going right coz we removed $k$ elements from the left
+

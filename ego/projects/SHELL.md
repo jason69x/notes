@@ -1,7 +1,13 @@
-`git add -u`   stages all modification and deletions of tracked files.
-`git commit -am` commits tracked file changes with given message
 
-`fmt.Fprint(w io.Writer, a ...any) (n int, err error)`
+*PS1* -   prompt string 1
 
+common PS1 escape sequences
+- \u -   user name
+- \h -   host name
+- \w -  current working directory
 
-valorant stats api
+`\u@\h:\w$`
+
+`PS1 = "\w $(git branch --show-current)\$"`
+execute commands and include their output in the prompt using `$(command)` 
+

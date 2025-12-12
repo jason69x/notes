@@ -335,12 +335,21 @@ using `const` prevents accidental changes to the arguments.
 
 lamba functions,
 `[ captures ] ( parameters ) -> return_type { function_body }`
-captures - variable outside the lambda functions you want to use inside it
-`[x] [&x] [&] [=]`
+captures - variable outside the lambda function you want to use inside it
+`[x] [&x] [&] [=] [=,&y] [z=10]`
 return type is auto deduced if not provided.
 
 in custom comparator, use `>` for min heap and `<` for max heap,
 returns true , means less priority.
 
+`clamp(x,low,high)` - return $x$ if in range $[low,high]$ else return nearest value.
 
+- AVL needs **more rotations** to maintain strict balance. search is better.
+- Red-black uses **fewer rotations**, so updates (insert/delete) are better.
+- AVL height ≈ **1.44 log₂(n)**
+- Red-black height ≈ **2 log₂(n)**
+
+set & map uses red-black trees.
+
+For custom logic, your comparator should return `true` when **a has lower priority than b**.
 

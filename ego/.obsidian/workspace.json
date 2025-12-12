@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "078b7eaffc963f20",
+        "id": "8a3f7e03fa7d9ad2",
         "type": "tabs",
         "children": [
           {
-            "id": "e9a74565ae170770",
+            "id": "aacef5360be2f405",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "skills/Lamine Yamal.md",
+                "file": "1000 days.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Lamine Yamal"
+              "title": "1000 days"
             }
           }
         ]
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "f5391c0917f5f724",
@@ -95,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "9.5 gpa/Mathematics for computer science.md",
+                "file": "skills/Rust.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Mathematics for computer science"
+              "title": "Backlinks for Rust"
             }
           },
           {
@@ -170,53 +169,53 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e9a74565ae170770",
+  "active": "aacef5360be2f405",
   "lastOpenFiles": [
-    "skills/GO.md",
-    "skills/Lamine Yamal.md",
-    "01 - gpa/Speech Processing.md",
-    "07 - images/LBG.png",
-    "01 - gpa/Analysis and Design of Algorithms.md",
-    "01 - gpa/Mathematics for computer science.md",
-    "07 - images/indrv.png",
-    "07 - images/pnphard.png",
-    "07 - images/NP.png",
-    "07 - images/decisionProblems.png",
-    "EGO/Systems.md",
     "EGO/GOALS.md",
-    "07 - images/dijkstra.png",
-    "07 - images/sssp in dag.png",
-    "07 - images/rpc.png",
-    "07 - images/ntp.png",
-    "07 - images/mst2.png",
-    "07 - images",
+    "1000 days.md",
     "projects/SHELL.md",
-    "projects/CS-542  , Term Project Report.md",
-    "projects/mtech projects.md",
-    "projects/distributed_scheduler_plan.md",
-    "projects/disti project write up.md",
-    "01 - gpa/Distributed Systems.md",
-    "images/container.jpg.~tmp",
-    "02 assignments/algo assignment 4.md",
-    "02 assignments/algo assignment 3.md",
-    "02 assignments/algo assignment 2.md",
-    "02 assignments/algo assignment 1.md",
-    "cp/CP.md",
-    "math/prime numbers.md",
-    "math/rational and irrational numbers.md",
+    "skills/Rust.md",
+    "07 - images/deref._rust.png",
+    "07 - images/Screenshot 2025-12-10 191825.png",
+    "07 - images/references_rust.png",
+    "07 - images/desktop.ini",
+    "07 - images",
+    "images/number_literals_rust.png",
+    "07 - images/Screenshot 2025-12-08 184203.png",
+    "images/desktop.ini",
+    "images/int_types_rust.png",
+    "ai_ml projects/MLOps.md",
+    "projects",
+    "gpa/Analysis and Design of Algorithms.md",
+    "images/rand_select.png",
+    "images/qs_partition.png",
+    "images/quick_sort.png",
+    "images/qs_regions.png",
+    "skills/pandas.md",
+    "skills/python.md",
+    "skills/Lamine Yamal.md",
+    "skills/GO.md",
+    "skills/berserk.md",
     "math/theories.md",
     "math/roots and polynomials.md",
+    "math/rational and irrational numbers.md",
+    "math/prime numbers.md",
     "math/graph,map coloring.md",
     "math/GCD - greatest common divisor.md",
-    "projects/Building a Voice AI Assistant Detailed Learning Plan.md",
+    "cp/CP.md",
+    "skills/Untitled",
+    "projects/distributed_scheduler_plan.md",
+    "projects/mtech projects.md",
+    "projects/CS-542  , Term Project Report.md",
+    "projects/disti project write up.md",
+    "EGO/Systems.md",
+    "ai_ml projects",
+    "gpa/Speech Processing.md",
+    "gpa/Mathematics for computer science.md",
+    "images",
+    "images/container.jpg.~tmp",
     "images/rpc.png.~tmp",
     "proofs",
-    "HabitVault/Daily",
-    "HabitVault/New folder",
-    "HabitVault/Templates",
-    "HabitVault",
-    "tasks/daily",
-    "tasks/templates",
     "Untitled.canvas"
   ]
 }

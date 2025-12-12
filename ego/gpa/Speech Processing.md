@@ -276,7 +276,7 @@ total area under the magnitude of $x(t)$- a signal, must be finite.
 
 *k means* is an unsupervised learning algorithm used for *clustering data* into *k* distinct groups based on similarity.
 it tries to find *k* centers (called *centroids*) such that each data point belongs to the cluster with the nearest centroid.
-centroids are called codewords and the set of all centroids in called the codebook.
+centroids are called codewords and the set of all centroids is called the codebook.
 
 1. initialize cluster centers
 2. assign observations to closest cluster center
@@ -521,3 +521,886 @@ after vector quantization, we get some observations. we can regenerate codebook 
 
 data modelling uses these observations and will compare the speech and give percentage how much it matches.
 
+$P(q_t=s_i\ |\ q_{t-1}=s_j,q_{t-2}=s_k,\ldots) = P(q_t=s_i\ |\ q_{t-1}=s_j)$
+
+memory loss, current state only depends on the previous state and not on entire history.
+markov chain (first order).
+
+
+*hidden markov model* - 
+
+it is a doubly embedded stochastic process with an underlying stochastic process that is not observable (hidden) . it can be observed through another set of stochastic processes that produces the sequence of observations.
+
+*stochastic process* - 
+a family of random variables $\{X_t : t\in T\}$
+where, $t$ is the index , $X_t$ is a random variable representing the state at time $t$.
+
+*elements of HMM* - 
+
+1. $N$ , number of hidden states . eg, you can't see *phonemes* but hear the acoustic signal $S = \{S_1,S_2,\ldots S_n\}$
+2. $M$ , number of  observation symbols (codebook size), $V = \{v_1,v_2,\ldots,v_M\}$
+3. $A = [a_{i,j}]\ N\times N\  ; a_{i,j} = P(q_{t+1} = S_j | q_{t+1} = S_i)$ , state transition probability matrix
+4. $B = [b_j(k)]\ N\times M\ ; b_j(k)=P(o_t=v_k\ |\ q_t = S_j)$ , observation (emission) probability matrix.  if you're in hidden state $S_j$ , what's the probability of generating observation $v_k$.
+5. $\pi = [\pi_i]\ N\ \ ;\pi_i = P(q_1=S_i)$ , initial state distribution . this tells us where the hidden state sequence begins.
+
+at time $t$ :
+1. you start in some hidden state $q_1$ according to $\pi$
+2. you move to another hidden state via transition probabilities $A$
+3. in each hidden state, you emit a observable symbol according to $B$
+
+this produces :
+- hidden sequence : $q_1,q_2,\ldots,q_T$ 
+- observed sequence : $o_1,o_2,\ldots,o_T$ 
+
+
+*Three fundamental problems of HMM*
+
+*evaluation (forward algorithm),*
+compute $P(O\ |\ \lambda)$ = probability that the model produced the observed sequence.
+
+*decoding (viterbi algorithm),*
+find the most likely hidden state sequence.
+
+*learning (baum-welch/ EM algorithm),*
+adjust $A,B,\pi$ from data.
+
+
+matrix in which row sums are $1$ , *stochastic matrix*
+
+
+*evaluation problem* -
+brute force time complexity $O(N^T)$
+$N$ - no. of hidden states
+$T$ - observation sequence length
+
+forward/backward algorithm time complexity - $O(N^2\cdot T)$
+
+
+You have an HMM with:
+- **5 hidden states**
+- **32 observation symbols**
+- A sequence of observations read from `SEQ.txt`
+
+$P(O \mid \lambda)$  
+### **A.txt → Transition matrix (A)**
+A is 5×5.  
+`A[i][j]` = probability of transitioning from state i → state j.
+### **B.txt → Emission matrix (B)**
+
+B is 5×32.  
+`B[i][k]` = probability that state i emits observation k.
+
+### **PI.txt → Initial probabilities (π)**
+
+π[i] = probability of starting in state i.
+
+### **SEQ.txt → Observation sequence O**
+
+
+# 🚀 **2. Forward Algorithm Setup**
+
+`alpha[t][i]` = probability of reaching state i at time t, _having observed_ the first t observations.
+
+Matrix shape: T × 5.
+
+# ⚡ **3. Initialization Step**
+
+At t = 0:
+```cpp
+for (int i = 0; i < 5; ++i)
+    alpha[0][i] = pi[i] * B[i][O[0]];
+```
+
+This means:  
+Start at state i → emit first observation
+
+# 🔁 **4. Recursion Step**
+
+For each time step t and each state j:
+
+Take every possible previous state i → transition to j → emit observation O[t].
+
+```cpp
+for (int t = 1; t < T; ++t) {
+    for (int j = 0; j < 5; ++j) {
+        double sum = 0.0;
+        for (int i = 0; i < 5; ++i)
+            sum += alpha[t-1][i] * A[i][j];
+        alpha[t][j] = sum * B[j][O[t]];
+    }
+}
+```
+
+# 🏁 **5. Termination Step**
+
+Final probability of sequence:
+
+```cpp
+double prob = 0.0;
+for (int i = 0; i < 5; ++i)
+    prob += alpha[T-1][i];
+```
+
+# 🌙 **What the Backward Algorithm Does**
+
+**β tells you the probability of observing the _rest_ of the sequence if you're currently in state i at time t.**
+
+# 📂 **1. Initialization Step**
+
+At the last time step:
+
+Reason:  
+If you’re at the end of the sequence, the probability of seeing “nothing more” = 1.
+
+```cpp
+vector<vector<double>> beta(T, vector<double>(N, 0.0));
+
+for (int i = 0; i < N; i++)
+    beta[T - 1][i] = 1.0;
+```
+
+# 🔁 **2. Recursion Step (Going Backwards)**
+
+For t = T–2 down to 0:
+
+Breakdown of the formula:
+
+- From state i we can transition to j → probability (A[i][j])
+    
+- State j emits next observation (O_{t+1}) → probability (B[j][O[t+1]])
+    
+- From j, the remaining future observations have probability (\beta_{t+1}(j))
+    
+
+So multiply all of this, then sum over every possible next state j.
+
+```cpp
+for (int t = T - 2; t >= 0; t--) {
+    for (int i = 0; i < N; i++) {
+        double sum = 0.0;
+        for (int j = 0; j < N; j++)
+            sum += A[i][j] * B[j][O[t + 1]] * beta[t + 1][j];
+        beta[t][i] = sum;
+    }
+}
+```
+
+This is literally the backward version of forward’s recursion.
+
+Time complexity:  
+**O(T × N²)** (same as forward).
+
+# 🎯 **3. How to Compute Final Probability With Backward**
+
+$P(O \mid \lambda) = \sum_{i=1}^N \pi(i) \cdot B[i][O_0] \cdot \beta_0(i)$  
+
+Forward ended with $α[T−1][i]$.  
+Backward starts with $β[0][i]$.
+
+# 🧠 **Concept Summary (Short & Clean)**
+
+- Forward: probability of past observations given state i at time t.  
+    **α_t(i) = P(O₀…O_t, state i at t)**
+    
+- Backward: probability of future observations given state i at time t.  
+    **β_t(i) = P(O_{t+1}…O_T | state i at t)**
+
+# 🌟 **viterbi**
+
+You have:
+
+- 5 states
+    
+- 32 possible observations
+    
+- Sequence in `SEQ.txt`
+    
+
+Goal: compute the most likely hidden state path  
+
+$\arg\max_{q_1,...,q_T} P(q_1,...,q_T, O_1,...,O_T)$  
+
+Viterbi = dynamic programming approach holding:
+
+- `delta[t][j]` → best log-probability of any path ending in state _j_ at time _t_
+    
+- `psi[t][j]` → pointer to the previous best state
+    
+
+---
+
+# ⚙️ **1. Log Probability Helper**
+
+```cpp
+const double NEG_INF = -1e20;
+
+double slog(double p) {
+    if (p <= 0.0) return NEG_INF;
+    return log(p);
+}
+```
+
+- Probabilities multiply during Viterbi → **log converts multiplication into addition**.
+    
+- This avoids numerical underflow.
+    
+- If probability = 0, return a giant negative number.
+    
+
+---
+
+# 📂 **2. Reading HMM Parameters**
+
+Same as in forward/backward:
+
+- **A**: 5×5 transition matrix
+    
+- **B**: 5×32 emission matrix
+    
+- **π**: 5 initial probabilities
+    
+- **O**: observation sequence
+    
+
+Nothing tricky here.
+
+---
+
+# 🚀 **3. Core Data Structures**
+
+```cpp
+vector<vector<double>> delta(T, vector<double>(5, NEG_INF));
+vector<vector<int>> psi(T, vector<int>(5, -1));
+```
+
+### `delta[t][i]`
+
+The _maximum_ log-probability of any path that ends in state **i** at time **t**.
+
+### `psi[t][i]`
+
+The backpointer:  
+Which previous state gave the best path into state **i** at time **t**?
+
+This is how you reconstruct the final state sequence.
+
+---
+
+# 🔰 **4. Initialization Step**
+
+For the first observation:
+
+[  
+\delta_0(i) = \log(\pi_i) + \log(B_i(O_0))  
+]
+
+```cpp
+for (int i = 0; i < 5; ++i)
+    delta[0][i] = slog(pi[i]) + slog(B[i][O[0]]);
+```
+
+Meaning:  
+Start in state i → emit first observation → take log.
+
+---
+
+# 🔁 **5. Recursion Step**
+
+For each time t and state j:
+
+[  
+\delta_t(j) = \max_i \big[ \delta_{t-1}(i) + \log A_{ij} \big] + \log B_{j}(O_t)  
+]
+
+And record the argmax in `psi`.
+
+```cpp
+for (int t = 1; t < T; ++t) {
+    for (int j = 0; j < 5; ++j) {
+        double best = NEG_INF;
+        int best_i = -1;
+        for (int i = 0; i < 5; ++i) {
+            double val = delta[t - 1][i] + slog(A[i][j]);
+            if (val > best) {
+                best = val;
+                best_i = i;
+            }
+        }
+        delta[t][j] = best + slog(B[j][O[t]]);
+        psi[t][j] = best_i;
+    }
+}
+```
+
+**What’s happening here:**
+
+- Try all previous states i
+    
+- Add transition probability to j
+    
+- Pick the _max_
+    
+- Store the best previous state in `psi[t][j]`
+    
+- Add the emission probability of observing O[t] in state j
+    
+
+This dynamic programming ensures max path probability.
+
+---
+
+# 🏁 **6. Termination Step**
+
+Choose the best final state:
+
+```cpp
+double best_prob = NEG_INF;
+int last_state = -1;
+for (int i = 0; i < 5; ++i) {
+    if (delta[T - 1][i] > best_prob) {
+        best_prob = delta[T - 1][i];
+        last_state = i;
+    }
+}
+```
+
+That’s the ending point of the most likely path.
+
+---
+
+# 🔄 **7. Backtracking — Recovering the Path**
+
+```cpp
+vector<int> path(T);
+path[T - 1] = last_state;
+for (int t = T - 2; t >= 0; --t)
+    path[t] = psi[t + 1][path[t + 1]];
+```
+
+You simply walk backwards:
+
+- Start from the best last state
+    
+- At each step use `psi` to find the previous best state
+    
+- This reconstructs the entire optimal hidden state sequence
+    
+
+---
+
+# 📤 **8. Output**
+
+```cpp
+for (int t = 0; t < T; ++t)
+    cout << "t =" << t << "  state =" << path[t] << endl;
+
+cout << "probability of path: " << best_prob << endl;
+```
+
+`best_prob` is the **log probability** of the best state path.
+
+If you want the actual probability:
+
+[  
+\exp(\text{best_prob})  
+]
+
+but it will likely underflow (very small).
+
+---
+
+# 🎯 **Concept Summary (Short & Clean)**
+
+### Viterbi = maximize over all possible paths.
+
+The code performs:
+
+1. **Initialize** Δ with π and B.
+    
+2. **Recursively compute** the best path to every state at every time.
+    
+3. **Track best previous states** in ψ.
+    
+4. **Pick best ending state**.
+    
+5. **Backtrack** to reconstruct the full state sequence.
+    
+
+It’s dynamic programming with log-space math.
+
+---
+
+# Want more?
+
+I can also explain:
+
+- forward vs backward vs Viterbi
+    
+- why we use log probabilities
+    
+- how to modify the code for scaling
+    
+- how Viterbi becomes decoding for speech recognition
+    
+
+Just tell me.
+
+Here you go — a full, detailed, high-clarity breakdown of the **learning problem (Baum–Welch / EM training)** code.  
+I’ll walk through every concept and every line of logic so you fully understand how and why this code re-estimates **A**, **B**, and **π** for an HMM.
+
+I’ll keep the tone clean, professional, and zero fluff — but still super clear.
+
+---
+
+# ⭐ What This Code Is Solving
+
+This program implements **Baum–Welch**, which is the EM (Expectation–Maximization) algorithm for **training an HMM from observation data**.
+
+You're given:
+
+- Current estimates of:
+    
+    - **A** → transition matrix
+        
+    - **B** → emission matrix
+        
+    - **π** → initial distribution
+        
+- A single observation sequence **O** of length **T**
+    
+
+Goal:
+
+> Re-estimate (A, B, π) to maximize the likelihood of the sequence.
+
+This is the **learning problem** of an HMM.
+
+The algorithm does:
+
+1. Forward computation
+    
+2. Backward computation
+    
+3. Compute γ (gamma)
+    
+4. Recompute π
+    
+5. Recompute A
+    
+6. Recompute B
+    
+
+This is **one EM iteration**.
+
+---
+
+# 📥 Step 1 — Reading Input
+
+```cpp
+int N = 5;  // number of states
+int M = 32; // number of possible observations
+```
+
+Matrices:
+
+- **A**: shape 5×5
+    
+- **B**: shape 5×32
+    
+- **π**: length 5
+    
+- Sequence **O[t]**: each is an integer observation index in 0..31
+    
+
+---
+
+# ▶️ Step 2 — Forward Algorithm (α)
+
+Forward probability αₜ(i) = probability of seeing observations up to t _and_ being in state i.
+
+Initialization:
+
+```cpp
+alpha[0][i] = pi[i] * B[i][O[0]];
+```
+
+Recursion:
+
+```cpp
+alpha[t][j] = ( sum over i of alpha[t-1][i] * A[i][j] ) * B[j][O[t]];
+```
+
+This computes:
+
+[  
+\alpha_t(j) = \left( \sum_i \alpha_{t-1}(i),A_{ij} \right) B_j(O_t)  
+]
+
+This table holds all **forward path probabilities** required for EM.
+
+---
+
+# ◀️ Step 3 — Backward Algorithm (β)
+
+βₜ(i) = probability of the remaining observations from t+1 to T−1, given we're in state i at t.
+
+Initialization:
+
+```cpp
+beta[T - 1][i] = 1;
+```
+
+Recursion:
+
+```cpp
+beta[t][i] = sum_j A[i][j] * B[j][O[t+1]] * beta[t+1][j];
+```
+
+Formula:
+
+[  
+\beta_t(i) = \sum_{j} A_{ij} B_j(O_{t+1}) \beta_{t+1}(j)  
+]
+
+This “looks forward” from each state.
+
+---
+
+# 🧠 Step 4 — Compute γ (Gamma)
+
+Gamma gives the probability of being in state i at time t _given the entire observation sequence_:
+
+[  
+\gamma_t(i) = \frac{\alpha_t(i)\beta_t(i)}{\sum_k \alpha_t(k)\beta_t(k)}  
+]
+
+The code:
+
+```cpp
+double denom = 0.0;
+for (int i = 0; i < N; i++)
+    denom += alpha[t][i] * beta[t][i];
+
+for (int i = 0; i < N; i++)
+    gamma[t][i] = (alpha[t][i] * beta[t][i]) / (denom + 1e-12);
+```
+
+Why use gamma?
+
+- γ tells us the “expected occupancy” of each state at each time.
+    
+- We use γ to re-estimate π, A, and B.
+    
+
+Gamma is basically the **soft assignment** of time steps to states.
+
+---
+
+# 🔄 Step 5 — Re-Estimating π
+
+The new initial distribution πᵢ is simply the probability we start in each state:
+
+[  
+\pi_i^{new} = \gamma_0(i)  
+]
+
+Code:
+
+```cpp
+newPi[i] = gamma[0][i];
+```
+
+Very straightforward.
+
+---
+
+# 🔁 Step 6 — Re-Estimating Transition Matrix A
+
+We need the expected number of transitions from state i to j, divided by the expected number of times we were in i.
+
+The numerator is:
+
+[  
+\xi_t(i,j) = \alpha_t(i) A_{ij} B_j(O_{t+1}) \beta_{t+1}(j)  
+]
+
+Summed over t:
+
+[  
+\text{num}_{ij} = \sum_{t=0}^{T-2} \xi_t(i,j)  
+]
+
+The denominator is:
+
+[  
+\text{den}_{i} = \sum_{t=0}^{T-2} \gamma_t(i)  
+]
+
+Code:
+
+```cpp
+num += alpha[t][i] * A[i][j] * B[j][O[t+1]] * beta[t+1][j];
+den += gamma[t][i];
+```
+
+Then:
+
+```cpp
+newA[i][j] = num / den;
+```
+
+Interpretation:
+
+- If γ says state **i** is “visited often”, A[i][j] is normalized appropriately.
+    
+- A rows remain probability distributions.
+    
+
+---
+
+# 🎨 Step 7 — Re-Estimating Emission Matrix B
+
+For each state **i** and observation symbol **k**:
+
+[  
+B_i(k) = \frac{\sum_{t : O_t=k} \gamma_t(i)}{\sum_t \gamma_t(i)}  
+]
+
+Numerator = expected number of times we were in state i _while emitting k_.  
+Denominator = expected number of times we were in state i at all.
+
+Code:
+
+```cpp
+if (O[t] == k)
+    num += gamma[t][i];
+den += gamma[t][i];
+```
+
+Then:
+
+```cpp
+newB[i][k] = num / den;
+```
+
+This ensures:
+
+- Each B[i][*] sums to 1.
+    
+- Emissions reflect how often state i “produces” each symbol.
+    
+
+---
+
+# 📤 Final Output
+
+Program prints:
+
+- new π
+    
+- new A
+    
+- new B
+    
+
+These are the re-estimated parameters after **one EM iteration**.
+
+Running this multiple times (using the new matrices as input next iteration) will improve model likelihood until convergence.
+
+---
+
+# 🎯 Clean Concept Summary
+
+This code performs **one full iteration** of Baum–Welch training:
+
+### E-Step
+
+Compute expected state occupancies & transitions:
+
+- Forward
+    
+- Backward
+    
+- Gamma
+    
+- Xi (inside the A update)
+    
+
+### M-Step
+
+Update parameters:
+
+- π from γ₀
+    
+- A from expected transitions
+    
+- B from expected emissions
+    
+
+This is the core of training HMMs in speech processing, digit recognition, and similar sequence modeling tasks.
+
+
+ergodic model ,  bakis/feed forw. model
+
+speech sample -> front end analysis (ai,ci,bi) -> LBG -> observation seq.  -> viterbi
+
+
+*dynamic time warping* - 
+
+algorithm for matching two sequences that are similar in pattern but differ in speed,streching or timing.
+align two sequences by *warping the time axis* so their shapes match as closely as possible.
+eg. if someone says "hello" slowly and another says it faster, their waveforms don't align index-by-index. DTW fixes that.
+
+Alright, let’s break these down clean and clear — DTW vs. LTW — because people mix them up all the time.
+
+---
+
+## **1. Dynamic Time Warping (DTW)**
+
+DTW is the **OG algorithm** for matching two sequences that are similar in pattern but differ in speed, stretching, or timing.
+
+Think speech signals, handwriting, sensor readings — anything where timing may vary.
+
+### **Goal**
+
+Align two sequences by _warping the time axis_ so their shapes match as closely as possible.
+
+### **Why it exists**
+
+If someone says “hello” slowly and another says it faster, their waveforms don’t align index-by-index. DTW fixes that.
+
+### **Core idea**
+
+You create a **cost matrix** where:
+
+- Rows = time steps of sequence A
+    
+- Columns = time steps of sequence B
+    
+- Each cell = distance between points
+    
+
+Then you find a **minimum-cost warping path** through the matrix.
+
+### **Rules for warping**
+
+- Moves allowed:  
+    → right, down, or diagonal (match, stretch, compress)
+    
+- Path must be monotonic (no going backwards in time)
+    
+- Path must start at (0,0) and end at (T1,T2)
+    
+
+### **Computational Complexity**
+
+- **Time:** O(N × M)
+    
+- **Space:** O(N × M) unless optimized
+    
+- Typically sequences are same length so O(T²)
+    
+
+### **What DTW gives**
+
+- A non-linear alignment
+    
+- Warping path
+    
+- Minimum matching cost (distance)
+    
+
+### **Use cases**
+
+- Speech recognition
+    
+- Signature and gesture recognition
+    
+- ECG heartbeat matching
+    
+- Time-series anomaly detection
+    
+- Music tempo alignment
+    
+
+---
+
+## **2. Linear Time Warping (LTW)**
+
+LTW is basically a **simplified DTW**, where the warping is _restricted to be linear_ rather than fully non-linear.
+
+Think of it like: “I’ll stretch/compress, but only at one global rate.”
+
+### **Goal**
+
+Align sequences by applying a **global scaling factor** to the time axis, rather than a complex nonlinear alignment.
+
+### **How LTW works**
+
+Given sequences A and B, LTW assumes:
+
+[  
+B(t) \approx A(a \cdot t + b)  
+]
+
+Where:
+
+- **a** = time scaling (speed)
+    
+- **b** = offset (shift)
+    
+
+You apply one global linear transformation and compare.
+
+### **Core difference vs DTW**
+
+DTW gives each time-step its own warping.  
+LTW gives the _entire sequence_ one warping.
+
+### **Complexity**
+
+- **Time:** O(T) or O(T × K) depending on how many scaling factors you test
+    
+- Much faster than DTW
+    
+
+### **Limitations**
+
+- Can’t handle local timing variations
+    
+- Only works if distortion is uniform across the entire sequence
+    
+
+### **Use cases**
+
+- When sequences differ by a consistent rate/speed
+    
+- Real-time systems
+    
+- Simple matching tasks
+    
+- Scenarios where computational cost must be tiny
+    
+
+---
+
+## **3. DTW vs LTW — Quick Contrast**
+
+| Feature           | DTW                 | LTW                                          |
+| ----------------- | ------------------- | -------------------------------------------- |
+| Warping type      | Non-linear          | Linear                                       |
+| Local distortions | Yes                 | No                                           |
+| Flexibility       | High                | Low                                          |
+| Complexity        | O(T²)               | O(T)                                         |
+| Accuracy          | Very high           | Good only if global slowdown/speed-up exists |
+| Use case          | Speech, sensor data | Lightweight matching, uniform distortions    |
+
+---
+
+## **4. Intuition Difference**
+
+**DTW:**  
+Imagine matching two audio clips where one speaker pauses randomly — DTW bends the timeline anywhere it wants.
+
+**LTW:**  
+Imagine just speeding up or slowing down the entire clip by a constant percentage — that’s LTW.
