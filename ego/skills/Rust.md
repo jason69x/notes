@@ -38,11 +38,7 @@ use `let` to create variables , by default variables & references in rust are im
 println!("x = {x} and y + 2 = {}", y + 2);
 ```
 
-*crate* - collection of rust source code files
-
-- binary crate
-- library crate
-
+*crate* - collection of rust source code files. binary crate, library crate
 
 #### variables and mutability
 
@@ -57,7 +53,8 @@ the type of the value *must* be annotated.
 
 constants may be set only to a constant expression, not the result of a value that could only be computed at runtime.
 
-constants are valid for the entire time a program runs, within the scope in which they were declared.
+constants are valid for the entire time a program runs, within the scope in which they were declared. not deallocated when a scope ends.
+a `const` is a compile-time constant, not a runtime variable. compiler inlines the value wherever used. embedded directly into the generated code.
 
 `const` can be used in global scope , `let` can only be used in a function
 
@@ -137,6 +134,7 @@ results from each arm of `if` must be the same type.
 `loop {}`
 executes a block of code forever, until explicitly stopped.
 `break continue`
+every `break` with a value must return the same type.
 
 ```rust
 let result = loop {
@@ -163,7 +161,7 @@ loop labels
 
 #### Ownership
 
-each time an interpreted program reads a variable, then the interpreter must check whether that variable in defined.
+each time an interpreted program reads a variable, then the interpreter must check whether that variable is defined.
 runtime exceptions overhead.
 rust performs these checks at compile time.
 
@@ -198,13 +196,29 @@ fn add_suffix(mut name: String) -> String {
 }
 ```
 
-here, int the function `add_suffix` `name` is taking the ownership of the box pointed by first.
+here, in the function `add_suffix`, `name` is taking the ownership of the box pointed by first.
 
 1. At L1, the string “Ferris” has been allocated on the heap. It is owned by `first`.
 2. At L2, the function `add_suffix(first)` has been called. This moves ownership of the string from `first` to `name`. The string data is not copied, but the pointer to the data is copied.
 3. At L3, the function `name.push_str(" Jr.")` resizes the string’s heap allocation. This does three things. First, it creates a new larger allocation. Second, it writes “Ferris Jr.” into the new allocation. Third, it frees the original heap memory. `first` now points to deallocated memory.
 4. At L4, the frame for `add_suffix` is gone. This function returned `name`, transferring ownership of the string to `full`.
 
+***immutability*** applies to the binding, not to heap. whether you can modify the heap value depends on how you access it and who owns it.
+
+the heap memory is inaccessible for mutation through a immutable binding. *moving ownership is different from borrowing*.
+
+```rust
+let s = String::from("kiara");
+let mut t = s; //ownership moved
+t.push('!'):
+```
+
+mutability is checked at the current owners binding, not a allocation time.
+
+| Thing    | What `mut` affects                      |
+| -------- | --------------------------------------- |
+| `mut r`  | Can `r` be reassigned                   |
+| `&mut T` | Can the **pointed-to value** be mutated |
 
 **Moved heap data principle:** if a variable `x` moves ownership of heap data to another variable `y`, then `x` cannot be used after the move.
 
@@ -289,3 +303,70 @@ The first observation is what makes mutable references _safe_. Mutable reference
 
 The second observation is what makes mutable references _useful_. `v[2]` can be mutated through `*num`. For example, `*num += 1` mutates `v[2]`. Note that `*num` has the W permission, but `num` does not. `num` refers to the mutable reference itself, e.g. `num` cannot be reassigned to a *different* mutable reference.
 
+---
+
+LLVM - optimization and code generation
+
+`let x:i64 = 123_i32;`
+`let x: i32 = 3_000_000_000_i64 as i32;`
+rust does not check overflow for `as` casts at compile or runtime.
+
+rust will look at how the variable is *used* to determine the type.
+
+| Operation       | Overflow behavior | Extra info            |
+| --------------- | ----------------- | --------------------- |
+| `overflowing_*` | Wraps             | Returns overflow flag |
+| `wrapping_*`    | Wraps             | No flag               |
+| `saturating_*`  | Clamp             | No wrap               |
+| `carrying_add`  | Wraps             | Carry in/out          |
+| `borrowing_sub` | Wraps             | Borrow in/out         |
+| Default `+`     | Panic / Wrap      | Build-dependent       |
+
+`assert_eq!(a,b);`
+evaluates both expressions, checks `a==b`. if false, the program panics and prints both values.
+
+`todo!("todo")` - not yet implemented, program panics
+
+- a block in rust contains a sequence of expressions, enclosed by braces `{}`
+- the final expression of a block determines the value and type of the whole block.
+- if the last expression ends with `;` , then the resulting value and type is `()`.
+
+`dbg!(exp)`
+macro used for debugging. it prints the value of an expression along with filename and line number and returns the value of the expression.
+prints to `stderr`.
+
+every process gets its own standard streams in memory buffer.
+accesible via file descriptor table. these descriptors points to kernel-managed file descriptions representing underlying device or file. user-space buffers.
+
+memory may still exist for a out-of-scope variable, but rust considers the value *deallocated* and prevents access.
+
+**Match Expression**
+
+```rust
+match val {
+	1 => println!("one"),
+	10 => println!("ten"),
+	_ => println!("something"),
+}
+```
+
+*labels* can be attached to arbitrary blocks, not just loops.
+
+unreachable code is compile time error.
+
+**Macros`!`**
+
+macros are expanded into rust code during compilation, and can take a variable number of argumetns.
+- `format!(format,..)` - works like println! but return result as string.
+- `unreachable!("msg")` - panic if executed, eg. `_` in `match`.
+- `eprintln!(format,..)` - prints to `stderr`
+- `assert!(cond)` - panics if false
+
+
+if the compiler can prove the access is safe, it removes the runtime check for better performance.
+
+`{arr:?}` gives the debug output. `{:#?}` - pretty printing format.
+
+`let (x,y,z) = tuple` - pattern matching
+
+*patterns* can be used directly inside conditionals `if` `while` `match` to both check and condition and extract values in a single step.
