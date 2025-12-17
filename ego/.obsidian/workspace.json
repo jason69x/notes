@@ -35,7 +35,8 @@
               "title": "1000 days"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -184,10 +185,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "aacef5360be2f405",
+  "active": "f22c8ae76cfd07d1",
   "lastOpenFiles": [
-    "1000 days.md",
     "skills/Rust.md",
+    "1000 days.md",
+    "07 - images/Screenshot 2025-12-16 221427.png",
     "07 - images/1000days.jpg",
     "07 - images/kiara.jpg",
     "07 - images/__takanashi_kiara_hololive_and_1_more_drawn_by_yoellim5__66070072a2babc4156f6bae365db736e.jpg",
@@ -204,7 +206,6 @@
     "07 - images/references_rust.png",
     "07 - images/desktop.ini",
     "07 - images",
-    "images/number_literals_rust.png",
     "images/desktop.ini",
     "ai_ml projects/MLOps.md",
     "projects",

@@ -58,6 +58,9 @@ a `const` is a compile-time constant, not a runtime variable. compiler inlines t
 
 `const` can be used in global scope , `let` can only be used in a function
 
+only functions marked `const` can be called at compile time to generate `const` values.
+`const fn calc_val()->u8 {}`
+
 variables can be *shadowed*.
 
 shadowing in the same scope : old binding is dropped immediately
@@ -340,6 +343,8 @@ accesible via file descriptor table. these descriptors points to kernel-managed 
 
 memory may still exist for a out-of-scope variable, but rust considers the value *deallocated* and prevents access.
 
+mutability of the *binding* and mutability of the *data* are different things.
+
 **Match Expression**
 
 ```rust
@@ -369,4 +374,128 @@ if the compiler can prove the access is safe, it removes the runtime check for b
 
 `let (x,y,z) = tuple` - pattern matching
 
-*patterns* can be used directly inside conditionals `if` `while` `match` to both check and condition and extract values in a single step.
+*patterns* can be used directly inside conditionals `if` `while` `match` to both check the condition and extract values in a single step.
+
+**references**
+
+references provides a way to access another value without taking ownership of the value, and is also called *borrowing*.
+
+a borrow lasts until its last use. *non-lexical lifetimes*
+
+`& T` - shared reference
+`&mut T` - exclusive reference
+
+*rule :*
+while an immutable borrow exists, the borrowed place must not be mutated.
+
+when taking a immutable reference to some object , we assume that borrowed place won't change, if we allowed mutation then if some thread changed the value, then this might create undesired results.
+
+references can never be *null* in rust.
+
+a shared reference does not allow modifying the value it refers to, even if that value was mutable.
+
+**slices** 
+
+a slice gives you a view into a larger collection.
+slices always borrow data from the sliced type.
+
+```rust
+let a: [i32;5] = [10,20,30,40,50];
+let s: &[i32] = &a[2..4];
+println!("{s:?}"); // [20,30]
+
+&a[..] //slice of complete array
+```
+
+slices can't be grown once created.
+
+**strings**
+
+`&str` is a slice of UTF-8 encoded bytes, similar to `&[u8]`
+`String` is an owned buffer of UTF-8 encoded bytes, similar to `Vec<T>`
+
+```rust
+let s1: &str = "World"; // lives in program's read only memory
+let s = String::from("hello");
+let slice: &str = &s[1..]; // borrows String s , "hello" on heap
+s.push_str("kiara");
+```
+
+`format!()` - generate an owned string from dynamic values.
+
+```rust
+    println!("{:?}", b"abc"); // byte string literal  [97,98,99]
+    println!("{:?}", &[97, 98, 99]);  // of type &[u8]
+	println!(r#"<a href="link.html">link</a>"#); // raw string #-delimeter for ""
+```
+
+
+`for i in v.iter() &v` `v.iter_mut() &mut v` 
+
+
+**user defined types**
+
+```rust
+struct Person {
+	name: String,
+	age: u8,
+}
+let mut person: Person = Person {  // named fields
+		name: String::from("kiara"),
+		age: 25,
+}
+let waifu = Person{name,age}; //variable names should match field
+```
+
+tuple structs, usually used for single-field wrappers
+
+```rust
+struct Newtons(f64);
+struct Person (String,u32);  //tuple struct
+let waifu = Person(String::from("kiara"),25); // fields accessed via .0 .1
+
+let kiara = Person{..person};
+```
+
+
+**Enums**
+
+enumerations allow you to collect a set of values under one type.
+variations
+
+```rust
+enum IpAddrKind {
+	V4(u8,u8,u8,u8),  // stores 4 u8 ints
+	V6, // None data
+}
+
+let localhost: IpAddrKind = IpAddrKind::V4(192,168,0,1)
+```
+
+
+*option enum* 
+
+used if a value can be something or NULL.
+included in programs scope by defualt
+
+```rust
+enum Option<T> {
+	Some(T),
+	None,
+}
+let x: Option<i32> = Some(5);
+let y: Option<i32> = None;
+let z: i32 = 10 + y.unwrap_or(default: 0);
+```
+
+```rust
+fn plus_one(x: Option<i32>) -> Option<i32> {
+	match x {
+		None => None,
+		Some(i: i32) => Some(i+1),
+	}
+}
+```
+
+*static* 
+variables will live during the whole execution of the program.
