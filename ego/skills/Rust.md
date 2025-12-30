@@ -463,6 +463,8 @@ let kiara = Person{..person};
 enumerations allow you to collect a set of values under one type.
 variations
 
+*mental model* - "a value of this type is exactly one of these possibilities."
+
 ```rust
 enum IpAddrKind {
 	V4(u8,u8,u8,u8),  // stores 4 u8 ints
@@ -479,7 +481,7 @@ used if a value can be something or NULL.
 included in programs scope by defualt
 
 ```rust
-enum Option<T> {
+enum Option<T> {  // enum for something or nothing. rust doesn't have null
 	Some(T),
 	None,
 }
@@ -499,3 +501,131 @@ fn plus_one(x: Option<i32>) -> Option<i32> {
 
 *static* 
 variables will live during the whole execution of the program.
+
+`for i in vec` - `vec` is no longer usable after the loop. giving ownership of each element 1 by 1 to i & gets dropped after each iteration. ownership of `vec` moved into the loop, becomes unusable at the start of the loop. vec gets dropped at the end of loop.
+
+`let output: Vec<i32> = input.iter().map(|e| e+1).collect();`
+
+```rust
+enum Message {
+    Quit,
+    Write(String),
+    Move { x: i32, y: i32 },
+    ChangeColor(i32, i32, i32),
+}
+
+fn process(msg: Message) {
+    match msg {
+        Message::Quit => println!("Quit requested"),
+        Message::Write(text) => println!("Message: {}", text),
+        Message::Move { x, y } => println!("Move to ({}, {})", x, y),
+        Message::ChangeColor(r, g, b) => println!("Color: {}, {}, {}", r, g, b),
+    }
+}
+```
+
+`match` must be exhaustive , every possible variant must be handled.
+
+null pointer bugs are impossible, use `Option<T>  Some(T)  None`
+
+*enum for errors*
+
+```rust
+enum Result<T,E> {
+	Ok(T),
+	Err(E),
+}
+fn divide(a: i32, b: i32) -> Result<i32, String> {
+    if b == 0 {
+        Err("division by zero".to_string())
+    } else {
+        Ok(a / b)
+    }
+}
+match divide(10, 2) {
+    Ok(v) => println!("result = {}", v),
+    Err(e) => println!("error: {}", e),
+}
+```
+
+| Struct                            | Enum                         |
+| --------------------------------- | ---------------------------- |
+| All fields exist at once          | Exactly one variant exists   |
+| Represents “has these properties” | Represents “is one of these” |
+| Good for records                  | Good for states / choices    |
+
+
+```rust
+enum TrafficLight
+    Red,
+    Yellow,
+    Green,
+
+impl TrafficLight 
+    fn duration(&self) -> u32 
+        match self 
+            TrafficLight::Red => 60,
+            TrafficLight::Yellow => 5,
+            TrafficLight::Green => 45,
+```
+
+##### Pattern Matching
+
+```rust
+let (a,b,c) = tuple;
+let (_,b,c) = tuple;
+let (..,c) = tuple;  // .. can only be used once per tuple pattern
+let [first,..,last] = array;
+```
+
+*match*
+
+```rust
+	    let input = 'x';
+    match input {
+        'q'                       => println!("Quitting"),
+        'a' | 's' | 'w' | 'd'     => println!("Moving around"),
+        '0'..='9'                 => println!("Number input"),
+        key if key.is_lowercase() => println!("Lowercase: {key}"),
+        _                         => println!("Something else"),
+    }
+```
+
+here *key* is a pattern binding. it matches any value that reaches this arm. `if key.is_lowercase()` is a *match gaurd*.
+
+- The condition defined in the guard applies to every expression in a pattern with an `|` as a whole.
+
+```rust
+match x 
+    key @ ('a' | 'b' | 'c') if key != 'b' => println!("a or c"),
+    _ => println!("other"),
+    
+let opt = Some(123);
+match opt {
+    outer @ Some(inner) => {
+        println!("outer: {outer:?}, inner: {inner}");
+    }
+    None => {}
+}
+
+```
+
+
+*match on struct*
+
+```rust
+struct Foo
+    x: (u32, u32),
+    y: u32,
+    
+let foo = Foo { x: (1, 2), y: 3 }
+    match foo {
+        Foo { y: 2, x: i }   => println!("y = 2, x = {i:?}"),
+        Foo { x: (1, b), y } => println!("x.0 = 1, b = {b}, y = {y}"),
+        Foo { y, .. }        => println!("y = {y}, other fields were ignored"),
+```
+
+
+`&String` is automatically coerced to `&str` by compiler.
+`String` is heap allocated.
+`trim()` - removes whitespaces, return `&str`
