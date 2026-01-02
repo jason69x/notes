@@ -9,7 +9,7 @@
 `dw` - until start of the next word
 `de` - to end of the current word
 `d$` - to end of the line.
-`db` - to start of the previous word
+`db` - to start of the previous word if on the start of cur word else         till start of cur word.
 `d0` - to start of line
 
 here `w e $ b 0` are the motions.
