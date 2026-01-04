@@ -43,8 +43,9 @@ println!("x = {x} and y + 2 = {}", y + 2);
 #### variables and mutability
 
 by default , variables are immutable.
-`println!("{x}")` - format argument must be a string literal
 you can make them mutable by adding `mut` in front of variable name
+`println!("{x}")` - format argument must be a string literal
+positional arguments are zero-based.
 
 *constants* , 
 are values that are bound to a name . always immutable
@@ -82,7 +83,7 @@ rust is a *statically typed* language, must know the types of all variables at c
 have fixed length, supports different data types
 
 `let tup: (i32,f64,u8) = (500,6.4,1);`
-`let tup : (4,3,2);`
+`let tup = (4,3,2);`
 `let (x,y,z) = tup;`  - pattern matching to destructure a tuple
 `tup.0`
 
@@ -93,7 +94,7 @@ have fixed length, supports different data types
 have fixed length, same data type
 `let a = [1,2,3];`
 `let a: [i32;5] = [1,2,3,4,5];`
-`let a = [3;5];`  - 5 element each 3
+`let a = [3;5];`  - 3 repeated 5 times 
 
 both *tuple* & *arrays* are immutable by default in rust.
 
@@ -150,10 +151,19 @@ let result = loop {
 
 loop labels
 
-```
-'counting_up: loop {
-		break `counting_up;
+```rust
+let ten = 'counting_up: loop {
+		break `counting_up 10;
 }
+```
+
+```rust
+let value = 'block: {
+    if true {
+        break 'block 42;
+    }
+    0
+};
 ```
 
 `while cond {}`
@@ -206,6 +216,8 @@ here, in the function `add_suffix`, `name` is taking the ownership of the box po
 3. At L3, the function `name.push_str(" Jr.")` resizes the string’s heap allocation. This does three things. First, it creates a new larger allocation. Second, it writes “Ferris Jr.” into the new allocation. Third, it frees the original heap memory. `first` now points to deallocated memory.
 4. At L4, the frame for `add_suffix` is gone. This function returned `name`, transferring ownership of the string to `full`.
 
+*all references becomes invalid after reallocation*.
+
 ***immutability*** applies to the binding, not to heap. whether you can modify the heap value depends on how you access it and who owns it.
 
 the heap memory is inaccessible for mutation through a immutable binding. *moving ownership is different from borrowing*.
@@ -216,7 +228,7 @@ let mut t = s; //ownership moved
 t.push('!'):
 ```
 
-mutability is checked at the current owners binding, not a allocation time.
+mutability is checked at the current owners binding, not at allocation time.
 
 | Thing    | What `mut` affects                      |
 | -------- | --------------------------------------- |
@@ -236,7 +248,7 @@ Rust does not in general try to determine whether if-statements will or won't ex
 
 
 #### References and Borrowing
-
+	
 ```rust
 fn main() {
     let m1 = String::from("Hello");
@@ -273,6 +285,8 @@ let c: i32 = *r2;    // so only one dereference is needed to read it
 `&mut a` - exclusive borrow of `a` that allows modification, only **one** mutable reference to a value can exists at a time. you cannot have any immutable references alive at the same time.
 
 `String` is not a pointer type `Box` is.
+
+A reference's lifetime must be *entirely inside* the lifetime of the value it borrows.
 
 ```rust
 let mut v: Vec<i32> = vec![1, 2, 3];
@@ -361,7 +375,7 @@ unreachable code is compile time error.
 
 **Macros`!`**
 
-macros are expanded into rust code during compilation, and can take a variable number of argumetns.
+macros are expanded into rust code during compilation, and can take a variable number of arguments.
 - `format!(format,..)` - works like println! but return result as string.
 - `unreachable!("msg")` - panic if executed, eg. `_` in `match`.
 - `eprintln!(format,..)` - prints to `stderr`
