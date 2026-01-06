@@ -416,7 +416,7 @@ slices always borrow data from the sliced type.
 ```rust
 let a: [i32;5] = [10,20,30,40,50];
 let s: &[i32] = &a[2..4];
-println!("{s:?}"); // [20,30]
+println!("{s:?}"); // [30,40]
 
 &a[..] //slice of complete array
 ```
@@ -643,3 +643,173 @@ let foo = Foo { x: (1, 2), y: 3 }
 `&String` is automatically coerced to `&str` by compiler.
 `String` is heap allocated.
 `trim()` - removes whitespaces, return `&str`
+
+
+**let control flow**
+
+`if let Some(x) = result {}`
+
+unlike `match`, `if let` does not have to cover all branches.
+
+*let else*
+
+```rust
+    let Some(s) = maybe_string else {
+        return Err(String::from("got None"));
+    };
+```
+
+the *else* case must diverge (`return`,`break`, or panic - anything but falling off the end of block).
+
+**Method and Traits**
+
+rust allows us to associate functions with new types. by using `impl`.
+
+```rust
+struct CarRace {
+    name: String,
+    laps: Vec<i32>,
+}
+impl CarRace {
+    // No receiver, a static/associated function
+    fn new(name: &str) -> Self {
+        Self { name: String::from(name), laps: Vec::new() }
+    }
+    // Exclusive borrowed read-write access to self
+    fn add_lap(&mut self, lap: i32) {
+        self.laps.push(lap);
+    }
+    // Shared and read-only borrowed access to self
+    fn print_laps(&self) {
+        println!("Recorded {} laps for {}:", self.laps.len(), self.name);
+        for (idx, lap) in self.laps.iter().enumerate() {
+            println!("Lap {idx}: {lap} sec");
+        }
+    }
+    // Exclusive ownership of self (covered later)
+    fn finish(self) {
+        let total: i32 = self.laps.iter().sum();
+        println!("Race {} is finished, total lap time: {}", self.name, total);
+    }
+}
+fn main() {
+    let mut race = CarRace::new("Monaco Grand Prix");
+    race.add_lap(70);
+    race.add_lap(68);
+    race.print_laps();
+    race.add_lap(71);
+    race.print_laps();
+    race.finish();
+    // race.add_lap(42);
+}
+```
+
+associated functions are accessed using `::` 
+`new` has no `self` parameter, so it is an associated function. which means it belongs to the *type*, not an instance.
+
+- `::` - associated functions/constansts/types
+- `.` - methods that take `self`,`&self`,`&mut self`
+
+the `self` arguments specify the object the method acts on.
+
+- `&self` - borrows the object from the caller using a shared and immutable reference. the object can be used afterwards.
+- `&mut self` - borrows the object using a unique and mutable reference. can be used after wards.
+- `self` - takes ownership of the object and moves it away from the caller. the object will be dropped when the methods returns unless its ownership is explicity transmitted. complete ownership doesn't automatically mean mutibility.
+- `mut self` - same as above, but the method can mutate object.
+- no receiver - becomes a static/associated method on the struct.
+
+`String`,`Vec` are stack handles pointing to heap data.
+
+methods can be also be called like associated functions by explicitly passing the receiver `CarRace::add_lap(&mut self,20)`
+
+`self` is an abbreviated term for `self: Self`, struct name could also be used.
+`Self` is a type alias for the type the `impl` block is in.
+
+**Traits**
+
+```rust
+trait Pet {
+	fn talk(&self) -> String;
+	fn greet(&self);
+}
+```
+
+- a trait defines a number of methods that types must have in order to implement the trait.
+
+```rust
+trait Pet {
+    fn talk(&self) -> String;
+    fn greet(&self) {
+        println!("Oh you're a cutie! What's your name? {}", self.talk());
+    }
+}
+struct Dog {
+    name: String,
+    age: i8,
+}
+impl Pet for Dog {
+    fn talk(&self) -> String {
+        format!("Woof, my name is {}!", self.name)
+    }
+}
+fn main() {
+    let fido = Dog { name: String::from("Fido"), age: 5 };
+    dbg!(fido.talk());
+    fido.greet();
+}
+```
+
+to implement Trait for type, you can use `impl Trait for Type {..}` block.
+
+traits may provide default implementations of some methods and they can rely on all the methods in a trait.
+
+need to implement *all non-default methods* of a trait
+trait implementations are *per-type*.
+
+*super-traits*
+```rust
+trait Pet: Animal + Owner {  // types impl Pet must also impl Animal Owner
+    fn name(&self) -> String;
+} 
+```
+
+*associated types*
+
+```rust
+struct Meters(i32);
+struct MetersSquared(i32);
+
+trait Multiply {
+    type Output;
+    fn multiply(&self, other: &Self) -> Self::Output;
+}
+impl Multiply for Meters {
+    type Output = MetersSquared;
+    fn multiply(&self, other: &Self) -> Self::Output {
+        MetersSquared(self.0 * other.0)
+    }
+}
+fn main() {
+    println!("{:?}", Meters(10).multiply(&Meters(20)));
+}
+```
+
+*deriving*
+
+```rust
+#[derive(Debug, Clone, Default)]
+struct Player {
+    name: String,
+    strength: u8,
+    hit_points: u8,
+}
+
+fn main() {
+    let p1 = Player::default(); // Default trait adds `default` constructor.
+    let mut p2 = p1.clone(); // Clone trait adds `clone` method.
+    p2.name = String::from("EldurScrollz");
+    // Debug trait adds support for printing with `{:?}`.
+    println!("{p1:?} vs. {p2:?}");
+}
+```
+

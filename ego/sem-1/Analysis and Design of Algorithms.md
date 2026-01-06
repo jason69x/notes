@@ -43,7 +43,7 @@ it takes $T(\frac{n}{b})$ time to solve one subproblem , so to solve $a$ such pr
 
 $O$-notation characterizes a *upper bound* on the asymptotic behavior of a function. it says that the function grows *no faster* than a cetain rate , based on the highest order term .
 
-consider a function $7n^2$ , we can write it is $O(n^2)$ , we can also write it is $O(n^3)$ , because it grows no faster than $n^3$. similarly $n^4$ and so on.
+consider a function $7n^2$ , we can write it as $O(n^2)$ , we can also write it is $O(n^3)$ , because it grows no faster than $n^3$. similarly $n^4$ and so on.
 
 $\Omega$-notation characterizes a *lower bound* on the asymptotic behavior of a function. it says that the function grows *at least as fast* as a certain rate.
 
