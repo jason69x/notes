@@ -1,0 +1,1 @@
+shell scripting, grep, awk, sed, user management, gdb, ddd

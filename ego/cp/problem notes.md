@@ -33,3 +33,7 @@ $p^3$ - divisors 4 : $1,p,p^2,p^3$
 $pq$ - divisors 4 : $1,p,q,pq$
 
 
+**lost cow problem**
+
+worst-case distance traveled $\leq 9\cdot\lvert x-y\rvert$ before finding $y$ from $x$ using zig-zag method $x+1,x-2,x+4,\ldots$ 
+

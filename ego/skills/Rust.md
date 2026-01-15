@@ -813,3 +813,97 @@ fn main() {
 }
 ```
 
+
+**Generics**
+
+```rust
+fn pick<T>(cond: bool, left: T, right: T) -> T {
+    if cond { left } else { right }
+}
+fn main() {
+    println!("picked a number: {:?}", pick(true, 222, 333));
+    println!("picked a string: {:?}", pick(false, 'L', 'R'));
+}
+```
+
+*trait bounds*
+
+```rust
+fn duplicate<T: Clone>(a: T) -> (T, T) {
+    (a.clone(), a.clone())  // can use trait methods inside if implemented
+}
+struct NotCloneable;
+fn main() {
+    let foo = String::from("foo");
+    let tatte = duplicate(NotCloneable); //error
+    let pair = duplicate(foo);
+    println!("{pair:?}"); // ("foo","foo")
+}
+```
+
+```rust
+fn duptlicate<T>(a:T)->(T,T)
+where
+	T:Clone,  // left can be Option<T>
+{
+	(a.clone(), a.clone())
+}
+```
+
+`pub trait` - trait can be used by other modules/crates outside current.
+
+```rust
+impl<L: Logger> Logger for VerbosityFilter<L> {
+    fn log(&self, verbosity: u8, message: &str) {
+        if verbosity <= self.max_verbosity {
+            self.inner.log(verbosity, message);
+        }
+    }
+}
+```
+
+**closures**
+
+`|..| ..`
+
+```rust
+fn main(){
+	let double_it = |n| n*2;
+	let add_1f32 = |x:f32| -> f32 {x+1.0};
+	dbg!(add_1f32(50.));
+}
+```
+
+arguments type can be inferred, return type is optional & can only be used with `{}`.
+
+```rust
+    let fn_ptr: fn(i32) -> String = foo;
+    // Closures that don't capture anything can also coerce to regular fn pointers.
+    let fn_closure: fn(i32) -> String = |val| format!("Closure val was {val}");
+    dbg!(fn_closure(7));
+```
+
+a closure can capture variables from env it was defined. by reference.
+
+```rust
+fn main(){
+	let max = 5;
+	let clamp = |v| { if v > max {max} else {v}};
+}
+```
+
+to capture by mutable ref. need to make var & closure mutable.
+
+to own data use `let clamp = move |V| {...};`
+
+`Option<T>` - stores either value of type `T` or nothing.
+
+```rust
+let x: Option<i32> = Some(5);
+let v = x.unwrap(); // if Some -> 5 else panics
+let v = x.expect("err msg"); // if Some->5 else panics with "err msg".
+let v = x.unwrap_or(0); // if some->5 else 0
+```
+
+
+`let n = "42".parse::<i32>().expect("x");`

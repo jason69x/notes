@@ -79,3 +79,33 @@ use `v` to save part of a file
 `y` - *yank operator*, copy text
 
 `H M L` - first, middle, last line of screen
+
+`ZZ` - save and quit  `ZQ` - force quit
+
+`f<char>` - jump and land on char
+`t<char>` - jump and land before char
+
+`<` `>` - indent selection by one block
+
+`ddp` - swap position of consecutive lines, dd then p
+
+
+**cmdline shortcuts**
+
+`Ctrl + A` - move to start of line
+`Ctrl + E` - move to end of line
+`Alt + B` - move back one word
+`Alt + F` - move forward one word
+
+`Ctrl + U` - del from cursor to start of line
+`Ctrl + K` - del from cursor to end of line
+`Ctrl + W` - delete word before cursor
+`Alt + D` - delete word after cursor
+`Ctrl + D` - delete character under cursor
+
+`Ctrl + Y` - paste last deleted text
+
+`Ctrl + P` - previous cmd
+`Ctrl + N` - next cmd
+`Ctrl + R` - reverse search
+`Ctrl + G` - cancel history search

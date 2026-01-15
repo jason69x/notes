@@ -1,15 +1,13 @@
-***RUST***
-**SHELL -> HTTP -> REDIS -> SQLITE -> KAFKA**
-
-shell - rust
-http  - go
-redis - rust
-sqlte - rust
-kafka - go
-
-
 *cpi goals for sem 2* -
 - ai & ethics : 9
-- topics in networks : 7
-- computer system lab : 10
+- performance modeling: 7
+- computer system lab : 9
 - nptel : 10
+
+**books to read** - 
+
+- *python* for devops
+- *linux* cmd
+- hands on *ML*
+- parts of *distributed systems* & *building extensive data app.*
+- *cloud computing*
