@@ -8,7 +8,7 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e61efe53244f5d05",
+            "id": "7844fee66caae449",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -95,7 +95,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "skills/Rust.md",
+                "file": "skills/socket programming.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -105,7 +105,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Rust"
+              "title": "Backlinks for socket programming"
             }
           },
           {
@@ -170,54 +170,53 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e61efe53244f5d05",
+  "active": "7844fee66caae449",
   "lastOpenFiles": [
-    "skills/HPC.md",
+    "skills/socket programming.md",
+    "07 - images/socket.png",
+    "skills/vim.md",
     "1000 days.md",
-    "ai infra/python.md",
-    "07 - images/generators_python.png",
+    "07 - images/recv().png",
+    "07 - images/send().png",
+    "07 - images/accept.png",
+    "07 - images/listen.png",
+    "07 - images/connect.png",
+    "07 - images/bind.png",
+    "07 - images/getaddrinfo_call.png",
+    "07 - images/getaddrinfo.png",
+    "skills/networks.md",
+    "assignments/cs-lab ass1.md",
+    "07 - images/struct_sockaddr.png",
+    "sem-2/computer system lab.md",
+    "cp/usaco.guide.md",
+    "07 - images/ping_packet_loss.png.~tmp",
     "books/The Linux Command Line - william shotts.md",
+    "skills/HPC.md",
+    "ai infra/python.md",
     "EGO/GOALS.md",
-    "07 - images/python_exception.png",
     "skills/python.md",
     "sem-2/performance analysis.md",
     "sem-1/Mathematics for computer science.md",
-    "07 - images/linux_perm.png",
-    "skills/vim.md",
-    "07 - images/umask.png",
     "MTP/Untitled.md",
     "MTP",
     "Untitled.md",
     "ai infra",
-    "sem-2/computer system lab.md",
     "skills/berserk.md",
     "projects/SHELL.md",
-    "07 - images/wildclasses.png",
-    "07 - images/wildcards.png",
-    "07 - images/sym_link.png",
     "cp/problem notes.md",
-    "cp/usaco.guide.md",
     "skills/Rust.md",
     "cp/problems.md",
     "sem-1/Analysis and Design of Algorithms.md",
     "cp/algorithms.md",
     "cp/cpp syntax.md",
     "sem-2",
-    "07 - images/tc.png",
-    "07 - images/tc.png",
-    "07 - images/guts.png",
     "math/GCD - greatest common divisor.md",
-    "math/prime numbers.md",
-    "math/roots and polynomials.md",
     "books",
     "07 - images/desktop.ini",
     "07 - images",
     "images/desktop.ini",
-    "ai_ml projects/MLOps.md",
     "projects",
-    "skills/pandas.md",
     "skills/Untitled",
-    "ai_ml projects",
     "Untitled.canvas"
   ]
 }

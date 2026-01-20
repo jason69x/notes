@@ -109,3 +109,11 @@ use `v` to save part of a file
 `Ctrl + N` - next cmd
 `Ctrl + R` - reverse search
 `Ctrl + G` - cancel history search
+
+----
+`B` `W` - ignore punctuations
+`20G`
+`fa` `;`
+
+`PS1` - prompt string 1
+

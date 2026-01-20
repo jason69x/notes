@@ -25,3 +25,8 @@ else they both returns `end()`. only supported in ordered set.
 `tie(a,b,..,n) = t`
 `t = tie(a,b,c)`
 `get<2>(t) = 7`
+
+`next_permutation(v.begin(),v.end())` - $O(n)$
+
+
+

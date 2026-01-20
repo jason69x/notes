@@ -239,3 +239,8 @@ init has *pid* 1 . pid's are assinged in ascending order.
 `nohup firefox`
 
 
+
+shell maintains a body of information during our shell session called *environment*.
+
+`printenv` `set` `echo $HOME`
+
