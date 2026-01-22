@@ -44,3 +44,17 @@ identifies the entire subnet/network itself, not any single device
 routers, switches uses it internally for routing decisions.
 (it checks network addr. in its routing table and forwards to it)
 
+*address resolution protocol*
+
+translation between ip addr. and mac addr.
+a host provides ip addr. to ARP and it returns mac addr. corresponding to that ip.
+resolves only for hosts and router interfaces on the same subnet.
+each router and host has ARP table in their memory.
+
+*socket programming*
+
+kernel closes socket only when last reference is gone.
+
+listening socket, tcp listen state
+connected socket, tcp established state
+

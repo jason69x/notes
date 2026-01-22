@@ -8,17 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "7844fee66caae449",
+            "id": "3778a870d469d163",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1000 days.md",
+                "file": "skills/networks.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1000 days"
+              "title": "networks"
             }
           }
         ]
@@ -170,12 +170,18 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "7844fee66caae449",
+  "active": "3778a870d469d163",
   "lastOpenFiles": [
+    "1000 days.md",
+    "assignments/cs-lab ass1.md",
+    "skills/networks.md",
+    "skills/vim.md",
+    "EGO/PROJECTS.md",
+    "sem-2/performance analysis.md",
+    "sem-2/cloud computing.md",
+    "07 - images/reze_colors.png",
     "skills/socket programming.md",
     "07 - images/socket.png",
-    "skills/vim.md",
-    "1000 days.md",
     "07 - images/recv().png",
     "07 - images/send().png",
     "07 - images/accept.png",
@@ -184,18 +190,13 @@
     "07 - images/bind.png",
     "07 - images/getaddrinfo_call.png",
     "07 - images/getaddrinfo.png",
-    "skills/networks.md",
-    "assignments/cs-lab ass1.md",
-    "07 - images/struct_sockaddr.png",
     "sem-2/computer system lab.md",
     "cp/usaco.guide.md",
     "07 - images/ping_packet_loss.png.~tmp",
     "books/The Linux Command Line - william shotts.md",
     "skills/HPC.md",
     "ai infra/python.md",
-    "EGO/GOALS.md",
     "skills/python.md",
-    "sem-2/performance analysis.md",
     "sem-1/Mathematics for computer science.md",
     "MTP/Untitled.md",
     "MTP",
@@ -210,7 +211,6 @@
     "cp/algorithms.md",
     "cp/cpp syntax.md",
     "sem-2",
-    "math/GCD - greatest common divisor.md",
     "books",
     "07 - images/desktop.ini",
     "07 - images",
