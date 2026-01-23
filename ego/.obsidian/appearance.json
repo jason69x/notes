@@ -1,10 +1,13 @@
 {
-  "accentColor": "#f1b79f",
+  "accentColor": "#d393e1",
   "interfaceFontFamily": "FiraCode Nerd Font",
   "cssTheme": "AnuPpuccin",
   "showRibbon": false,
   "enabledCssSnippets": [
-    "Colored Sidebar Items"
+    "Colored Sidebar Items",
+    "custom-background",
+    "extended-colorschemes"
   ],
-  "theme": "obsidian"
+  "theme": "obsidian",
+  "showViewHeader": false
 }

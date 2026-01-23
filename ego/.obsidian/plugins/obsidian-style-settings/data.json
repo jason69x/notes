@@ -41,7 +41,7 @@
   "anuppuccin-theme-settings@@anp-rainbow-folder-bg-opacity": 0.7,
   "anuppuccin-theme-settings@@anp-stacked-header-width": 30,
   "anuppuccin-theme-settings@@anp-bg-fix": true,
-  "anuppuccin-theme-settings@@anuppuccin-theme-accents": "ctp-accent-green",
+  "anuppuccin-theme-settings@@anuppuccin-theme-accents": "ctp-accent-lavender",
   "anuppuccin-theme-settings@@anuppuccin-theme-dark": "ctp-frappe",
   "anuppuccin-theme-settings@@anp-border-padding": 10,
   "anuppuccin-theme-settings@@anp-border-radius": 12,
@@ -49,5 +49,14 @@
   "anuppuccin-theme-settings@@ctp-custom-red@@dark": "#F1B79F",
   "anuppuccin-theme-settings@@ctp-custom-green@@dark": "#9CD7C5",
   "anuppuccin-theme-settings@@anp-print": true,
-  "anuppuccin-theme-settings@@file-margins": 18
+  "anuppuccin-theme-settings@@file-margins": 18,
+  "obsidian-transparent@@tr": "transparent",
+  "anuppuccin-custom-background@@anp-background-image-toggle": true,
+  "anuppuccin-custom-background@@anp-background-image-dark": "url(\"https://images6.alphacoders.com/140/thumb-1920-1403573.png\")",
+  "anuppuccin-theme-settings-extended@@anp-theme-ext-dark": true,
+  "anuppuccin-theme-settings-extended@@anp-theme-ext-amoled": false,
+  "anuppuccin-theme-settings-extended@@catppuccin-theme-dark-extended": "ctp-thorns",
+  "anuppuccin-custom-background@@anp-custom-bg-blur-dark": 5,
+  "anuppuccin-custom-background@@anp-custom-bg-card-fg-opacity-dark": 0.4,
+  "anuppuccin-custom-background@@anp-custom-bg-brightness-dark": 0.3
 }
