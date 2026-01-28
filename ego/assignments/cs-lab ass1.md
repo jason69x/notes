@@ -1,4 +1,11 @@
 
+## CS-558 - Assignment 1
+### Group 6
+- 254101015, Gobinda Panda, g.panda@iitg.ac.in
+- 254101029, Leisel Rangsuo Koireng, leisel.koireng@iitg.ac.in
+- 254101043, Raghuraman B, b.raghuraman@iitg.ac.in
+- 254101002, Abhishek Meena, abhishekm1002@iitg.ac.in
+- 254101006, Ankit Kumar Jha, ankitkj@iitg.ac.in
 ###### Q1. Ping Command Exploration
 1.*detect packet loss*
 
@@ -49,10 +56,9 @@ host: youtube.com , number of packets: 30
 | 512 bytes   | 12.534 | 11.411 | 11.594 |
 | 1024 bytes  | 12.395 | 10.815 | 14.011 |
 | 2048 bytes  |   -    |   -    |   -    |
-//**todo** ● The effect of packet size on RTT
-● The influence of time-of-day on network latency
+![[rtt_vs_size.png|300]]
 
-
+packet size and time-of-day doesn't have much effect on RTT it mostly depends on server load and routing paths.
 ###### Q3. ifconfig and route commands
 
 *1.ifconfig* - network interface management utility.
@@ -165,5 +171,42 @@ associating your mac address with another hosts ip address is known as ARP spoof
 by using static ARP entries, a host fixes a ip with a mac address and prevents further updates to this entry.
 
 disadvantages of static ARP entries, NIC of a host can change due to failure. need to manually set ARP entry on every host in the subnet.
-
 ###### Q7. LAN scanning using NMAP
+subnet used : gaurang hostel bharos wifi LAN
+
+`nmap -sn 192.168.1.0/24`
+
+|  time   | active hosts |
+| :-----: | :----------: |
+| 7:35pm  |      2       |
+| 2:45pm  |      2       |
+| 11:55am |      2       |
+| 3:08pm  |      2       |
+| 6:37pm  |      2       |
+| 10:35pm |      2       |
+this Access Point has setup AP isolation or per-client Virtual LAN.
+we can check this by using `nmap -sn -PR 192.168.1.0/24`.
+this command sends ARP request to each hosts on LAN, if ARP reply arrives -> host is up else host is treated as down. this resulted in only 2 hosts that is the router and current host.
+
+*1. probes to determine a host is active*
+
+ ICMP Echo Request, 
+ Sends ICMP Echo Requests and waits for Echo Replies.
+ 
+ TCP SYN Probe,
+ Sends a TCP SYN packet to common ports (e.g., 80, 443).
+ A SYN-ACK or RST response indicates the host is up.
+ 
+ TCP ACK Probe,
+ Sends TCP ACK packets to target ports.
+ A RST response suggests the host is reachable.
+
+there are several other probes as well, but these are the most frequently used.
+
+*2. purpose of -n*
+
+if used alone `nmap -n` it disables dns resolution. nmap still does host discovery and port scans.
+`nmap -sn` is used to disable port scanning and perform host discovery only.
+using `-n` improves scan performance and reduces total time it takes to perform the scan.
+
+---

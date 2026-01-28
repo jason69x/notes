@@ -28,5 +28,8 @@ else they both returns `end()`. only supported in ordered set.
 
 `next_permutation(v.begin(),v.end())` - $O(n)$
 
+`count(s.begin(), s.end(), 'i')`
+$O(\log{n})$ for set,map -> 0/1.
+`count_if(nums.begin(),nums.end(),[](int x){return x<3;});` - count with cond.
 
-
+`" \n"[i==n-1]`
