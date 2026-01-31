@@ -194,3 +194,239 @@ data must outlive any references to it.
 if a value does not own heap data, then it can be copied without a move.
 `get_first(&name)`
 rust only looks at the type signature, which just says "some String in the input gets borrowed". rust conservatively decides then that both `name.0` & `name.1` get borrowed, and eliminates write and own permissions on both.
+![[rust_permissions.png|400]]
+###### 4.4 The Slice Type
+slices let you reference a contiguous sequence of elements in a collection rather than the whole collection.
+a slice is kind of a reference, so it is a non-owning pointer.
+
+a string slice is a reference to part of a `String`
+`let hello: &str = &s[0..5];`
+
+`String` metadata is stored on stack, underlying `Vec<u8>` vec of bytes
+
+`s[..5]  s[0..]  s[..]`
+
+`s.as_bytes()` - produces immutable reference to `s`
+`for (i,&byte) in bytes.iter().enumerate()`
+
+string literal are slices, & immutable
+
+`&[i32]`
+
+a slice is represented as a "fat pointer" which contains a pointer to the beginning of the range and a length of the range.
+one advantage of slices over index-based ranges is that the slice cannot be invalidated while it's being used.
+
+`&String` - 8bytes, pointer
+`&str` - 16bytes, pointer + length
+###### 4.5 Ownership Recap
+garbage collector works at runtime.
+the collector scans through memory to find data that's no longer used - that is, the running program can no longer reach that data from a function-local variable. then the collector deallocates the unused memory for later use.
+
+GC pause the execution of the program and checks from root for unreachable objects and free's them (memory is simple marked as available for the runtime) and then it starts the execution again.
+
+after a scan it focuses only on regions that might contain new references.
+
+reference counting, each object keeps a counter of how many references currently point to it. when the counter reaches zero, the object is freed immediately
+
+rust's ownership model puts pointers front-and-center.
+- improves runtime performance by avoiding garbage collection
+- improves predictability by preventing accidental "leaks" of data
+
+
+ownership at runtime
+
+- rust allocates local variables in stack frames, which are allocated when a function is called and deallocated when the call ends.
+- local variables can hold either data or pointers.
+- pointers can be created either through boxes(pointers owning data on the heap) or references(non-owning pointers).
+
+![[ownership_review.png|400]]
+![[slices_review.png|320]]
+
+a move of a variable with a non-copyable type(like `Box<T>` or `String`) requires the (**RO**) persmissions, and the move eliminates all permissions on the variable. this rule prevents the use of moved variables.
+
+borrowing a variable(creating a reference to it) temporarily removes some of the variable's permissions.
+
+locks work at runtime, borrow checker checks for bugs at compile time.
+
+immutable reference disables the borrowed data from being mutated or moved. (**R**)
+mutating an immutable reference is not ok.
+mutating the immutably borrowed data is not ok.
+moving data out of the reference is not ok.
+
+mutable reference disables the borrowed data from being read,written or moved.
+mutating a mutable reference is ok.
+accessing the mutably borrowed data is not ok.
+
+![[ownership_example.png|300]]
+rust normally disallows multiple mutable accesses to the same array, even when those accesses are disjoint.
+`let (r0,r1) = (&mut v[0..2],&mut v[2..4];`
+`v.split_at_mut(2)`
+
+target string does not need to be heap allocated, use `&str` rather than `String`
+
+```rust
+fn get_first(strs: &mut (String, String)) -> &mut String 
+    &mut strs.0
+    
+fn get_second(strs: &mut (String, String)) -> &mut String
+    &mut strs.1
+
+fn transfer_string(strs: &mut (String, String))
+    let fst = get_first(strs);
+    let snd = get_second(strs);
+    fst.push_str(snd);
+    snd.clear();
+```
+rust rejects this function, because both functions take `&mut (String,String)` and return a `&mut String`
+
+from the compilers perspective
+- `fst` is a mutable borrow of `strs`
+- `snd` is also a mutable borrow of `strs`
+
+rust cannot prove that these two mutable references point to different fields.
+
+`fn transfer_string((fst,snd): &mut (String,String))`
+#### Using Structs to Structure Related Data 
+a structure, is a custom data type lets you package together and name multiple related values that make up a meaningful group.
+###### Defining and Instantiating Structs
+```rust
+struct User {
+	active: bool,
+	username: String,
+	email: String,
+}
+```
+![[field_init.png|400]]
+*field init* shorthand, because the function parameters had same name as struct fields.
+
+you can create a new instance of a struct that includes most of the values from another instance of the same type,but changes some.
+you can do this with *struct update syntax*.
+```rust
+let user2 = User{
+	email: String::from("reze@san.com"),
+	..user1 // use rest of the values of user1
+};
+```
+
+*tuple structs*
+`struct Color(u8,u8,u8);`
+`let Color(r,g,b) = colors;`
+
+*unit-like structs*
+`struct AlwaysEqual` 
+useful when used with traits
+
+
+it is also possible for structs to store references to data owned by something else, but to do so we require the use of *lifetimes*.
+lifetimes ensure that the data referenced by a struct is valid for as long as the struct is.
+
+rust tracks ownership at both struct-level and field-level.
+if we borrow `x` field of a `Point` struct, then both `p` and `p.x` temporarily lose their permissions(but not `p.y`).
+
+`:?` - `Debug` format `:#?`
+`#[derive(Debug)]` - outer attribute
+
+`println!` takes a reference 
+`dbg!` takes ownership, returns after call, prints file and line no.
+###### 5.3 Method Syntax
+unlike functions, methods are defined within the context of a struct,enum or trait object.
+their first parameter is always `self`
+which represents the instance of struct the method is being called on.
+
+`impl Rectangle { fn area(&self)->u32{} }`
+
+methods must have a parameter named `self` of type `Self`  for their first parameter.
+`self` is short for `self: Self`
+`Self` is an alias for struct type
+
+all functions defined within `impl` block are called *associated functions*. we can define associated functions as functions that don't have `self` as their first parameter.
+
+rust only give special meaning to `self` if it is first parameter.
+
+to call associative function we use `::`, used for namespaces also.
+
+each struct is allowed to have multiple `impl` blocks.
+
+when we overwrite `*self`, rust will implicitly drop the data previously in `*self`.
+### Enums and Pattern Matching
+enums allows you to define a type by enumerating its possible variants.
+they gives us a way of saying a value is one of a possible set of values.
+an enum value can only be one of its variants.
+```rust
+enum IpAddrKind{
+	v4, // variant with no data
+	v6, // unit variant
+}
+let ip_v4 = IpAddrKind::v4;
+```
+
+`IpAddrKind` is now a custom data type.
+
+variants are namespaced under its identifier.
+
+```rust
+enum IpAddr {
+	v4(u8,u8,u8,u8), // variants can store data
+	v6(String), // we get constructor function automatically
+	move { x: i32, y: i32 },
+}
+let home = IpAddr::v4(String::from("127.0.0.1"));
+let mov = IpAddr::move { x: 5, y: 6};
+```
+
+we can also define methods on enums using `impl`
+
+`Option<T>`- value could be something or nothing.
+```rust
+enum Option<T> {
+	None,
+	Some(T),
+}
+```
+included in the prelude plus its variants.
+```rust
+let some_number = Option::Some(5);  // type : Option<i32>
+let some_char = Some('a'); // type: Option<char>
+let absent_number: Option<i32> = None; // need to give type for None coz compiler can't infer what would be the type of its corresponding Some value.
+```
+
+`Option<T>` and `T` are different types.
+
+everywhere that a value has a type that isn't `Option<T>`, you can safely assume that the value isn't null.
+
+###### 6.2 The match Control Flow Construct
+```rust
+    match coin { // coin can be any type
+        Coin::Penny => 1, // match arm , pattern => code,
+        Coin::Nickel => 5,
+		Coin::Quarter(state) => {println!("{state:?}"); 25},
+		_ => 0, // catch all, without value capture
+    }
+```
+
+the code associated with each arm is an expression, resultant value is the value that gets returned for the entire `match` expression.
+
+the arm's patterns must cover all possibilities.
+```rust
+match opt
+	Some(_) => {} // doesn't moves opt
+	Some(s) => {} // moves opt
+
+match &opt
+```
+###### 6.3 if let and let else
+match one pattern while ignoring the rest.
+the code in `if let` block only runs if the value matches the pattern.
+```rust
+if let Some(max) = config_max {
+	println!("{max}");
+}
+else {} // optional , same as _
+```
+
+```rust
+let Some(x) = get_val() else { return None;}
+```
+
+#### Managing Growing Projecsts with Packages,Crates and Modules
+a package can contain multiple binary crates and optionally one one library crate.

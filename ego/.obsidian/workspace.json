@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1000days.md",
+                "file": "skills/Rust.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "1000days"
+              "title": "Rust"
             }
           }
         ]
@@ -78,7 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 243,
     "collapsed": true
   },
   "right": {
@@ -172,19 +172,25 @@
   },
   "active": "a8328703a2e65d6e",
   "lastOpenFiles": [
+    "sem-2/cloud computing.md",
+    "skills/Rust.md",
+    "1000days.md",
+    "07 - images/field_init.png",
+    "07 - images/ownership_example.png",
+    "07 - images/slices_review.png",
+    "07 - images/ownership_review.png",
+    "07 - images/Screenshot 2026-01-29 192047.png",
+    "07 - images/rust_permissions.png",
     "07 - images/client_example.png",
     "temp.md",
     "07 - images/gcc_example.png",
     "07 - images/server_example.png",
     "assignments/cs-lab ass1.md",
     "skills/networks.md",
-    "skills/Rust.md",
     "sem-2/performance analysis.md",
-    "sem-2/cloud computing.md",
     "sem-2/computer system lab.md",
     "07 - images/rtt_vs_size.png",
     "ai infra/machine learning.md",
-    "1000days.md",
     "EGO/PROJECTS.md",
     "ai infra/model server api.md",
     "ai infra/postman.md",
@@ -192,13 +198,8 @@
     "1000 days.md",
     "cp/usaco.guide.md",
     "skills/socket programming.md",
-    "07 - images/select().png",
-    "07 - images/in_addr.png",
-    "07 - images/sockaddr_in.png",
     "07 - images/getaddrinfo.png.~tmp",
-    "07 - images/inet_pton_ntop.png",
     "skills/vim.md",
-    "07 - images/reze_colors.png",
     "07 - images/ping_packet_loss.png.~tmp",
     "books/The Linux Command Line - william shotts.md",
     "skills/HPC.md",
