@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "skills/Rust.md",
+                "file": "MTP/5 stage pipelining.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Rust"
+              "title": "5 stage pipelining"
             }
           }
         ]
@@ -172,9 +172,16 @@
   },
   "active": "a8328703a2e65d6e",
   "lastOpenFiles": [
-    "sem-2/cloud computing.md",
-    "skills/Rust.md",
     "1000days.md",
+    "MTP/5 stage pipelining.md",
+    "07 - images/SR_table.png",
+    "07 - images/SR_LATCH.png",
+    "07 - images/cross_couples_not.png",
+    "projects/Redis.md",
+    "MTP/Untitled.md",
+    "skills/Rust.md",
+    "sem-2/concurrency theory.md",
+    "sem-2/cloud computing.md",
     "07 - images/field_init.png",
     "07 - images/ownership_example.png",
     "07 - images/slices_review.png",
@@ -183,13 +190,10 @@
     "07 - images/rust_permissions.png",
     "07 - images/client_example.png",
     "temp.md",
-    "07 - images/gcc_example.png",
-    "07 - images/server_example.png",
     "assignments/cs-lab ass1.md",
     "skills/networks.md",
     "sem-2/performance analysis.md",
     "sem-2/computer system lab.md",
-    "07 - images/rtt_vs_size.png",
     "ai infra/machine learning.md",
     "EGO/PROJECTS.md",
     "ai infra/model server api.md",
@@ -205,12 +209,8 @@
     "skills/HPC.md",
     "skills/python.md",
     "sem-1/Mathematics for computer science.md",
-    "MTP/Untitled.md",
     "MTP",
     "ai infra",
-    "skills/berserk.md",
-    "projects/Redis.md",
-    "cp/problem notes.md",
     "sem-2",
     "books",
     "07 - images/desktop.ini",

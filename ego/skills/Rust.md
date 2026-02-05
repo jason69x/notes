@@ -427,6 +427,85 @@ else {} // optional , same as _
 ```rust
 let Some(x) = get_val() else { return None;}
 ```
-
-#### Managing Growing Projecsts with Packages,Crates and Modules
+#### Managing Growing Projects with Packages,Crates and Modules
 a package can contain multiple binary crates and optionally one one library crate.
+
+a *crate* is a smallest amount of code that the rust compiler considers at a time.
+- binary crate `\src\main.rs   \src\bin\`
+- library crate `\src\lib.rs`
+
+a *package* is a bundle of one or more crates
+`cargo new` creates a package and a crate
+
+#### Common Collections
+- Sequences: `Vec`,`VecDeque`,`LinkedList`
+- Maps: `HashMap`,`BTreeMap`
+- Sets: `HashSet`,`BTreeSet`
+- Misc: `BinaryHeap`
+
+https://doc.rust-lang.org/std/collections/index.html
+###### Storing List of Values with Vectors
+`Vec<T>` - ptr,len,cap
+vectors allows you to store more than one value in a single data structure that puts all the values next to each other in memory.
+
+Vectors can only store values of the same type.
+
+`let v: Vec<i32> = Vec::new();`
+`v.push(4);` - vec needs to be mutable
+
+`v.get(2)` - returns `Option<&i32>`, 0-based
+
+`for i in &v { *i }` - immutable references to each element
+`for i in &mut v { *i+=1 }` - mutable reference
+
+`let mut s = v[0];`
+Non-copyable types cannot be moved out of a vector by indexing. Only methods such as `Vec::remove` permit moving out of a vector.
+
+`v.iter() iter.next()` - iter is a pointer that moves through each element of the vector. next() returns `Option<&T>` to current element and moves iterator to next item. returns `None`at end of vector.
+
+to use iterators safely, rust does not allow you to add or remove elements while iterating.
+`v.push(x)` - needs mutable reference to v and x.
+
+use enum to store multiple datatype elements in a vec
+###### Storing UTF-8 Encoded Text with Strings
+rust only has one string type in the core language and that is `str`.
+`String` is implemented as a wrapper around a vector of bytes
+
+`let s = String::new()    String::from("reze")`
+
+string literals are string slices `&str`.
+`"reze".to_string()` can be used on any type that impl `Display` trait.
+
+`s1.push_str(s2)` takes a string slice
+`s1.push(c)`
+
+`s = s1 + &s2` add takes ownership of first string and ref of second,...
+`format!("{s1}-{s2}-{s3}")` doesn't take ownership, returns a String
+
+`.chars().nth()`   `.bytes().nth()`
+
+`char` - unicode scalar value
+
+bytes,chars,grapheme clusters
+
+`&str` points to bytes that can always be interpreted as UTF-8
+###### Storing keys with Associated Values in Hash Maps
+`HashMap<K, V>`
+```rust
+use std::collections::HashMap;
+let mut scores = HashMap::new();
+scores.insert(String::from("reze"),1);
+scores.get("reze".to_string()).copied().unwrap_or(0);
+```
+`get` - returns a `Option<&V>`
+`copied` - converts `Option<&V>` to `Option<V>`
+
+`for (key,val) in &scores {}`
+
+
+
+
+
+
+
+
