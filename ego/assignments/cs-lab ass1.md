@@ -28,9 +28,7 @@ we can set a total duration in seconds for which the ping command should run by 
 4.*timeout value for waiting for an Echo Reply*
 
 we can set this using `-W <timeout>` flag. after using this flag, the ping command will wait `<timeout>` seconds for each reply. if the timeout expires, ping doesn't output anything for that packet. these timed out packets count towards total packet loss. total runtime of ping can stretch.
-
 ###### Q2. RTT and Packet Loss Analysis
-
 *selected six hosts*
 
 | Hosts          | avg.RTT (2pm) | avg.RTT (8pm) | avg.RTT (9am) | distance (km) |

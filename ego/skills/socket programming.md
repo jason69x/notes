@@ -25,7 +25,7 @@ stream sockets are reliable two-way connected communication streams.
 items arrive in order, error-free.
 ssh,http uses stream sockets.
 
-stream sockets uses TCP. `send()``
+stream sockets uses TCP. `send()`
 datagram sockets uses UDP. `sendto()`
 
 *port number*, 16-bit , local address for the connection.
