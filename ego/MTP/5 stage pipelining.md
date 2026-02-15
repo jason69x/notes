@@ -314,3 +314,10 @@ Memory, and Writeback stages, so it remains in sync with the rest of
 the instruction. WA3W and ResultW are fed back together to the register
 file in the Writeback stage.
 ![[pipelined_with_control.png]]
+
+if cond is *false*, the condition unit outputs `CondEx=0`, and instruction behaves like $NOP$ .
+no branch,reg,mem,flag write control signals are disabled by ANDing them with CondEx.
+
+update PC if instruction wants to update it or it is a branch instr.
+that why we are doing (PCsrc AND CondEx) OR (Branch AND CondEx)
+
