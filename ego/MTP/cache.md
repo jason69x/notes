@@ -1,6 +1,7 @@
 #### cache
 above pipeline assumed memory can be accessed in a single clock cycle.
 but large memories are slow and requires many cycles.
+on cache miss, pipeline is stalled until data is available.
 
 processor communicates to memory over a memory interface.
 the processor sends an address over *Address* bus. for read *MemWrite* is 0 and the memory returns the data on *ReadData* bus.
@@ -97,6 +98,8 @@ the cache reads blocks from both ways in the selected set and checks the tag and
 
 set associative caches generally have less conflicts then direct mapped cache of same size.
 but are slower and expensive then direct.
+
+You don’t rely only on Hit1. You use two things: 1) Way select = Hit1 (since only one of Hit0/Hit1 can be 1 on a valid hit). 2) Overall Hit = Hit0 OR Hit1. The data mux may still output Way0 when Hit1=0, but that output is ignored if Hit=0. The control logic uses Hit to decide whether the data is valid. If Hit=0 (miss), the processor ignores the mux output and starts a memory access instead. So even though the mux selects something, it is not used unless Hit=1.
 ###### fully associative cache
 a *fully associative* cache contains a single set with *B* ways.
 ![[fully_associative.png]]
@@ -122,13 +125,13 @@ in direct mapped cache, if a set is full it needs to be replaced.
 in set and fully associative cache, we must choose which set to evict.
 principle of temporal locality suggest that we should remove set which was *least recently used (LRU)*.
 
-in a 2-way set ac, a *use* bit `U`, indicates which way whithing a set was least recently used.
+in a 2-way set ac, a *use* bit `U`, indicates which way whithin a set was least recently used.
 tracking last used becomes difficult in case of more than 2-way set ac.
 to takcle this, ways are divided into two groups, use bit indicates which group of ways was least recently used, during replacement the new block replaces a random way from lru group of ways.
 this method is known as *pseudo-LRU*.
 ![[use_bit_lru.png|400]]
 
-cache misses can be reduces by changing capacity, block size, and/or associativity. first understand cause of misses.
+cache misses can be reduced by changing capacity, block size, and/or associativity. first understand cause of misses.
 can be compulsory, conflict, capacity.
 
 Changing cache parameters can affect one or more type of cache miss. eg, increasing cache capacity can reduce conflict and capacity misses, but it does not affect compulsory misses. On other hand, increasing block size could reduce compulsory misses (due to spatial locality) but might actually increase conflict misses (because more addresses would map to the same set and could conflict).
