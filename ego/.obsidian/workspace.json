@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MTP/cache.md",
+                "file": "jpnese.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "cache"
+              "title": "jpnese"
             }
           }
         ]
@@ -172,8 +172,9 @@
   },
   "active": "d8bbaf45427cf8c8",
   "lastOpenFiles": [
-    "MTP/cache.md",
     "MTP/hazards & instructions.md",
+    "jpnese.md",
+    "MTP/cache.md",
     "07 - images/two-bit_branch_predictor.png",
     "07 - images/pipelined_full_hazard.png",
     "07 - images/control_hazard_pipeline.png",

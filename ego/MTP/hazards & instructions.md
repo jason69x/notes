@@ -34,7 +34,6 @@ RA1E and RA2E are pipeline registers that stores register addresses from decode 
 if both memory and writeback stages contain matching destination registers, then the memory stage should have priority, because it contains the more recently executed instruction.
 ![[forwarding_match_logic.png]]
 
-
 forwarding is sufficient to solve RAW data hazards when the result is computed in the execute stage and then be forwarded to execute stage of next instr.
 
 LDR does not finish reading data until the end of memory stage.
@@ -125,8 +124,6 @@ assembly code tests the opposite condition of the one in the high-level code.
 ![[branch_instructiosn.png|600]]
 
 the processor calculates the *branch target address* from the instruction by sign-extending the 24-bit immediate, shifting it left by 2 (to convert words to bytes) and adding it to PC+8.
-
-
 ###### solving control hazards
 the `B` instruction presents a control hazard: the pipelines processor does not know what instruction to fetch next, because the branch decision has not been made by the time next instruction is fetched. Writes to R15(PC) present a similar control hazard.
 
