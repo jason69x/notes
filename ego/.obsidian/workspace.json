@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "366580fc5972c029",
+        "id": "790edaf12f2bcb67",
         "type": "tabs",
         "children": [
           {
-            "id": "d8bbaf45427cf8c8",
+            "id": "b8b2028bb9068658",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jpnese.md",
+                "file": "MTP/HBM controller.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "jpnese"
+              "title": "HBM controller"
             }
           }
         ]
@@ -170,27 +170,36 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "d8bbaf45427cf8c8",
+  "active": "b8b2028bb9068658",
   "lastOpenFiles": [
-    "MTP/hazards & instructions.md",
+    "07 - images/hbm_stack.png",
+    "07 - images/type2use_dram.png",
+    "07 - images/package_dram.png",
+    "07 - images/channels_dram.png",
+    "07 - images/page_miss_dram.png",
+    "07 - images/bank_access.mp4",
+    "07 - images/bank_access.m3u8",
+    "07 - images/bank_access.gif.m3u8",
+    "07 - images/bank_access_gif.m3u8",
+    "07 - images/uP02mik6yjJIBApqZRPzww39PeQLBdIxSYogLbP4fVcc.m3u8",
+    "07 - images/dram_bank.png",
+    "MTP/HBM controller.md",
+    "07 - images/dram_cell.jpg.~tmp",
+    "07 - images/dram_cell.jpg",
+    "07 - images/dram_cell.webp",
+    "07 - images/dram.png",
+    "assignments/CT_ass.md",
+    "07 - images/ctass_q.png",
+    "07 - images/ctass_p.png",
+    "sem-2/concurrency theory.md",
     "jpnese.md",
+    "MTP/hazards & instructions.md",
     "MTP/cache.md",
-    "07 - images/two-bit_branch_predictor.png",
-    "07 - images/pipelined_full_hazard.png",
-    "07 - images/control_hazard_pipeline.png",
-    "07 - images/earlier_branch_prediction.png",
-    "07 - images/branch_flush.png",
-    "07 - images/branch_instructiosn.png",
-    "07 - images/while_asm.png",
-    "07 - images/switch_asm.png",
-    "07 - images/cond_instr_if_else.png",
-    "07 - images/if_branch.png",
     "1000days.md",
     "MTP/5 stage pipelining.md",
     "EGO/PROJECTS.md",
     "MTP/CoreMemDTM.md",
     "sem-2/ai & ethics.md",
-    "sem-2/concurrency theory.md",
     "sem-2/cloud computing.md",
     "sem-2/performance analysis.md",
     "skills/socket programming.md",
@@ -205,19 +214,10 @@
     "ai infra/model server api.md",
     "ai infra/postman.md",
     "ai infra/python.md",
-    "1000 days.md",
-    "cp/usaco.guide.md",
     "07 - images/getaddrinfo.png.~tmp",
-    "skills/vim.md",
     "07 - images/ping_packet_loss.png.~tmp",
     "MTP",
     "ai infra",
-    "sem-2",
-    "books",
-    "07 - images/desktop.ini",
-    "07 - images",
-    "images/desktop.ini",
-    "projects",
     "Untitled.canvas"
   ]
 }

@@ -59,7 +59,7 @@ non-determinism
 `VM = in50.(outCoke + outMars)` this machine allows user to choose product after inserting coin.
 `VM = (in50.outCoke + in50.outMars)` the machine chooses what happens after coin is inserted. it may output mars or coke.
 
-if don't consider these two VMs equal, it is known as *bisimilarity*
+if we don't consider these two VMs equal, it is known as *bisimilarity*
 
 *parallel composition*
 
@@ -81,3 +81,25 @@ a man eats every time a clock ticks
 `CLOCK` = tick.CLOCK
 `MAN` = $\overline{tick}$.eat.MAN
 `EXAMPLE` = (MAN|CLOCK)\tick
+
+---
+###### LTS
+we call a triple $\tau = (Pr,Act,\to)$ a *labeled transition system* if $Pr$ is a set of processes, $Act$ a set of actions such that $Pr\cap Act = \phi$ , and $\to\ \subseteq Pr\times Act\times Pr$ the *labeled transition relation* of $\tau$.
+
+*traces* are finite sequences of action labels
+$p\xrightarrow{\epsilon}p$ 
+$p\xrightarrow{a\sigma}q$ , $\sigma\in Act^{*}$ 
+
+$p\in Pr$ is called a *deadlock* *(process)* if $p\not\xrightarrow{a}$ for all $a\in Act$ 
+
+*completed traces* are traces ending in deadlocks.
+
+###### Trace Semantics
+
+the *set of (partial) traces* of $p\in Pr$, traces(p), is defined inductively
+- $\epsilon\in$ traces(p)
+- if $\sigma \in$ traces(q) and $p\xrightarrow{a}q$ , then $a\sigma\in$ traces(q)
+
+if traces(p) = traces(q), p is *trace equivalent* to q
+
+![[traces.png|380]]

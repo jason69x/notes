@@ -106,3 +106,49 @@ The long vowel sound “oo” can be written with an う or with an お.
 |  8  |   はち   |
 |  9  |  きゅう   |
 | 10  |  じゅう   |
+
+もう - again/ one more
+いちど - one time
+おねがいします - please
+
+もうすこし - a little more
+ゆっくり - slowly
+いって - say
+ください - please
+
+わかりますか？ - do you understand?
+できますか？ - do you speak it?
+
+日本語 - japanese
+えいご - english
+ちゅうごくご - chinese
+インドネシアご - indonesia
+
+はい、できます
+はい、わかります
+はい、すこし
+すみません、わかりません
+
+おきゃくさん - customer
+じゃあ - well then...
+あのお - umm...
+
+これは、にほんごでなんですか？
+これは、にほんごでなんといいますか？
+～は、
+
+かさ - umbrella
+スマホ - smartphone
+めんきょしょう - license
+か - mosquito
+え - huh?
+そうそう - that's right
+
+よく - well...
+
+ここ、なまえ、かいてください
+あ、わかりました
+
+じゃあ、えいご、わかりますか？
+はい、わかります
+
