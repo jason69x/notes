@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "MTP/HBM controller.md",
+                "file": "sem-2/ai & ethics.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "HBM controller"
+              "title": "ai & ethics"
             }
           }
         ]
@@ -172,6 +172,16 @@
   },
   "active": "b8b2028bb9068658",
   "lastOpenFiles": [
+    "07 - images/rank_algo.png",
+    "07 - images/Screenshot 2026-02-28 231302.png",
+    "sem-2/ai & ethics.md",
+    "07 - images/massaged_data_algo.png",
+    "sem-2/concurrency theory.md",
+    "07 - images/ccs_vs_pi.png",
+    "assignments/CT_ass.md",
+    "jpnese.md",
+    "MTP/cache.md",
+    "MTP/HBM controller.md",
     "07 - images/hbm_stack.png",
     "07 - images/type2use_dram.png",
     "07 - images/package_dram.png",
@@ -183,23 +193,13 @@
     "07 - images/bank_access_gif.m3u8",
     "07 - images/uP02mik6yjJIBApqZRPzww39PeQLBdIxSYogLbP4fVcc.m3u8",
     "07 - images/dram_bank.png",
-    "MTP/HBM controller.md",
     "07 - images/dram_cell.jpg.~tmp",
     "07 - images/dram_cell.jpg",
-    "07 - images/dram_cell.webp",
-    "07 - images/dram.png",
-    "assignments/CT_ass.md",
-    "07 - images/ctass_q.png",
-    "07 - images/ctass_p.png",
-    "sem-2/concurrency theory.md",
-    "jpnese.md",
     "MTP/hazards & instructions.md",
-    "MTP/cache.md",
     "1000days.md",
     "MTP/5 stage pipelining.md",
     "EGO/PROJECTS.md",
     "MTP/CoreMemDTM.md",
-    "sem-2/ai & ethics.md",
     "sem-2/cloud computing.md",
     "sem-2/performance analysis.md",
     "skills/socket programming.md",

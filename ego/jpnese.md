@@ -152,3 +152,26 @@ The long vowel sound “oo” can be written with an う or with an お.
 じゃあ、えいご、わかりますか？
 はい、わかります
 
+###### 3. introduction
+きました  - came
+くる  - come
+わたし - i/myself
+
+はじめまして - hello (said when meeting someone for first time)
+（どうぞ）よろしくおねがいします - nice to meet you
+
+タイワン　からきました -  i came from taiwan
+
+の - of
+あいのことば - words of love
+はじめのことば - first words
+はじめまして
+
+なまえ - name
+しゅっしん - place of origin
+おわりのことば - final words
+よろしくおねがいします
+
+にほん - japan
+にほんご - japanese language
+にほんじん - japanese person

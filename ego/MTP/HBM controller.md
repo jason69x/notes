@@ -2,7 +2,7 @@ customizable open-source HBM controller
 
 - fine-grained memory command scheduling
 - dynamic bandwidth allocation
-- workload-specific optimazation
+- workload-specific optimization
 - compatibility with FPGA-based architectures
 
 **FPGA** 
@@ -94,3 +94,14 @@ HBM comprises multiple DRAM dies - typically four - vertically stacked above a b
 interconnection between the DRAM dies and the logic die is enabled by *Through-Silicon-Vias* (TSV).
 each DRAM die is partitioned into two independent memory channels, with each further subdivided into multiple DRAM banks 8 or more
 
+
+*NeuroMap Idea* - statically map cores to HBM channels and dynamically map DNNs tasks to cores
+
+
+the charge stored on each capacitor is too small to be read directly and is instead measured by a circuit called a sense amplifier.
+the sense amplifier detects the minute differences in charge and outputs the corresponding logic level.
+reading the bitline forces the charge to flow out of capacitor.
+precharging is performed to put value read back into capacitor.
+capacitors leak data overtime and needs to be refreshed.
+
+a rank is a separately addressable set of DRAMs.
