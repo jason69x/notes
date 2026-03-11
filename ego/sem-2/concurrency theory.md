@@ -98,7 +98,7 @@ $p\in Pr$ is called a *deadlock* *(process)* if $p\not\xrightarrow{a}$ for all $
 
 the *set of (partial) traces* of $p\in Pr$, traces(p), is defined inductively
 - $\epsilon\in$ traces(p)
-- if $\sigma \in$ traces(q) and $p\xrightarrow{a}q$ , then $a\sigma\in$ traces(q)
+- if $\sigma \in$ traces(q) and $p\xrightarrow{a}q$ , then $a\sigma\in$ traces(p)
 
 if traces(p) = traces(q), p is *trace equivalent* to q
 

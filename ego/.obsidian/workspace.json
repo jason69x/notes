@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "sem-2/ai & ethics.md",
+                "file": "MTP/cache.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "ai & ethics"
+              "title": "cache"
             }
           }
         ]
@@ -172,15 +172,17 @@
   },
   "active": "b8b2028bb9068658",
   "lastOpenFiles": [
+    "skills/vim.md",
+    "MTP/cache.md",
+    "07 - images/PLRU-Tree based.png",
+    "sem-2/concurrency theory.md",
+    "sem-2/ai & ethics.md",
     "07 - images/rank_algo.png",
     "07 - images/Screenshot 2026-02-28 231302.png",
-    "sem-2/ai & ethics.md",
     "07 - images/massaged_data_algo.png",
-    "sem-2/concurrency theory.md",
     "07 - images/ccs_vs_pi.png",
     "assignments/CT_ass.md",
     "jpnese.md",
-    "MTP/cache.md",
     "MTP/HBM controller.md",
     "07 - images/hbm_stack.png",
     "07 - images/type2use_dram.png",
@@ -192,9 +194,7 @@
     "07 - images/bank_access.gif.m3u8",
     "07 - images/bank_access_gif.m3u8",
     "07 - images/uP02mik6yjJIBApqZRPzww39PeQLBdIxSYogLbP4fVcc.m3u8",
-    "07 - images/dram_bank.png",
     "07 - images/dram_cell.jpg.~tmp",
-    "07 - images/dram_cell.jpg",
     "MTP/hazards & instructions.md",
     "1000days.md",
     "MTP/5 stage pipelining.md",
@@ -213,7 +213,6 @@
     "ai infra/machine learning.md",
     "ai infra/model server api.md",
     "ai infra/postman.md",
-    "ai infra/python.md",
     "07 - images/getaddrinfo.png.~tmp",
     "07 - images/ping_packet_loss.png.~tmp",
     "MTP",

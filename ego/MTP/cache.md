@@ -5,8 +5,8 @@ on cache miss, pipeline is stalled until data is available.
 
 processor communicates to memory over a memory interface.
 the processor sends an address over *Address* bus. for read *MemWrite* is 0 and the memory returns the data on *ReadData* bus.
-for write MemWrite is 1 and processor provides sends data to memory on the *WriteData* bus.
-ReadData bus is not logically disables on write rather it is not used.
+for write MemWrite is 1 and processor provides data to memory on the *WriteData* bus.
+ReadData bus is not logically disabled on write rather it is not used.
 
 ![[mem_interface.png|300]]
 
@@ -53,7 +53,7 @@ some of the address bits are used to determine which cache set contains the data
 if the set contains more than one block, data may be kept in any of the blocks in the set.
 
 caches are categorized based on number of blocks in a set.
-in a *directed mapped* cache, each set contains exactly one block.
+in a *direct mapped* cache, each set contains exactly one block.
 
 in a *N-way associative* cache, each set contains N blocks.
 addresses maps to unique set, but data can go in any block in the set.
@@ -86,7 +86,7 @@ if tag matches and valid bit is set, cache hits and data is returned to the proc
 in set associative cache, there are N comparators (one per way), outputs go into a priority encoder/ mux control. if any comparator outputs 1 -> hit. that way's data block is selected via multiplexer.
 everything is fully parallel, thats why cache is fast.
 
-when two recently accessed address map to the same cache block, a *conflict* occurs, and the most recently accessed address *evicts* the previous one from the block.
+when two recently accessed address map to the same cache block, a *conflict* occurs, and the least recently accessed address *evicts* the previous one from the block.
 direct mapped caches have only one block in each set, so two addresses that map to the same set always cause a conflit.
 
 ###### multi-way set associative cache
@@ -122,7 +122,7 @@ caches are organized as 2d-arrays, the rows are called sets, and columns are cal
 data replacement,
 
 in direct mapped cache, if a set is full it needs to be replaced.
-in set and fully associative cache, we must choose which set to evict.
+in set and fully associative cache, we must choose which way to evict.
 principle of temporal locality suggest that we should remove set which was *least recently used (LRU)*.
 
 in a 2-way set ac, a *use* bit `U`, indicates which way whithin a set was least recently used.
@@ -137,3 +137,124 @@ can be compulsory, conflict, capacity.
 Changing cache parameters can affect one or more type of cache miss. eg, increasing cache capacity can reduce conflict and capacity misses, but it does not affect compulsory misses. On other hand, increasing block size could reduce compulsory misses (due to spatial locality) but might actually increase conflict misses (because more addresses would map to the same set and could conflict).
 
 ![[write_policy.png|600]]
+
+---
+word size(data path/ register width)
+
+for smaller associativity, True LRU can be implemented using an Order Matrix. for 4-way SAC, hardware stores `4x4` matrix of bits excluding diagonals.
+
+store which block was used more recently than another.
+`M[i][j] = 1` way $i$ was used more recently than $j$.
+
+row with all zeroes is LRU way.
+
+when accesing $W_i$ update `M[i][j]=1 & M[j][i]=0` $\forall_{i\neq j}$
+
+total bits used $N\times (N-1)$ 
+
+PLRU-m : https://github.com/karlmcguire/plru
+
+![[PLRU-Tree based.png|500]]
+
+random, used where cache hit/miss are unpredictable or design needs to be simple.
+
+MFU, used when older data is frequently used rather than newer data.
+
+adaptive replacement, 1/4 - algo1 1/4 - algo2, 1/2 - based on results of these two algo, whichever performs best.
+
+True-LRU, bits required = $\lceil\log_2(n!)\rceil$ , $4-way = 5bits$
+state transition logic is complex because every access requires decoding, computing, encoding a permutation.
+
+Pseudo-LRU, bits required = $n-1$ , $4-way=3bits$
+simple tree traversal.
+
+NRU, not RU, 
+
+*write policies*
+
+write hit:
+- write through - write to both cache and main memory
+- write back - write to cache, when evicting write to MM (dirty)
+
+write miss:
+- write allocate - bring block from MM to cache then write
+- write around - directly write a word to MM 
+
+cpu reads/writes a word, cache fetches/writes a block/line
+
+cache hardware reads entire cache line, but cpu receives only the specific word using block_offset.
+
+simulations:
+- trace-based, reading a pre recorded trace of instructions
+- execution-driven, directly execute program's instructions
+
+continuous sequential access direct mapped get miss on all.
+
+*cache misses*
+
+slows down retrieval and increase server load.
+cause of cache misses is important to minimize them and improve system performance
+
+- compulsory 
+- conflict
+- capacity
+
+compulsory,
+
+occurs when data is accessed for the first time and has not yet been cached. mitigation strategies includes:
+- data prefetching, where frequently used data is loaded into the cache in advance
+- increasing cache block size, store larger chunks of data, so that next nearby access gets hit.
+use multi-layer caches to reduce traffic to the origin.
+
+conflict,
+
+happens when multiple cache blocks compete for the same cache slot,
+leads to frequent evictions and reloading.
+solutions include :
+- increasing associativity
+- optimizing access patterns
+
+capacity,
+
+occurs when cache is too small to store all necessary data, forcing frequent replacements. *when the working set of data exceeds available cache size, older data gets removed before its needed again*.
+reducing capacity misses involves: 
+- increasing cache 
+- efficient replacement policies
+- ensuring frequently accessed data remains in cache longer
+
+cause of cache misses,
+- poor data locality, inefficient data access patterns
+- limited cache size
+- low associativity or improper blocksize
+
+cdn's doesn't require entire file to be cached before serving, as soon as first byte arrives from origin it begins serving users. doesn't wait for the complete file to be cached from origin first & then serve.
+this reduces delay caused by cache misses
+
+during a traffic spike (when multiple requests for the same content reach the cache server before the origin has responded to the first request) CDN temporarily pauses the operation before forwarding additional request to origin, this pause helps reduce unnecessary load on origin, this helps to get more time to get the requested file to the caches and then provide them from there and not from origin.
+
+cache expiry
+static content like images,videos, stylesheets can be cached for extended periods to reduce compulsory misses.
+
+cache-aside, application decides when to use cache
+
+on modern processors, running time is dominated by memory access.
+
+cache invalidation,
+
+when one processor modifies a value in its cache, other processors cannot use the old value anymore. that memory location will be invalidated in all of the caches. Furthermore, since caches operate on the granularity of cache lines and not individual bytes, the entire cache line will be invalidated in all caches.
+
+N-way set associative caches are the typical solution for processor caches, as they make good trade off between implementation simplicity and good hit rate.
+
+SRAM is large, putting a lot of it on the die gobbles up die area very fast.
+
+*direct*
+- power efficient, avoids search through all cache lines
+- simple placement policy, just evict the line
+- simple hardware, only one tag needs to compared and selected
+- lowe cache hit rate, more conflict misses
+*fully*
+- full utilization of cache, place in any line
+- draws more power, comparison over entire cache
+- high cost of comparison hardware
+
+pseudo-associative
