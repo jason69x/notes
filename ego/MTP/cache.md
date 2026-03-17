@@ -251,10 +251,168 @@ SRAM is large, putting a lot of it on the die gobbles up die area very fast.
 - power efficient, avoids search through all cache lines
 - simple placement policy, just evict the line
 - simple hardware, only one tag needs to compared and selected
-- lowe cache hit rate, more conflict misses
+- lower cache hit rate, more conflict misses
 *fully*
 - full utilization of cache, place in any line
 - draws more power, comparison over entire cache
 - high cost of comparison hardware
 
 pseudo-associative
+
+---
+#### Large and Fast: Exploiting Memory Hierarchy
+*why use memory hierarchy*
+by implementing the memory system as a hierarchy, the user has the illusion of a memory that is as large as largest level of the hierarchy, but can be accessed as if it were all built from the fastest memory.
+
+*block (line)*
+the minimum unit of information that can be either present or not present in a cache.
+
+*hit rate*
+the fraction of memory accesses found in a level of the memory hierarchy.
+
+*miss rate*
+the fraction of memory accesses not found in a level of the memory hierarchy.
+
+*hit time*
+the time required to access a level of the memory hierarchy, including the time needed to determine whether the access is a hit or a miss.
+
+*miss penalty*
+the time required to fetch a block into a level of the memory hierarchy from the lower level, including the time to access the block, transmit it from one level to the other, insert it in the level that experienced the miss, and then pass the block to the requestor.
+
+*true hierarchy*
+data cannot be present in level $i$ unless it is also present in level $i+1$
+
+*SRAM*
+they typically use $6$ to $8$ transistors per bit to prevent information from being disturbed when read.
+
+*DRAM*
+value kept in a cell is stored as a charge in a capacitor. a single transistor is used to access this charge, either to read or to overwrite the charge stored there. 
+
+capacitor (stores charge)
+transistor (acts as a switch)
+word line (controls the switch)
+bit line (used to read/write)
+
+when the word line is on the transistor connects the capacitor to the bit line.
+
+reading the value:
+before reading the bit line is precharged to about $vdd/2$ (half the supply voltage). when the word line turns on, the capacitor connects to the bit line and slightly changes the voltage depending on its stored charge.
+if the capacitor stored $0$ $\to$ it pulls the bitline voltage slightly below $v_{dd}/2$ . DRAM uses a sense amplifier to detect this.
+if the capacitor stored $1\to$ it pushes the bitline voltage slightly above $vdd/2$.
+
+reading a DRAM cell destroys the stored charge because the capacitor shares charge with the bitline.
+recharged by detecting and making it full/empty.
+
+
+because DRAMs use only a single transistor per bit of storage, they are much denser and cheaper per bit than SRAM.
+
+DRAMs are organized in banks. sending PRE (precharge) opens or closes a bank. a row address is sent with an ACT (activate), which causes the row to transfer to a buffer. when the row is in buffer, it can be transferred by successive column addresses at whatever the width of DRAM is.
+
+DRAM row buffer (sense amplifier) stores one row at a time per bank.
+accessing another row requires PRECHARGE and ACTIVATE operations.
+
+DDR SDRAM - data transfer on both rising and falling clock edges.
+
+each bank has its own row buffer, address contains bank number, if there are four different addresses, they can be simultaneously read/write.
+
+address interleaving means consecutive memory addresses are distributed across different banks.
+
+data bus width may limit parallel work of banks.
+
+DIMM contains multiple DRAM chips.
+
+eg. DIMM with 16 DRAM chips, but only 8 chips needed to supply 64bits
+so chips are divided into groups called memory rank.
+
+only one rank is active at a time, but switching ranks is faster than switching rows inside DRAM.
+
+---
+when cpu performance increases, miss penalty becomes more significant.
+
+after comparing and ANDing with valid bits , ORing them gives HIT,
+and passing them to lets say 4x2 encoder gives index of the line which got hit in the set, passing these signals to a 4x1 MUX we get the desired data.
+
+use a write buffer / victim cache to hold dirty blocks being replaced so you don't have to wait for the write to complete before reading.
+check victim cache on miss, may get lucky.
+
+sits on L1 fill path, small-fully associative cache
+
+coherence: maintain a single writer multiple reader invariant
+
+initially prefetch data in both caches.
+setup prefetching logic in between L1 and L2 and prefetch potential future accessed block in L2.
+
+dynamic cache resizing
+
+banked cache, parallel access, bank conflict
+
+split cache, instr. data
+
+*NVM*
+provides DRAM-like performance, disk-like capacity, and persistency.
+
+*DRAM*
+
+![[sense_amplifier.png|200]]
+sense amplifier
+
+since sense amplifier is large we connect multiple rows of cells to one row of sense amplifier
+![[row_of_sense_amplifier.png|300]]
+
+row decoder decides which row of cells is active
+
+![[bank_dram.png|300]]
+
+dram bank is a collection of (subarrays) row buffers ( row of cells with sense amplifier row in between)
+
+we create subarrays coz if a line is very long , then we may not be able to sense the charge on capacitor
+
+![[dram_operation.png|500]]
+
+
+*cache coherence*
+
+multiple processors on a single chip sharing same physical address space.
+
+caching shared data introduces a new problem,
+because the view of memory held by two different processors is through their individual caches, which, without any additional precautions, could end up seeing two different values.
+this is referred to as the cache coherence problem.
+
+informally, we could say that a memory system is coherent if any read of a data item returns the most recently written value of that data item.
+
+0. coherence
+1. read after write by same processor should see updated value
+2. read after write by diff processor should see updated value
+3. writes by diff processors to same location should be serialized
+
+![[cache_coherence_eg.png|400]]
+
+write invalidate protocol
+invalidates copies in other caches on a write. no other readable or writable copies of an item exist when the write occurs.
+broadcast to all caches.
+
+consider a write followed by a read by another processor, since the write requires exclusive access, any copy held by the reading processor must be invalidated. thus, when the read occurs, it misses in the cache, and the cache is forced to fetch a new copy of the data.
+
+for writes at same time, one processor wins the race and invalidates others cache. other need to fetch the new copy, thus enforcing serialization.
+
+![[invalidation_coherence.png|400]]
+
+
+false sharing, different variables in same block
+large data blocks, more data moved during coherence events
+
+suppose X,Y are in same block, if processor A writes X then it invalidates this block in processor B, so when processor B needs to write it fetches this block again and invalidates this block in A, ping-pong miss effect.
+
+cpu B issues read-for-ownership on the bus, cpu's snoop the bus and sends the block to requesting cpu if their block is latest and invalidates their copy. 
+
+bus transactions,
+`BusRd` - read miss , fetch block from other caches or memory
+`BusRdX` - write miss, fetch block from other caches(invalidates them) or memory 
+`BusUpgr` - write to shared block, invalidates other no fetching (already has the block, just upgrading permissions)
+`Flush` - modified data requested by other, provide it & invalidate self
+
+suppose a cpu reads after a write, but it may be possible that the write request from diff cpu didn't completed yet, we need consistency
+
+consistency,
+- a write does not complete (and allow the next write to occur) until all processors have seen the effect of the write.
+- the processor does not change the order of any write with respect to any other memory access.
