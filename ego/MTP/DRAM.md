@@ -195,5 +195,53 @@ chip select is used to select a rank.
 
 ![[dual_channel_dram.png|400]]
 
- 
+
+$bandwidth = buswidth\times frequency$
+
+HBM uses extremely wide bus 1024bits with low frequency, resulting in high bandwidth with low power.
+
+cpu (memory controller) -> memory channel (data, address, control signals) -> DIMM -> DRAM chips
+
+---
+
+memory controller is placed on the same chip as the processor
+
+per-socket/ per-cluster NUMA is used 
+
+memory wall,
+memory capacity is increasing  fast but latency is decreasing very slowly.
+
+capacitor,
+a capacitor consists of two conductive plates separated by an insulating material called a dielectric. when a voltage is applied, one plate accumulates positive charge while the other plate accumulates an equal amount of negative charge, allowing it to store electrical energy. 
+
+acts like a water tank to smooth out flow when interruption occurs
+
+*refresh*
+the process of periodically reading the value of blocks in DRAM memory and writing them back is known as refresh operation. the capacitors in the DRAM cells gradually lose their stored charge; hence, it is necessary to periodically read their state and then restore the voltage across the capacitors to the ideal values.
+
+if capacitor is small, charge may leak out quickly, and need to refresh more often.
+trade-off between storage density and max time b/w two refresh
+
+
+*Read Access*
+
+address first arrives at row decoder which enables a corresponding wordline, which enables all the cells in its row. 
+the cells start setting the values of their attached bit lines.
+we read an entire row at a time and buffer its contents.
+
+we use precharging, set all bits to fixed voltage, half of supply voltage. we monitor the direction in which voltage on the bit line is gravitating towards. if it is gravitating towards a logical 0, then we declare the bit to be 0 much before voltage actually reaches 0.
+
+advantage or precharging is that we don't need to wait for the voltage to swing to either $0$ or $V_{dd}$
+we simply need to ensure that the voltage difference between the current voltage and the precharged voltage is more than the noise margin.
+
+consider the case where the capacitor in the DRAM cell stores a logical 1. when we enable the access transistor via the word line, the capacitor starts to charge the bit line. this means that stored charge from the capacitor flows towards the bit line and increases its voltage. this further means that the voltage across the capacitor in the DRAM decreases.
+the next time we read this cell, the voltage across it might not be enough to infer a logical 1.
+
+restoring after destructive read adds latency to read operation.
+
+DRAM sense amplifiers function both as differential amplifiers as well as buffers.
+
+sense amplifiers acts as a cache, serve from this if row hit instead of fresh access.
+
+*sense amplifier*
 
