@@ -75,7 +75,12 @@ aim is to eliminate write-backs as far as possible.
 
 ![[MOESI.png|700]]
 
-need two temporary states, in case the owner gets evicted. then according to our rules only owner transfers blocks but there may be other caches that may have block in shared state.
+need two temporary states, in case the owner gets evicted. according to our rules only owner transfers blocks but there may be other caches that may have block in shared state. wait for owner, else search sister caches in shared states else fetch from lower level.
 
 
+---
 
+many i/o devices write directly to memory, in case of write-back we need to check each level if the block is dirty.
+
+on DMA request.
+invalidate cache lines if not dirty, if dirty, write-back and then invalidate

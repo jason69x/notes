@@ -245,3 +245,4 @@ sense amplifiers acts as a cache, serve from this if row hit instead of fresh ac
 
 *sense amplifier*
 
+write - precharge, activate, drive bitlines 

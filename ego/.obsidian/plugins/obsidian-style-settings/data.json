@@ -55,8 +55,8 @@
   "anuppuccin-theme-settings-extended@@anp-theme-ext-dark": true,
   "anuppuccin-theme-settings-extended@@anp-theme-ext-amoled": false,
   "anuppuccin-theme-settings-extended@@catppuccin-theme-dark-extended": "ctp-thorns",
-  "anuppuccin-custom-background@@anp-custom-bg-blur-dark": 5,
-  "anuppuccin-custom-background@@anp-custom-bg-card-fg-opacity-dark": 0.4,
-  "anuppuccin-custom-background@@anp-custom-bg-brightness-dark": 0.3,
-  "anuppuccin-custom-background@@anp-background-image-dark": "url(\"https://image2url.com/r2/default/images/1773299795128-06a7b251-c24b-4bfa-945e-582cbd2ef54a.jpg\")"
+  "anuppuccin-custom-background@@anp-custom-bg-blur-dark": 7,
+  "anuppuccin-custom-background@@anp-custom-bg-card-fg-opacity-dark": 0.35,
+  "anuppuccin-custom-background@@anp-custom-bg-brightness-dark": 0.15,
+  "anuppuccin-custom-background@@anp-background-image-dark": "url(\"https://image2url.com/r2/default/images/1775132151467-849a9745-273f-4af4-9460-141ea7844d3d.jpg\")"
 }

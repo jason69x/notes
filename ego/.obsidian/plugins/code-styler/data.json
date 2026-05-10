@@ -432,7 +432,7 @@
         },
         "inline": {
           "backgroundColour": "--code-background",
-          "textColour": "#9CFF66",
+          "textColour": "#FA79C2",
           "activeTextColour": "--code-normal",
           "titleTextColour": "--code-comment"
         },

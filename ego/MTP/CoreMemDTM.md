@@ -20,6 +20,9 @@ VRM, voltage regulator module
 decreasing performance, lower freq. then voltage
 increasing performance, incre volt. then freq.
 
+fast transistor switching needs high voltage and low for slow switching
+if we don't increase voltage when running on high frequency, we can get timing violations.
+
 multiples cores can access the same channel, but the channel physically serializes transfers.
 
 *stall-balanced core DVFS policy*
